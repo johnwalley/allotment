@@ -1,0 +1,128 @@
+:root {
+  --focus-border: #007fd4;
+  --sash-size: 8px;
+  --sash-hover-size: 4px;
+}
+
+.sash {
+  position: absolute;
+  z-index: 35;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.sash.disabled {
+  pointer-events: none;
+}
+
+.sash.mac.vertical {
+  cursor: col-resize;
+}
+
+.sash.vertical.minimum {
+  cursor: e-resize;
+}
+
+.sash.vertical.maximum {
+  cursor: w-resize;
+}
+
+.sash.mac.horizontal {
+  cursor: row-resize;
+}
+
+.sash.horizontal.minimum {
+  cursor: s-resize;
+}
+
+.sash.horizontal.maximum {
+  cursor: n-resize;
+}
+
+.sash.disabled {
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+.sash.vertical {
+  cursor: ew-resize;
+  top: 0;
+  width: var(--sash-size);
+  height: 100%;
+}
+
+.sash.horizontal {
+  cursor: ns-resize;
+  left: 0;
+  width: 100%;
+  height: var(--sash-size);
+}
+
+.sash:not(.disabled) > .orthogonal-drag-handle {
+  content: " ";
+  height: calc(var(--sash-size) * 2);
+  width: calc(var(--sash-size) * 2);
+  z-index: 100;
+  display: block;
+  cursor: all-scroll;
+  position: absolute;
+}
+
+.sash.horizontal.orthogonal-edge-north:not(.disabled)
+  > .orthogonal-drag-handle.start,
+.sash.horizontal.orthogonal-edge-south:not(.disabled)
+  > .orthogonal-drag-handle.end {
+  cursor: nwse-resize;
+}
+
+.sash.horizontal.orthogonal-edge-north:not(.disabled)
+  > .orthogonal-drag-handle.end,
+.sash.horizontal.orthogonal-edge-south:not(.disabled)
+  > .orthogonal-drag-handle.start {
+  cursor: nesw-resize;
+}
+
+.sash.vertical > .orthogonal-drag-handle.start {
+  left: calc(var(--sash-size) * -0.5);
+  top: calc(var(--sash-size) * -1);
+}
+
+.sash.vertical > .orthogonal-drag-handle.end {
+  left: calc(var(--sash-size) * -0.5);
+  bottom: calc(var(--sash-size) * -1);
+}
+
+.sash.horizontal > .orthogonal-drag-handle.start {
+  top: calc(var(--sash-size) * -0.5);
+  left: calc(var(--sash-size) * -1);
+}
+
+.sash.horizontal > .orthogonal-drag-handle.end {
+  top: calc(var(--sash-size) * -0.5);
+  right: calc(var(--sash-size) * -1);
+}
+
+.sash:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.1s ease-out;
+  background: transparent;
+}
+
+.sash.vertical:before {
+  width: var(--sash-hover-size);
+  left: calc(50% - (var(--sash-hover-size) / 2));
+}
+
+.sash.horizontal:before {
+  height: var(--sash-hover-size);
+  top: calc(50% - (var(--sash-hover-size) / 2));
+}
+
+.sash.hover:before,
+.sash.active:before {
+  background: var(--focus-border);
+}

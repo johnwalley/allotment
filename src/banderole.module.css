@@ -1,0 +1,86 @@
+:root {
+  --separator-border: #454545;
+}
+
+.canvasContainer {
+  cursor: crosshair;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  background-color: #0f0f0f;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.splitView {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.splitView > .sashContainer {
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.splitView > .sashContainer > .sash {
+  pointer-events: auto;
+}
+
+.splitView > .splitViewContainer {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.splitView > .splitViewContainer > .splitViewView {
+  position: absolute;
+  white-space: initial;
+  overflow: hidden;
+}
+
+.splitView > .splitViewContainer > .splitViewView:not(.visible) {
+  display: none;
+}
+
+.splitView.vertical > .splitViewContainer > .splitViewView {
+  width: 100%;
+}
+
+.splitView.horizontal > .splitViewContainer > .splitViewView {
+  height: 100%;
+}
+
+.splitView.separatorBorder
+  > .splitViewContainer
+  > .splitViewView:not(:first-child)::before {
+  background-color: var(--separator-border);
+  content: " ";
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  z-index: 5;
+}
+
+.splitView.separatorBorder.vertical
+  > .splitViewContainer
+  > .splitViewView:not(:first-child)::before {
+  height: 1px;
+  width: 100%;
+}
+
+.splitView.separatorBorder.horizontal
+  > .splitViewContainer
+  > .splitViewView:not(:first-child)::before {
+  height: 100%;
+  width: 1px;
+}

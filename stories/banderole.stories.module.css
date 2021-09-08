@@ -1,0 +1,14 @@
+.container {
+  background: rgb(30, 30, 30);
+  height: 100%;
+}
+
+.content {
+  color: rgb(255, 255, 255);
+  background: rgb(30, 30, 30);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
