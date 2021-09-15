@@ -8,6 +8,10 @@
   <p align="center">
     React split-pane component.
   </p>
+  
+  <p align="center">
+    <img align="center" src="https://user-images.githubusercontent.com/981531/133465908-0f9c28e9-9da3-4faf-959e-ec36393acd0a.gif" />
+  </p>
 </p>
 
 - **React-based:** Integrate effortlessly into your existing React-based application.
