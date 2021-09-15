@@ -45,3 +45,27 @@ export const App = () => (
   </Banderole>
 );
 ```
+
+### Passing a `ref` to a child
+
+If you need to attach a ref to a child component then you must wrap it in a `Banderole.Pane` component.
+
+```jsx
+import React from "react";
+import { Banderole } from "banderole";
+
+export const App = () => {
+  const ref = React.useRef<HTMLElement>(null);
+
+  return (
+    <Banderole>
+      <Banderole.Pane>
+        <ComponentA ref={ref}>
+      </Banderole.Pane>
+      <ComponentB>
+    </Banderole>
+  )
+};
+```
+
+Under the hood the library needs to attach a ref to the immediate children. This overwrites any existing refs which will not be populated/called. This limitation may go away in a future release.

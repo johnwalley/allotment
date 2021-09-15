@@ -8,7 +8,7 @@
   },
   "main": "./dist/legacy.js",
   "module": "./dist/module.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/types/src/index.d.ts",
   "keywords": [
     "react",
     "split"
@@ -19,7 +19,7 @@
   "files": [
     "dist/*.js",
     "dist/*.css",
-    "dist/**/*.d.ts"
+    "dist/types/src/**/*.d.ts"
   ],
   "dependencies": {
     "classnames": "^2.3.0",
@@ -73,7 +73,7 @@
     "react-dom": "^17.0.0"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && yarn build-types",
     "build-storybook": "build-storybook",
     "build-types": "tsc",
     "storybook": "start-storybook -p 6006",
