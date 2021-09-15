@@ -3,9 +3,24 @@ import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./banderole.module.css";
-import { range } from "./helpers/range";
 import { Orientation } from "./sash";
 import { Sizing, SplitView } from "./split-view/split-view";
+
+export type PaneProps = {
+  children: React.ReactNode;
+};
+
+export const Pane = forwardRef<HTMLDivElement, BanderoleProps>(
+  ({ children }: PaneProps, ref) => {
+    return (
+      <div ref={ref} className={styles.pane}>
+        {children}
+      </div>
+    );
+  }
+);
+
+Pane.displayName = "Banderole.Pane";
 
 export type BanderoleProps = {
   children: React.ReactNode;
@@ -15,7 +30,7 @@ export type BanderoleProps = {
   vertical?: boolean;
 };
 
-export const Banderole = forwardRef(
+const Banderole = forwardRef<HTMLElement, BanderoleProps>(
   (
     {
       children,
@@ -23,8 +38,8 @@ export const Banderole = forwardRef(
       minSize = 30,
       snap = false,
       vertical = false,
-    }: BanderoleProps,
-    ref: React.Ref<HTMLElement>
+    },
+    ref
   ) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const splitViewContainerRef = useRef<HTMLDivElement>(null!);
@@ -135,8 +150,6 @@ export const Banderole = forwardRef(
               >
                 {React.cloneElement(child, {
                   ref: (el: HTMLElement | null) => {
-                    (child as any).ref(el); // TODO: Perhaps more robust to use a custom prop to pass the ref down?
-
                     if (el) {
                       viewRef.current[child.key ?? index] = el;
                     } else {
@@ -154,3 +167,5 @@ export const Banderole = forwardRef(
 );
 
 Banderole.displayName = "Banderole";
+
+export default Object.assign(Banderole, { Pane: Pane });

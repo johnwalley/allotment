@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 
-import { Banderole, BanderoleProps } from "../src/banderole";
+import Banderole, { BanderoleProps } from "../src/banderole";
 import { range } from "../src/helpers/range";
 import styles from "./banderole.stories.module.css";
 
@@ -32,7 +32,7 @@ const Template: Story<BanderoleProps & { numViews: number }> = ({
     >
       <Banderole {...args}>
         {views.map((view) => (
-          <div key={view.id} className={styles.content}>
+          <div key={view.id} ref={console.log} className={styles.content}>
             {view.id}
           </div>
         ))}
@@ -64,13 +64,25 @@ export const Nested: Story = (args) => {
       }}
     >
       <Banderole minSize={100} snap>
-        <div className={styles.content}>
-          <Banderole vertical minSize={100}>
-            <div className={styles.content}>One</div>
-            <div className={styles.content}>Two</div>
-          </Banderole>
-        </div>
-        <div className={styles.content}>Three</div>
+        <Banderole.Pane>
+          <div className={styles.content}>
+            <Banderole vertical minSize={100}>
+              <Banderole.Pane>
+                <div ref={console.log} className={styles.content}>
+                  One
+                </div>
+              </Banderole.Pane>
+              <Banderole.Pane>
+                <div ref={console.log} className={styles.content}>
+                  Two
+                </div>
+              </Banderole.Pane>
+            </Banderole>
+          </div>
+        </Banderole.Pane>
+        <Banderole.Pane>
+          <div className={styles.content}>Three</div>
+        </Banderole.Pane>
       </Banderole>
     </div>
   );

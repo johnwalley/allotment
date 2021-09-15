@@ -1,1 +1,1 @@
-export { Banderole } from "./banderole";
+export { default as Banderole } from "./banderole";
