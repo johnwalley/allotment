@@ -21,15 +21,7 @@ const Template: Story<BanderoleProps & { numViews: number }> = ({
   const views = range(0, numViews).map((n) => ({ id: String(n) }));
 
   return (
-    <div
-      className={styles.container}
-      style={{
-        width: "80vw",
-        height: "80vh",
-        resize: "both",
-        overflow: "scroll",
-      }}
-    >
+    <div className={styles.container}>
       <Banderole {...args}>
         {views.map((view) => (
           <div key={view.id} ref={console.log} className={styles.content}>
@@ -49,20 +41,13 @@ Vertical.args = {
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {
-  numViews: 2,
+  numViews: 3,
   vertical: false,
 };
 
 export const Nested: Story = (args) => {
   return (
-    <div
-      style={{
-        width: "80vw",
-        height: "80vh",
-        resize: "both",
-        overflow: "scroll",
-      }}
-    >
+    <div className={styles.container}>
       <Banderole minSize={100} snap>
         <Banderole.Pane>
           <div className={styles.content}>

@@ -1,14 +1,18 @@
 .container {
   background: rgb(30, 30, 30);
-  height: 100%;
+  font-family: sans-serif;
+  height: 80vh;
+  overflow: scroll;
+  resize: both;
+  width: 80vw;
 }
 
 .content {
-  color: rgb(255, 255, 255);
+  align-items: center;
   background: rgb(30, 30, 30);
-  height: 100%;
+  color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
   justify-content: center;
 }
