@@ -59,7 +59,7 @@ import React from "react";
 import { Allotment } from "allotment";
 
 export const App = () => {
-  const ref = React.useRef<HTMLElement>(null);
+  const ref = React.useRef(null);
 
   return (
     <Allotment>
