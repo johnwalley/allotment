@@ -1,12 +1,12 @@
 import { Meta, Story } from "@storybook/react";
 
-import Banderole, { BanderoleProps } from "../src/banderole";
+import Allotment, { AllotmentProps } from "../src/allotment";
 import { range } from "../src/helpers/range";
-import styles from "./banderole.stories.module.css";
+import styles from "./allotment.stories.module.css";
 
 export default {
   title: "Basic",
-  Component: Banderole,
+  Component: Allotment,
   argTypes: {
     numViews: {
       control: { type: "number", min: 1, max: 10, step: 1 },
@@ -14,7 +14,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<BanderoleProps & { numViews: number }> = ({
+const Template: Story<AllotmentProps & { numViews: number }> = ({
   numViews,
   ...args
 }) => {
@@ -22,13 +22,13 @@ const Template: Story<BanderoleProps & { numViews: number }> = ({
 
   return (
     <div className={styles.container}>
-      <Banderole {...args}>
+      <Allotment {...args}>
         {views.map((view) => (
           <div key={view.id} ref={console.log} className={styles.content}>
             {view.id}
           </div>
         ))}
-      </Banderole>
+      </Allotment>
     </div>
   );
 };
@@ -48,27 +48,27 @@ Horizontal.args = {
 export const Nested: Story = (args) => {
   return (
     <div className={styles.container}>
-      <Banderole minSize={100} snap>
-        <Banderole.Pane>
+      <Allotment minSize={100} snap>
+        <Allotment.Pane>
           <div className={styles.content}>
-            <Banderole vertical minSize={100}>
-              <Banderole.Pane>
+            <Allotment vertical minSize={100}>
+              <Allotment.Pane>
                 <div ref={console.log} className={styles.content}>
                   One
                 </div>
-              </Banderole.Pane>
-              <Banderole.Pane>
+              </Allotment.Pane>
+              <Allotment.Pane>
                 <div ref={console.log} className={styles.content}>
                   Two
                 </div>
-              </Banderole.Pane>
-            </Banderole>
+              </Allotment.Pane>
+            </Allotment>
           </div>
-        </Banderole.Pane>
-        <Banderole.Pane>
+        </Allotment.Pane>
+        <Allotment.Pane>
           <div className={styles.content}>Three</div>
-        </Banderole.Pane>
-      </Banderole>
+        </Allotment.Pane>
+      </Allotment>
     </div>
   );
 };

@@ -1,1 +1,1 @@
-export { default as Banderole } from "./banderole";
+export { default as Allotment } from "./allotment";

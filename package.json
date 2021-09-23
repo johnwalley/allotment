@@ -1,5 +1,5 @@
 {
-  "name": "banderole",
+  "name": "allotment",
   "version": "1.0.0",
   "description": "React split-pane component",
   "exports": {
@@ -13,7 +13,7 @@
     "react",
     "split"
   ],
-  "repository": "https://github.com/johnwalley/banderole.git",
+  "repository": "https://github.com/johnwalley/allotment.git",
   "author": "johnwalley <john@walley.org.uk>",
   "license": "MIT",
   "files": [

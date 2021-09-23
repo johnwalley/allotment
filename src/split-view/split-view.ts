@@ -1,7 +1,7 @@
 import EventEmitter from "eventemitter3";
 import clamp from "lodash.clamp";
 
-import styles from "../banderole.module.css";
+import styles from "../allotment.module.css";
 import { Disposable } from "../helpers/disposable";
 import { range } from "../helpers/range";
 import {

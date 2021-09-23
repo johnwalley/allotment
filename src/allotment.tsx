@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { forwardRef, useEffect, useMemo, useRef } from "react";
 import useResizeObserver from "use-resize-observer";
 
-import styles from "./banderole.module.css";
+import styles from "./allotment.module.css";
 import { Orientation } from "./sash";
 import { Sizing, SplitView } from "./split-view/split-view";
 
@@ -10,7 +10,7 @@ export type PaneProps = {
   children: React.ReactNode;
 };
 
-export const Pane = forwardRef<HTMLDivElement, BanderoleProps>(
+export const Pane = forwardRef<HTMLDivElement, AllotmentProps>(
   ({ children }: PaneProps, ref) => {
     return (
       <div ref={ref} className={styles.pane}>
@@ -20,9 +20,9 @@ export const Pane = forwardRef<HTMLDivElement, BanderoleProps>(
   }
 );
 
-Pane.displayName = "Banderole.Pane";
+Pane.displayName = "Allotment.Pane";
 
-export type BanderoleProps = {
+export type AllotmentProps = {
   children: React.ReactNode;
   maxSize?: number;
   minSize?: number;
@@ -30,13 +30,13 @@ export type BanderoleProps = {
   vertical?: boolean;
 };
 
-const Banderole = ({
+const Allotment = ({
   children,
   maxSize = Infinity,
   minSize = 30,
   snap = false,
   vertical = false,
-}: BanderoleProps) => {
+}: AllotmentProps) => {
   const containerRef = useRef<HTMLDivElement>(null!);
   const previousKeys = useRef<string[]>([]);
   const splitViewContainerRef = useRef<HTMLDivElement>(null!);
@@ -158,6 +158,6 @@ const Banderole = ({
   );
 };
 
-Banderole.displayName = "Banderole";
+Allotment.displayName = "Allotment";
 
-export default Object.assign(Banderole, { Pane: Pane });
+export default Object.assign(Allotment, { Pane: Pane });

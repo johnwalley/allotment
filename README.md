@@ -1,9 +1,9 @@
 <p align="center">
-    <a href="https://github.com/johnwalley/banderole">
-    <img src="./assets/logo.png" alt="Logo" width="640" height="120" style="image-rendering: pixelated;">
+    <a href="https://github.com/johnwalley/allotment">
+    <img src="./assets/logo.svg" alt="Logo" height="120">
   </a>
   
-  <h3 align="center">Banderole</h3>
+  <h3 align="center">Allotment</h3>
 
   <p align="center">
     React split-pane component.
@@ -20,11 +20,11 @@
 
 ## Getting Started
 
-Banderole is available from npm.
+Allotment is available from npm.
 
 ### Prerequisites
 
-Banderole has `react` and `react-dom` as peer dependencies.
+Allotment has `react` and `react-dom` as peer dependencies.
 
 ```sh
 yarn add react react-dom
@@ -33,41 +33,41 @@ yarn add react react-dom
 ### Installation
 
 ```sh
-yarn add banderole
+yarn add allotment
 ```
 
 ## Usage
 
 ```jsx
 import React from "react";
-import { Banderole } from "banderole";
+import { Allotment } from "allotment";
 
 export const App = () => (
-  <Banderole>
+  <Allotment>
     <ComponentA>
     <ComponentB>
-  </Banderole>
+  </Allotment>
 );
 ```
 
 ### Passing a `ref` to a child
 
-If you need to attach a ref to a child component then you must wrap it in a `Banderole.Pane` component.
+If you need to attach a ref to a child component then you must wrap it in a `Allotment.Pane` component.
 
 ```jsx
 import React from "react";
-import { Banderole } from "banderole";
+import { Allotment } from "allotment";
 
 export const App = () => {
   const ref = React.useRef<HTMLElement>(null);
 
   return (
-    <Banderole>
-      <Banderole.Pane>
+    <Allotment>
+      <Allotment.Pane>
         <ComponentA ref={ref}>
-      </Banderole.Pane>
+      </Allotment.Pane>
       <ComponentB>
-    </Banderole>
+    </Allotment>
   )
 };
 ```
