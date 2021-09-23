@@ -76,7 +76,8 @@
     "build": "rollup -c && yarn build-types",
     "build-storybook": "build-storybook",
     "build-types": "tsc",
-    "storybook": "start-storybook -p 6006",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "standard-version",
+    "storybook": "start-storybook -p 6006"
   }
 }
