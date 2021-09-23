@@ -11,7 +11,9 @@
   "types": "./dist/types/src/index.d.ts",
   "keywords": [
     "react",
-    "split"
+    "split",
+    "pane",
+    "view"
   ],
   "repository": "https://github.com/johnwalley/allotment.git",
   "author": "johnwalley <john@walley.org.uk>",
