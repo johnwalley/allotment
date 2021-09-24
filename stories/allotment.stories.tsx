@@ -47,7 +47,7 @@ Horizontal.args = {
 
 export const Nested: Story = (args) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
       <Allotment minSize={100} snap>
         <Allotment.Pane>
           <div className={styles.content}>
