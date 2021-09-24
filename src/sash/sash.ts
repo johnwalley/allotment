@@ -105,8 +105,6 @@ export class Sash extends EventEmitter implements Disposable {
 
     const cssStyleDeclaration = getComputedStyle(document.documentElement);
 
-    console.log(cssStyleDeclaration.getPropertyValue("--sash-size").trim());
-
     const sashSize = parseInt(
       cssStyleDeclaration.getPropertyValue("--sash-size").trim(),
       10
