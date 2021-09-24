@@ -2,10 +2,6 @@
   --separator-border: #838383;
 }
 
-.pane {
-  height: 100%;
-}
-
 .splitView {
   height: 100%;
   position: relative;

@@ -45,28 +45,33 @@ Horizontal.args = {
   vertical: false,
 };
 
-export const Nested: Story = (args) => {
+export const Nested: Story = () => {
   return (
     <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
-      <Allotment minSize={100} snap>
-        <Allotment.Pane>
+      <Allotment minSize={100}>
+        <Allotment.Pane maxSize={400}>
           <div className={styles.content}>
-            <Allotment vertical minSize={100}>
-              <Allotment.Pane>
+            <Allotment vertical>
+              <Allotment.Pane minSize={100}>
                 <div ref={console.log} className={styles.content}>
                   One
                 </div>
               </Allotment.Pane>
-              <Allotment.Pane>
+              <Allotment.Pane snap>
                 <div ref={console.log} className={styles.content}>
                   Two
+                </div>
+              </Allotment.Pane>
+              <Allotment.Pane snap>
+                <div ref={console.log} className={styles.content}>
+                  Three
                 </div>
               </Allotment.Pane>
             </Allotment>
           </div>
         </Allotment.Pane>
         <Allotment.Pane>
-          <div className={styles.content}>Three</div>
+          <div className={styles.content}>Four</div>
         </Allotment.Pane>
       </Allotment>
     </div>
