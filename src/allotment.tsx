@@ -42,7 +42,6 @@ const Allotment = ({
   const splitViewContainerRef = useRef<HTMLDivElement>(null!);
   const splitViewRef = useRef<SplitView | null>(null);
   const splitViewViewRef = useRef<Record<string, HTMLElement>>({});
-  const viewRef = useRef<Record<string, HTMLElement>>({});
 
   const childrenArray = useMemo(
     () => React.Children.toArray(children).filter(React.isValidElement),
@@ -129,27 +128,21 @@ const Allotment = ({
             return null;
           }
 
+          const key = child.key ?? index;
+
           return (
             <div
-              key={child.key ?? index}
+              key={key}
               ref={(el: HTMLElement | null) => {
                 if (el) {
-                  splitViewViewRef.current[child.key ?? index] = el;
+                  splitViewViewRef.current[key] = el;
                 } else {
-                  delete splitViewViewRef.current[child.key ?? index];
+                  delete splitViewViewRef.current[key];
                 }
               }}
               className={classNames(styles.splitViewView)}
             >
-              {React.cloneElement(child, {
-                ref: (el: HTMLElement | null) => {
-                  if (el) {
-                    viewRef.current[child.key ?? index] = el;
-                  } else {
-                    delete viewRef.current[child.key ?? index];
-                  }
-                },
-              })}
+              {child}
             </div>
           );
         })}

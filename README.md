@@ -49,27 +49,3 @@ export const App = () => (
   </Allotment>
 );
 ```
-
-### Passing a `ref` to a child
-
-If you need to attach a ref to a child component then you must wrap it in a `Allotment.Pane` component.
-
-```jsx
-import React from "react";
-import { Allotment } from "allotment";
-
-export const App = () => {
-  const ref = React.useRef(null);
-
-  return (
-    <Allotment>
-      <Allotment.Pane>
-        <ComponentA ref={ref}>
-      </Allotment.Pane>
-      <ComponentB>
-    </Allotment>
-  )
-};
-```
-
-Under the hood the library needs to attach a ref to the immediate children. This overwrites any existing refs which will not be populated/called. This limitation may go away in a future release.
