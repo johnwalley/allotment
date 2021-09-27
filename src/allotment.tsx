@@ -10,12 +10,15 @@ function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
-export type PaneProps = {
-  children: React.ReactNode;
+export interface CommonProps {
   maxSize?: number;
   minSize?: number;
   snap?: boolean;
-};
+}
+
+export type PaneProps = {
+  children: React.ReactNode;
+} & CommonProps;
 
 export const Pane = forwardRef<HTMLDivElement, PaneProps>(
   ({ children }: PaneProps, ref) => {
@@ -31,11 +34,8 @@ Pane.displayName = "Allotment.Pane";
 
 export type AllotmentProps = {
   children: React.ReactNode;
-  maxSize?: number;
-  minSize?: number;
-  snap?: boolean;
   vertical?: boolean;
-};
+} & CommonProps;
 
 const Allotment = ({
   children,
@@ -49,9 +49,7 @@ const Allotment = ({
   const splitViewContainerRef = useRef<HTMLDivElement>(null!);
   const splitViewRef = useRef<SplitView | null>(null);
   const splitViewViewRef = useRef<Record<string, HTMLElement>>({});
-  const splitViewPropsRef = useRef<
-    Record<string, { maxSize?: number; minSize?: number; snap?: boolean }>
-  >({});
+  const splitViewPropsRef = useRef<Record<string, CommonProps>>({});
 
   const childrenArray = useMemo(
     () => React.Children.toArray(children).filter(React.isValidElement),
