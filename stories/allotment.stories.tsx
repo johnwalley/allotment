@@ -1,4 +1,6 @@
 import { Meta, Story } from "@storybook/react";
+import { debounce } from "lodash";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import Allotment, { AllotmentProps } from "../src/allotment";
 import { range } from "../src/helpers/range";
@@ -14,6 +16,17 @@ export default {
   },
 } as Meta;
 
+export const Simple: Story = () => {
+  return (
+    <div className={styles.container}>
+      <Allotment vertical>
+        <div className={styles.content}>Pane 1</div>
+        <div className={styles.content}>Pane 2</div>
+      </Allotment>
+    </div>
+  );
+};
+
 const Template: Story<AllotmentProps & { numViews: number }> = ({
   numViews,
   ...args
@@ -24,7 +37,7 @@ const Template: Story<AllotmentProps & { numViews: number }> = ({
     <div className={styles.container}>
       <Allotment {...args}>
         {views.map((view) => (
-          <div key={view.id} ref={console.log} className={styles.content}>
+          <div key={view.id} className={styles.content}>
             {view.id}
           </div>
         ))}
@@ -45,6 +58,54 @@ Horizontal.args = {
   vertical: false,
 };
 
+export const PersistSizes: Story<{ numViews: number; vertical: boolean }> = ({
+  numViews,
+  vertical,
+}) => {
+  const views = range(0, numViews).map((n) => ({ id: String(n) }));
+  const [hasReadFromLocalStorage, setHasReadFromLocalStorage] = useState(false);
+
+  const [sizes, setSizes] = useState<number[]>();
+
+  const handleChange = useMemo(
+    () =>
+      debounce((sizes) => {
+        console.log("write_sizes", sizes);
+        localStorage.setItem("sizes", JSON.stringify(sizes));
+      }, 100),
+    []
+  );
+
+  useEffect(() => {
+    const value = localStorage.getItem("sizes");
+
+    if (value) {
+      console.log("read_sizes", JSON.parse(value));
+      setSizes(JSON.parse(value));
+    }
+
+    setHasReadFromLocalStorage(true);
+  }, []);
+
+  return (
+    <div className={styles.container}>
+      {hasReadFromLocalStorage && (
+        <Allotment vertical={vertical} onChange={handleChange} sizes={sizes}>
+          {views.map((view) => (
+            <div key={view.id} className={styles.content}>
+              {view.id}
+            </div>
+          ))}
+        </Allotment>
+      )}
+    </div>
+  );
+};
+PersistSizes.args = {
+  numViews: 3,
+  vertical: true,
+};
+
 export const Nested: Story = () => {
   return (
     <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
@@ -53,19 +114,13 @@ export const Nested: Story = () => {
           <div className={styles.content}>
             <Allotment vertical>
               <Allotment.Pane minSize={100}>
-                <div ref={console.log} className={styles.content}>
-                  One
-                </div>
+                <div className={styles.content}>One</div>
               </Allotment.Pane>
               <Allotment.Pane snap>
-                <div ref={console.log} className={styles.content}>
-                  Two
-                </div>
+                <div className={styles.content}>Two</div>
               </Allotment.Pane>
               <Allotment.Pane snap>
-                <div ref={console.log} className={styles.content}>
-                  Three
-                </div>
+                <div className={styles.content}>Three</div>
               </Allotment.Pane>
             </Allotment>
           </div>

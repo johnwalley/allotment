@@ -199,6 +199,7 @@ export class SplitView extends EventEmitter implements Disposable {
   private sashDragState: SashDragState | undefined;
   private proportionalLayout: boolean;
   private readonly getSashOrthogonalSize: { (): number } | undefined;
+  private readonly onDidChange: ((sizes: number[]) => void) | undefined;
 
   private _startSnappingEnabled = true;
   get startSnappingEnabled(): boolean {
@@ -229,13 +230,18 @@ export class SplitView extends EventEmitter implements Disposable {
   constructor(
     container: HTMLElement,
     viewContainer: HTMLElement,
-    options: SplitViewOptions = {}
+    options: SplitViewOptions = {},
+    onDidChange?: (sizes: number[]) => void
   ) {
     super();
 
     this.orientation = options.orientation ?? Orientation.Vertical;
     this.proportionalLayout = options.proportionalLayout ?? true;
     this.getSashOrthogonalSize = options.getSashOrthogonalSize;
+
+    if (onDidChange) {
+      this.onDidChange = onDidChange;
+    }
 
     this.sashContainer = document.createElement("div");
 
@@ -256,6 +262,10 @@ export class SplitView extends EventEmitter implements Disposable {
 
         this.addView(container, view, size, index, true);
       }
+
+      // Initialize content size and proportions for first layout
+      this.contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
+      this.saveProportions();
     }
   }
 
@@ -736,6 +746,8 @@ export class SplitView extends EventEmitter implements Disposable {
       viewItem.layout(offset);
       offset += viewItem.size;
     }
+
+    this.onDidChange?.(this.viewItems.map((viewItem) => viewItem.size));
 
     // Layout sashes
     this.sashItems.forEach((item) => item.sash.layout());

@@ -1,18 +1,27 @@
 import classNames from "classnames";
-import React, { forwardRef, useEffect, useMemo, useRef } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react";
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
 import { Orientation } from "./sash";
-import { Sizing, SplitView } from "./split-view/split-view";
+import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
 export interface CommonProps {
+  /** Maximum size of each element */
   maxSize?: number;
+  /** Minimum size of each element */
   minSize?: number;
+  /** Enable snap to zero size */
   snap?: boolean;
 }
 
@@ -34,35 +43,76 @@ Pane.displayName = "Allotment.Pane";
 
 export type AllotmentProps = {
   children: React.ReactNode;
+  /** Initial size of each element */
+  sizes?: number[];
+  /** Direction to split */
   vertical?: boolean;
+  /** Callback on drag */
+  onChange?: (sizes: number[]) => void;
 } & CommonProps;
 
 const Allotment = ({
   children,
   maxSize = Infinity,
   minSize = 30,
+  sizes,
   snap = false,
   vertical = false,
+  onChange,
 }: AllotmentProps) => {
   const containerRef = useRef<HTMLDivElement>(null!);
   const previousKeys = useRef<string[]>([]);
   const splitViewContainerRef = useRef<HTMLDivElement>(null!);
+  const splitViewPropsRef = useRef(new Map<React.Key, CommonProps>());
   const splitViewRef = useRef<SplitView | null>(null);
-  const splitViewViewRef = useRef<Record<string, HTMLElement>>({});
-  const splitViewPropsRef = useRef<Record<string, CommonProps>>({});
+  const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
 
   const childrenArray = useMemo(
     () => React.Children.toArray(children).filter(React.isValidElement),
     [children]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    let initializeSizes = true;
+
+    if (sizes && splitViewViewRef.current.size !== sizes.length) {
+      initializeSizes = false;
+
+      console.warn(
+        `Expected ${sizes.length} children based on sizes but found ${splitViewViewRef.current.size}`
+      );
+    }
+
+    if (initializeSizes && sizes) {
+      previousKeys.current = childrenArray.map((child) => child.key as string);
+    }
+
+    const options: SplitViewOptions = {
+      orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
+      ...(initializeSizes &&
+        sizes && {
+          descriptor: {
+            size: sizes.reduce((a, b) => a + b, 0),
+            views: sizes.map((size, index) => ({
+              container: [...splitViewViewRef.current.values()][index],
+              size: size,
+              view: {
+                element: document.createElement("div"),
+                minimumSize: minSize,
+                maximumSize: maxSize,
+                snap: snap,
+                layout: () => {},
+              },
+            })),
+          },
+        }),
+    };
+
     splitViewRef.current = new SplitView(
       containerRef.current,
       splitViewContainerRef.current,
-      {
-        orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
-      }
+      options,
+      onChange
     );
 
     splitViewRef.current.on("sashreset", (_index: number) => {
@@ -74,7 +124,8 @@ const Allotment = ({
     return () => {
       that.dispose();
     };
-  }, [vertical]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Add or remove views as number of children changes
@@ -92,10 +143,10 @@ const Allotment = ({
     });
 
     for (const key of enter) {
-      const props = splitViewPropsRef.current[key];
+      const props = splitViewPropsRef.current.get(key);
 
       splitViewRef.current?.addView(
-        splitViewViewRef.current[key],
+        splitViewViewRef.current.get(key)!,
         {
           element: document.createElement("div"),
           minimumSize: props?.minSize ?? minSize,
@@ -110,7 +161,7 @@ const Allotment = ({
     if (enter.length > 0 || exit.length > 0) {
       previousKeys.current = keys;
     }
-  }, [children, childrenArray, maxSize, minSize, snap]);
+  }, [childrenArray, maxSize, minSize, snap]);
 
   useResizeObserver({
     ref: containerRef,
@@ -136,18 +187,19 @@ const Allotment = ({
             return null;
           }
 
-          const key = child.key ?? index;
+          // toArray flattens and converts nulls to non-null keys
+          const key = child.key!;
 
           if (isPane(child)) {
-            splitViewPropsRef.current[key] = child.props;
+            splitViewPropsRef.current.set(key, child.props);
 
             return React.cloneElement(child, {
               key: key,
               ref: (el: HTMLElement | null) => {
                 if (el) {
-                  splitViewViewRef.current[key] = el;
+                  splitViewViewRef.current.set(key, el);
                 } else {
-                  delete splitViewViewRef.current[key];
+                  splitViewViewRef.current.delete(key);
                 }
               },
             });
@@ -157,9 +209,9 @@ const Allotment = ({
                 key={key}
                 ref={(el: HTMLElement | null) => {
                   if (el) {
-                    splitViewViewRef.current[key] = el;
+                    splitViewViewRef.current.set(key, el);
                   } else {
-                    delete splitViewViewRef.current[key];
+                    splitViewViewRef.current.delete(key);
                   }
                 }}
               >
