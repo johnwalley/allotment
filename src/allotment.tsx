@@ -39,7 +39,6 @@ const Allotment = ({
 }: AllotmentProps) => {
   const containerRef = useRef<HTMLDivElement>(null!);
   const previousKeys = useRef<string[]>([]);
-  const splitViewContainerRef = useRef<HTMLDivElement>(null!);
   const splitViewRef = useRef<SplitView | null>(null);
   const splitViewViewRef = useRef<Record<string, HTMLElement>>({});
 
@@ -49,13 +48,9 @@ const Allotment = ({
   );
 
   useEffect(() => {
-    splitViewRef.current = new SplitView(
-      containerRef.current,
-      splitViewContainerRef.current,
-      {
-        orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
-      }
-    );
+    splitViewRef.current = new SplitView(containerRef.current, {
+      orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
+    });
 
     splitViewRef.current.on("sashreset", (_index: number) => {
       splitViewRef.current?.distributeViewSizes();
@@ -122,7 +117,7 @@ const Allotment = ({
         styles.separatorBorder
       )}
     >
-      <div ref={splitViewContainerRef} className={styles.splitViewContainer}>
+      <div className={styles.splitViewContainer}>
         {React.Children.toArray(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return null;
@@ -140,7 +135,6 @@ const Allotment = ({
                   delete splitViewViewRef.current[key];
                 }
               }}
-              className={classNames(styles.splitViewView)}
             >
               {child}
             </div>
