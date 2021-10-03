@@ -92,6 +92,7 @@ export class Sash extends EventEmitter implements Disposable {
 
     this.el = document.createElement("div");
     this.el.classList.add(styles.sash);
+    this.el.dataset.testid = "sash";
     container.append(this.el);
 
     if (isMacintosh) {
