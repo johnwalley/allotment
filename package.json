@@ -1,6 +1,6 @@
 {
   "name": "allotment",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "React split-pane component",
   "exports": {
     ".": "./dist/modern.js",
@@ -46,6 +46,7 @@
     "@storybook/addon-essentials": "6.3.8",
     "@storybook/addon-links": "6.3.8",
     "@storybook/react": "6.3.8",
+    "@testing-library/dom": "^8.7.1",
     "@types/jest": "^27.0.2",
     "@types/lodash.clamp": "4.0.6",
     "@types/lodash.debounce": "4.0.6",
@@ -80,6 +81,7 @@
     "build-types": "tsc",
     "prepare": "husky install",
     "release": "standard-version",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "test": "jest"
   }
 }

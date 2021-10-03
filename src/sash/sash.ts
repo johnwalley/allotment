@@ -92,6 +92,7 @@ export class Sash extends EventEmitter implements Disposable {
 
     this.el = document.createElement("div");
     this.el.classList.add(styles.sash);
+    this.el.dataset.testid = "sash";
     container.append(this.el);
 
     if (isMacintosh) {
@@ -103,7 +104,14 @@ export class Sash extends EventEmitter implements Disposable {
     this.el.addEventListener("mouseenter", this.onMouseEnter);
     this.el.addEventListener("mouseleave", this.onMouseLeave);
 
-    this.size = 4;
+    const cssStyleDeclaration = getComputedStyle(document.documentElement);
+
+    const sashSize = parseInt(
+      cssStyleDeclaration.getPropertyValue("--sash-size").trim(),
+      10
+    );
+
+    this.size = isNaN(sashSize) ? 4 : sashSize;
 
     this.hidden = false;
     this.layoutProvider = layoutProvider;

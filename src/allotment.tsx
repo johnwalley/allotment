@@ -62,7 +62,6 @@ const Allotment = ({
 }: AllotmentProps) => {
   const containerRef = useRef<HTMLDivElement>(null!);
   const previousKeys = useRef<string[]>([]);
-  const splitViewContainerRef = useRef<HTMLDivElement>(null!);
   const splitViewPropsRef = useRef(new Map<React.Key, CommonProps>());
   const splitViewRef = useRef<SplitView | null>(null);
   const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
@@ -110,7 +109,6 @@ const Allotment = ({
 
     splitViewRef.current = new SplitView(
       containerRef.current,
-      splitViewContainerRef.current,
       options,
       onChange
     );
@@ -181,7 +179,7 @@ const Allotment = ({
         styles.separatorBorder
       )}
     >
-      <div ref={splitViewContainerRef} className={styles.splitViewContainer}>
+      <div className={styles.splitViewContainer}>
         {React.Children.toArray(children).map((child, index) => {
           if (!React.isValidElement(child)) {
             return null;
