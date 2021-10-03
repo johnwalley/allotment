@@ -72,6 +72,9 @@ abstract class ViewItem {
     this.container = container;
     this.view = view;
 
+    this.container.classList.add(styles.splitViewView);
+    this.container.dataset.testid = "split-view-view";
+
     if (typeof size === "number") {
       this._size = size;
       this._cachedVisibleSize = undefined;
@@ -226,11 +229,7 @@ export class SplitView extends EventEmitter implements Disposable {
     this.updateSashEnablement();
   }
 
-  constructor(
-    container: HTMLElement,
-    viewContainer: HTMLElement,
-    options: SplitViewOptions = {}
-  ) {
+  constructor(container: HTMLElement, options: SplitViewOptions = {}) {
     super();
 
     this.orientation = options.orientation ?? Orientation.Vertical;
