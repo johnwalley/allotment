@@ -1,6 +1,7 @@
 [![CI status](https://github.com/johnwalley/allotment/actions/workflows/node.js.yml/badge.svg)](https://github.com/johnwalley/allotment/actions/workflows/node.js.yml)
 [![GitHub license](https://img.shields.io/npm/l/allotment?style=plastic)](https://github.com/johnwalley/allotment/blob/main/LICENSE)
 [![NPM](https://img.shields.io/npm/v/allotment?style=plastic&color=green)](https://npmjs.com/package/allotment/)
+[![Netlify Status](https://img.shields.io/netlify/17b280b3-d81d-4576-a58d-b7ccc2e66d7c?color=green&style=plastic)](https://allotment-storybook.netlify.app/)
 
 <p align="center">
     <a href="https://github.com/johnwalley/allotment">
