@@ -46,6 +46,7 @@ yarn add allotment
 ```jsx
 import React from "react";
 import { Allotment } from "allotment";
+import "allotment/dist/style.css";
 
 export const App = () => (
   <Allotment>
@@ -54,3 +55,9 @@ export const App = () => (
   </Allotment>
 );
 ```
+
+## Frequently asked questions
+
+### Next.js
+
+If you get an error when importing allotment in a Next.js project consider [not including the module server-side](https://nextjs.org/docs/advanced-features/dynamic-import#with-no-ssr). Allotment currently only works in a browser. It might be possible to produce sensible results server-side in the future so create an issue requesting this is interested.
