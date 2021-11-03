@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Allotment, { AllotmentProps } from "../src/allotment";
 import { range } from "../src/helpers/range";
