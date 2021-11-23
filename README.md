@@ -56,6 +56,20 @@ export const App = () => (
 );
 ```
 
+### Styling
+
+Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling.
+You can customize the following default variables.
+
+```css
+:root {
+  --focus-border: #007fd4;
+  --sash-size: 8px;
+  --sash-hover-size: 4px;
+  --separator-border: #838383;
+}
+```
+
 ## Frequently asked questions
 
 ### Next.js
