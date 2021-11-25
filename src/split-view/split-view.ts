@@ -372,6 +372,10 @@ export class SplitView extends EventEmitter implements Disposable {
     if (!skipLayout) {
       this.relayout();
     }
+
+    if (!skipLayout && typeof size !== "number" && size.type === "distribute") {
+      this.distributeViewSizes();
+    }
   }
 
   public removeView(index: number, sizing?: Sizing): View {
