@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/johnwalley/allotment/compare/v1.2.0...v1.2.1) (2021-11-25)
+
+### Bug Fixes
+
+- distribute space event when adding a pane ([cb38ce9](https://github.com/johnwalley/allotment/commit/cb38ce9e71227b8825b42d0ee6a9e5c7b59fb540))
+
 ## [1.2.0](https://github.com/johnwalley/allotment/compare/v1.1.0...v1.2.0) (2021-10-03)
 
 ### Features
