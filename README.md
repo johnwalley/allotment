@@ -23,6 +23,10 @@
 - **Industry standard look and feel:** Like VS Code's split view implementation? You're in luck! This component is derived from the same codebase.
 - **Dynamic:** Want to declaratively add and remove panes? We've got you covered.
 
+## Examples
+
+You can find examples of using the library [here](https://allotment-storybook.netlify.app/).
+
 ## Getting Started
 
 Allotment is available from npm.
