@@ -74,6 +74,30 @@ You can customize the following default variables.
 }
 ```
 
+### Programmatic control
+
+You can use a ref to get access to the Allotment component instance and call its reset method manually:
+
+```jsx
+const ref = React.useRef(ref);
+
+return (
+  <div>
+    <button
+      onClick={() => {
+        ref.current.reset();
+      }}
+    >
+      Reset
+    </button>
+    <Allotment ref={ref}>
+      <div />
+      <div />
+    </Allotment>
+  </div>
+);
+```
+
 ## Frequently asked questions
 
 ### Next.js
