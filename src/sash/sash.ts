@@ -2,7 +2,7 @@ import EventEmitter from "eventemitter3";
 import debounce from "lodash.debounce";
 
 import { Disposable } from "../helpers/disposable";
-import { isMacintosh } from "../helpers/platform";
+import { isIOS, isMacintosh } from "../helpers/platform";
 import styles from "./sash.module.css";
 
 export interface SashOptions {
@@ -111,7 +111,7 @@ export class Sash extends EventEmitter implements Disposable {
       10
     );
 
-    this.size = isNaN(sashSize) ? 4 : sashSize;
+    this.size = isIOS ? 20 : isNaN(sashSize) ? 4 : sashSize;
 
     this.hidden = false;
     this.layoutProvider = layoutProvider;
