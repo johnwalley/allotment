@@ -90,7 +90,11 @@ export const PersistSizes: Story<{ numViews: number; vertical: boolean }> = ({
   return (
     <div className={styles.container}>
       {hasReadFromLocalStorage && (
-        <Allotment vertical={vertical} onChange={handleChange} sizes={sizes}>
+        <Allotment
+          vertical={vertical}
+          onChange={handleChange}
+          defaultSizes={sizes}
+        >
           {views.map((view) => (
             <div key={view.id} className={styles.content}>
               {view.id}

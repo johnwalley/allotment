@@ -43,7 +43,14 @@ Pane.displayName = "Allotment.Pane";
 
 export type AllotmentProps = {
   children: React.ReactNode;
-  /** Initial size of each element */
+  /**
+   * Initial size of each element
+   */
+  defaultSizes?: number[];
+  /**
+   * Initial size of each element
+   * @deprecated Use {@link AllotmentProps.defaultSizes defaultSizes} instead
+   */
   sizes?: number[];
   /** Direction to split */
   vertical?: boolean;
@@ -56,6 +63,7 @@ const Allotment = ({
   maxSize = Infinity,
   minSize = 30,
   sizes,
+  defaultSizes = sizes,
   snap = false,
   vertical = false,
   onChange,
@@ -66,6 +74,10 @@ const Allotment = ({
   const splitViewRef = useRef<SplitView | null>(null);
   const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
 
+  if (process.env.NODE_ENV !== "production" && sizes) {
+    console.warn(`Prop sizes is deprecated. Please use defaultSizes instead.`);
+  }
+
   const childrenArray = useMemo(
     () => React.Children.toArray(children).filter(React.isValidElement),
     [children]
@@ -74,25 +86,25 @@ const Allotment = ({
   useLayoutEffect(() => {
     let initializeSizes = true;
 
-    if (sizes && splitViewViewRef.current.size !== sizes.length) {
+    if (defaultSizes && splitViewViewRef.current.size !== defaultSizes.length) {
       initializeSizes = false;
 
       console.warn(
-        `Expected ${sizes.length} children based on sizes but found ${splitViewViewRef.current.size}`
+        `Expected ${defaultSizes.length} children based on sizes but found ${splitViewViewRef.current.size}`
       );
     }
 
-    if (initializeSizes && sizes) {
+    if (initializeSizes && defaultSizes) {
       previousKeys.current = childrenArray.map((child) => child.key as string);
     }
 
     const options: SplitViewOptions = {
       orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
       ...(initializeSizes &&
-        sizes && {
+        defaultSizes && {
           descriptor: {
-            size: sizes.reduce((a, b) => a + b, 0),
-            views: sizes.map((size, index) => ({
+            size: defaultSizes.reduce((a, b) => a + b, 0),
+            views: defaultSizes.map((size, index) => ({
               container: [...splitViewViewRef.current.values()][index],
               size: size,
               view: {
