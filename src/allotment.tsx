@@ -46,7 +46,14 @@ export type AllotmentHandle = { reset: () => void };
 
 export type AllotmentProps = {
   children: React.ReactNode;
-  /** Initial size of each element */
+  /**
+   * Initial size of each element
+   */
+  defaultSizes?: number[];
+  /**
+   * Initial size of each element
+   * @deprecated Use {@link AllotmentProps.defaultSizes defaultSizes} instead
+   */
   sizes?: number[];
   /** Direction to split */
   vertical?: boolean;
@@ -61,6 +68,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       maxSize = Infinity,
       minSize = 30,
       sizes,
+      defaultSizes = sizes,
       snap = false,
       vertical = false,
       onChange,
@@ -72,6 +80,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     const splitViewPropsRef = useRef(new Map<React.Key, CommonProps>());
     const splitViewRef = useRef<SplitView | null>(null);
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
+
+    if (process.env.NODE_ENV !== "production" && sizes) {
+      console.warn(
+        `Prop sizes is deprecated. Please use defaultSizes instead.`
+      );
+    }
 
     const childrenArray = useMemo(
       () => React.Children.toArray(children).filter(React.isValidElement),
