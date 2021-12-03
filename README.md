@@ -75,6 +75,8 @@ If you want more control over the behaviour of the individual panes you can use 
 
 ## Allotment props
 
+All properties are optional.
+
 ### defaultSizes
 
 An array of initial sizes of the panes. If the sum of the sizes differs from the size of the container then the panes' sizes will be scaled proportionally.
