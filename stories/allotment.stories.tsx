@@ -1,8 +1,8 @@
 import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import Allotment, { AllotmentProps } from "../src/allotment";
+import Allotment, { AllotmentHandle, AllotmentProps } from "../src/allotment";
 import { range } from "../src/helpers/range";
 import styles from "./allotment.stories.module.css";
 
@@ -90,7 +90,11 @@ export const PersistSizes: Story<{ numViews: number; vertical: boolean }> = ({
   return (
     <div className={styles.container}>
       {hasReadFromLocalStorage && (
-        <Allotment vertical={vertical} onChange={handleChange} sizes={sizes}>
+        <Allotment
+          vertical={vertical}
+          onChange={handleChange}
+          defaultSizes={sizes}
+        >
           {views.map((view) => (
             <div key={view.id} className={styles.content}>
               {view.id}
@@ -181,3 +185,26 @@ export const Closable: Story = () => {
   );
 };
 Closable.args = {};
+
+export const Reset: Story<AllotmentProps> = (args) => {
+  const ref = useRef<AllotmentHandle>(null!);
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          ref.current.reset();
+        }}
+      >
+        Reset
+      </button>
+      <div className={styles.container}>
+        <Allotment ref={ref} {...args}>
+          <div className={styles.content}>One</div>
+          <div className={styles.content}>Two</div>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Reset.args = {};

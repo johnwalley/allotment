@@ -23,6 +23,10 @@
 - **Industry standard look and feel:** Like VS Code's split view implementation? You're in luck! This component is derived from the same codebase.
 - **Dynamic:** Want to declaratively add and remove panes? We've got you covered.
 
+## Examples
+
+You can find examples of using the library [here](https://allotment-storybook.netlify.app/).
+
 ## Getting Started
 
 Allotment is available from npm.
@@ -56,7 +60,67 @@ export const App = () => (
 );
 ```
 
-### Styling
+If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
+
+```jsx
+<Allotment >
+  <Allotment.Pane minSize={200}>
+    <ComponentA>
+  </Allotment.Pane>
+  <Allotment.Pane snap>
+    <ComponentB>
+  </Allotment.Pane>
+</Allotment>
+```
+
+## Allotment props
+
+### defaultSizes
+
+An array of initial sizes of the panes. If the sum of the sizes differs from the size of the container then the panes' sizes will be scaled proportionally.
+
+```jsx
+<Allotment defaultSizes={[100, 200]}>
+  <div />
+  <div />
+</Allotment>
+```
+
+### maxSize (default: `Infinity`)
+
+Maximum size of any pane.
+
+### minSize (default: `30`)
+
+Minimum size of any pane.
+
+### snap
+
+Enable snap to zero for all panes.
+
+### vertical (default: `false`)
+
+Direction to split. If true then the panes will be stacked vertically, otherwise they will be stacked horizontally.
+
+### onChange
+
+Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback.
+
+## Allotment.Pane props
+
+### maxSize
+
+Maximum size of this pane. Overrides `maxSize` set on parent component.
+
+### minSize
+
+Minimum size of this pane. Overrides `minSize` set on parent component.
+
+### snap
+
+Enable snap to zero for this pane. Overrides `snap` set on parent component.
+
+## Styling
 
 Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling.
 You can customize the following default variables.
@@ -68,6 +132,30 @@ You can customize the following default variables.
   --sash-hover-size: 4px;
   --separator-border: #838383;
 }
+```
+
+### Programmatic control
+
+You can use a ref to get access to the Allotment component instance and call its reset method manually:
+
+```jsx
+const ref = React.useRef(ref);
+
+return (
+  <div>
+    <button
+      onClick={() => {
+        ref.current.reset();
+      }}
+    >
+      Reset
+    </button>
+    <Allotment ref={ref}>
+      <div />
+      <div />
+    </Allotment>
+  </div>
+);
 ```
 
 ## Frequently asked questions
