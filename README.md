@@ -96,7 +96,7 @@ Maximum size of any pane.
 
 Minimum size of any pane.
 
-### snap
+### snap (default: `false`)
 
 Enable snap to zero for all panes.
 
@@ -106,7 +106,7 @@ Direction to split. If true then the panes will be stacked vertically, otherwise
 
 ### onChange
 
-Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback.
+Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback. Passed an array of numbers.
 
 ## Allotment.Pane props
 
