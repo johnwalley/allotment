@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/johnwalley/allotment/compare/v1.2.0...v1.3.0) (2021-12-03)
+
+### Features
+
+- add defaultSizes prop and deprecate sizes prop ([#72](https://github.com/johnwalley/allotment/issues/72)) ([2ece9ce](https://github.com/johnwalley/allotment/commit/2ece9ce2f8142d1c28b5394743d73f920f4489e2))
+- add imperative reset method ([#69](https://github.com/johnwalley/allotment/issues/69)) ([aceb88f](https://github.com/johnwalley/allotment/commit/aceb88f2de9e454dfce2ccd35bc4e23c8d8e3cb7))
+
+### Bug Fixes
+
+- distribute space evenly when adding a pane ([#58](https://github.com/johnwalley/allotment/issues/58)) ([6feb767](https://github.com/johnwalley/allotment/commit/6feb767cb8a289f5c167ae981b435e4c02f50215))
+
 ## [1.2.0](https://github.com/johnwalley/allotment/compare/v1.1.0...v1.2.0) (2021-10-03)
 
 ### Features
