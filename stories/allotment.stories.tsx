@@ -138,6 +138,54 @@ export const Nested: Story = () => {
 };
 Nested.args = {};
 
+export const Closable: Story = () => {
+  const [panes, setPanes] = useState([0, 1, 2]);
+
+  return (
+    <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
+      <Allotment vertical minSize={100}>
+        <Allotment.Pane maxSize={400}>
+          <div className={styles.content}>
+            <Allotment>
+              {panes.map((pane) => (
+                <Allotment.Pane key={pane}>
+                  <div className={styles.content}>{pane}</div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <div style={{ position: "absolute", top: 0, right: 0 }}>
+                      <button
+                        onClick={() =>
+                          setPanes((panes) => {
+                            const newPanes = [...panes];
+                            newPanes.splice(pane, 1);
+                            return newPanes;
+                          })
+                        }
+                      >
+                        x
+                      </button>
+                    </div>
+                  </div>
+                </Allotment.Pane>
+              ))}
+            </Allotment>
+          </div>
+        </Allotment.Pane>
+        <Allotment.Pane>
+          <div className={styles.content}>Four</div>
+        </Allotment.Pane>
+      </Allotment>
+    </div>
+  );
+};
+Closable.args = {};
+
 export const Reset: Story<AllotmentProps> = (args) => {
   const ref = useRef<AllotmentHandle>(null!);
 
@@ -159,3 +207,4 @@ export const Reset: Story<AllotmentProps> = (args) => {
     </div>
   );
 };
+Reset.args = {};
