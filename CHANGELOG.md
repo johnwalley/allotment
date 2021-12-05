@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/johnwalley/allotment/compare/v1.4.0...v1.4.1) (2021-12-05)
+
+### Bug Fixes
+
+- defaultSizes needs to be used ([#77](https://github.com/johnwalley/allotment/issues/77)) ([cd2eae1](https://github.com/johnwalley/allotment/commit/cd2eae13116af91af00846e212452287cfb7c607))
+
 ## [1.4.0](https://github.com/johnwalley/allotment/compare/v1.3.0...v1.4.0) (2021-12-05)
 
 ### Features
