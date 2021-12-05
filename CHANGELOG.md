@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/johnwalley/allotment/compare/v1.3.0...v1.4.0) (2021-12-05)
+
+### Features
+
+- increase sash size on touch devices ([#66](https://github.com/johnwalley/allotment/issues/66)) ([20ab7d9](https://github.com/johnwalley/allotment/commit/20ab7d93ab836af864a67531b3c5c1244e23a3b8))
+
 ## [1.3.0](https://github.com/johnwalley/allotment/compare/v1.2.0...v1.3.0) (2021-12-03)
 
 ### Features
