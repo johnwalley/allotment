@@ -118,10 +118,10 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       const options: SplitViewOptions = {
         orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
         ...(initializeSizes &&
-          sizes && {
+          defaultSizes && {
             descriptor: {
-              size: sizes.reduce((a, b) => a + b, 0),
-              views: sizes.map((size, index) => ({
+              size: defaultSizes.reduce((a, b) => a + b, 0),
+              views: defaultSizes.map((size, index) => ({
                 container: [...splitViewViewRef.current.values()][index],
                 size: size,
                 view: {

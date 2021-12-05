@@ -208,3 +208,15 @@ export const Reset: Story<AllotmentProps> = (args) => {
   );
 };
 Reset.args = {};
+
+export const DefaultSize: Story = () => {
+  return (
+    <div className={styles.container}>
+      <Allotment defaultSizes={[200, 400]}>
+        <div className={styles.content}>div1</div>
+        <div className={styles.content}>div2</div>
+      </Allotment>
+    </div>
+  );
+};
+DefaultSize.args = {};
