@@ -101,15 +101,18 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     useLayoutEffect(() => {
       let initializeSizes = true;
 
-      if (sizes && splitViewViewRef.current.size !== sizes.length) {
+      if (
+        defaultSizes &&
+        splitViewViewRef.current.size !== defaultSizes.length
+      ) {
         initializeSizes = false;
 
         console.warn(
-          `Expected ${sizes.length} children based on sizes but found ${splitViewViewRef.current.size}`
+          `Expected ${defaultSizes.length} children based on defaultSizes but found ${splitViewViewRef.current.size}`
         );
       }
 
-      if (initializeSizes && sizes) {
+      if (initializeSizes && defaultSizes) {
         previousKeys.current = childrenArray.map(
           (child) => child.key as string
         );
