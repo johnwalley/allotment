@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/johnwalley/allotment/compare/v1.4.2...v1.5.0) (2021-12-26)
+
+### Features
+
+- enable sash size to be customised in code ([#101](https://github.com/johnwalley/allotment/issues/101)) ([f177e48](https://github.com/johnwalley/allotment/commit/f177e48bdf4e12533b8e5dcdd76cd94802c83710))
+
 ### [1.4.2](https://github.com/johnwalley/allotment/compare/v1.4.1...v1.4.2) (2021-12-24)
 
 ### Bug Fixes
