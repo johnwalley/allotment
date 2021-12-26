@@ -29,7 +29,7 @@ export enum SashState {
   Enabled = "ENABLED",
 }
 
-let globalSize = 4;
+let globalSize = isIOS ? 20 : 8;
 
 const onDidChangeGlobalSize = new EventEmitter();
 

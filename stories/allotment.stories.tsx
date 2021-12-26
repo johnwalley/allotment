@@ -2,7 +2,12 @@ import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import Allotment, { AllotmentHandle, AllotmentProps } from "../src/allotment";
+import {
+  Allotment,
+  AllotmentHandle,
+  AllotmentProps,
+  setSashSize,
+} from "../src";
 import { range } from "../src/helpers/range";
 import styles from "./allotment.stories.module.css";
 
@@ -223,7 +228,11 @@ DefaultSize.args = {
   defaultSizes: [200, 400],
 };
 
-export const ConfigureSash: Story<AllotmentProps> = (args) => {
+export const ConfigureSash: Story = ({ sashSize, ...args }) => {
+  useEffect(() => {
+    setSashSize(sashSize);
+  }, [sashSize]);
+
   return (
     <div className={styles.container}>
       <Allotment {...args}>
