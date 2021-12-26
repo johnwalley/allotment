@@ -52,6 +52,12 @@ export interface HorizontalSashLayoutProvider extends SashLayoutProvider {
   getHorizontalSashWidth?(sash: Sash): number;
 }
 
+/**
+ * The {@link Sash} is the UI component which allows the user to resize other
+ * components. It's usually an invisible horizontal or vertical line which, when
+ * hovered, becomes highlighted and can be dragged along the perpendicular dimension
+ * to its direction.
+ */
 export class Sash extends EventEmitter implements Disposable {
   private el: HTMLElement;
   private layoutProvider: SashLayoutProvider;
