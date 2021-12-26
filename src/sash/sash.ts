@@ -123,7 +123,7 @@ export class Sash extends EventEmitter implements Disposable {
     } else {
       this.size = globalSize;
 
-      onDidChangeGlobalSize.addListener("onDidChangeGlobalSize", (size) => {
+      onDidChangeGlobalSize.on("onDidChangeGlobalSize", (size) => {
         this.size = size;
         this.layout();
       });
