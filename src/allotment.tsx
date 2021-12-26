@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import clamp from "lodash.clamp";
 import React, {
   forwardRef,
   useEffect,
@@ -10,7 +11,8 @@ import React, {
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
-import { Orientation } from "./sash";
+import { isIOS } from "./helpers/platform";
+import { Orientation, setGlobalSashSize } from "./sash";
 import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
@@ -51,6 +53,11 @@ export type AllotmentProps = {
    */
   defaultSizes?: number[];
   /**
+   * Controls the feedback area size in pixels of the dragging area in between panes.
+   * Set it to a larger value if you feel it's hard to resize panes using the mouse.
+   */
+  sashSize?: number;
+  /**
    * Initial size of each element
    * @deprecated Use {@link AllotmentProps.defaultSizes defaultSizes} instead
    */
@@ -67,6 +74,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       children,
       maxSize = Infinity,
       minSize = 30,
+      sashSize = isIOS ? 20 : 4,
       sizes,
       defaultSizes = sizes,
       snap = false,
@@ -192,6 +200,19 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         previousKeys.current = keys;
       }
     }, [childrenArray, maxSize, minSize, snap]);
+
+    useEffect(() => {
+      const size = clamp(sashSize, 4, 20);
+      const hoverSize = clamp(sashSize, 1, 8);
+
+      document.documentElement.style.setProperty("--sash-size", size + "px");
+      document.documentElement.style.setProperty(
+        "--sash-hover-size",
+        hoverSize + "px"
+      );
+
+      setGlobalSashSize(size);
+    }, [sashSize]);
 
     useResizeObserver({
       ref: containerRef,

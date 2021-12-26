@@ -209,14 +209,30 @@ export const Reset: Story<AllotmentProps> = (args) => {
 };
 Reset.args = {};
 
-export const DefaultSize: Story = () => {
+export const DefaultSize: Story<AllotmentProps> = (args) => {
   return (
     <div className={styles.container}>
-      <Allotment defaultSizes={[200, 400]}>
+      <Allotment {...args}>
         <div className={styles.content}>div1</div>
         <div className={styles.content}>div2</div>
       </Allotment>
     </div>
   );
 };
-DefaultSize.args = {};
+DefaultSize.args = {
+  defaultSizes: [200, 400],
+};
+
+export const ConfigureSash: Story<AllotmentProps> = (args) => {
+  return (
+    <div className={styles.container}>
+      <Allotment {...args}>
+        <div className={styles.content}>div1</div>
+        <div className={styles.content}>div2</div>
+      </Allotment>
+    </div>
+  );
+};
+ConfigureSash.args = {
+  sashSize: 4,
+};

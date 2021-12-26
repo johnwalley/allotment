@@ -29,6 +29,15 @@ export enum SashState {
   Enabled = "ENABLED",
 }
 
+let globalSize = 4;
+
+const onDidChangeGlobalSize = new EventEmitter();
+
+export function setGlobalSashSize(size: number): void {
+  globalSize = size;
+  onDidChangeGlobalSize.emit("onDidChangeGlobalSize", size);
+}
+
 export interface SashLayoutProvider {}
 
 export interface VerticalSashLayoutProvider extends SashLayoutProvider {
@@ -46,7 +55,6 @@ export interface HorizontalSashLayoutProvider extends SashLayoutProvider {
 export class Sash extends EventEmitter implements Disposable {
   private el: HTMLElement;
   private layoutProvider: SashLayoutProvider;
-  private hidden: boolean;
   private orientation!: Orientation;
   private size: number;
   private hoverDelay = 300;
@@ -104,16 +112,23 @@ export class Sash extends EventEmitter implements Disposable {
     this.el.addEventListener("mouseenter", this.onMouseEnter);
     this.el.addEventListener("mouseleave", this.onMouseLeave);
 
-    const cssStyleDeclaration = getComputedStyle(document.documentElement);
+    if (typeof options.size === "number") {
+      this.size = options.size;
 
-    const sashSize = parseInt(
-      cssStyleDeclaration.getPropertyValue("--sash-size").trim(),
-      10
-    );
+      if (options.orientation === Orientation.Vertical) {
+        this.el.style.width = `${this.size}px`;
+      } else {
+        this.el.style.height = `${this.size}px`;
+      }
+    } else {
+      this.size = globalSize;
 
-    this.size = isIOS ? 20 : isNaN(sashSize) ? 4 : sashSize;
+      onDidChangeGlobalSize.addListener("onDidChangeGlobalSize", (size) => {
+        this.size = size;
+        this.layout();
+      });
+    }
 
-    this.hidden = false;
     this.layoutProvider = layoutProvider;
 
     this.orientation = options.orientation ?? Orientation.Vertical;
@@ -227,18 +242,6 @@ export class Sash extends EventEmitter implements Disposable {
           horizontalProvider.getHorizontalSashWidth(this) + "px";
       }
     }
-  }
-
-  show(): void {
-    this.hidden = false;
-    this.el.style.removeProperty("display");
-    this.el.setAttribute("aria-hidden", "false");
-  }
-
-  hide(): void {
-    this.hidden = true;
-    this.el.style.display = "none";
-    this.el.setAttribute("aria-hidden", "true");
   }
 
   public dispose(): void {
