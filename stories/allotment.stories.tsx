@@ -2,7 +2,12 @@ import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import Allotment, { AllotmentHandle, AllotmentProps } from "../src/allotment";
+import {
+  Allotment,
+  AllotmentHandle,
+  AllotmentProps,
+  setSashSize,
+} from "../src";
 import { range } from "../src/helpers/range";
 import styles from "./allotment.stories.module.css";
 
@@ -209,14 +214,34 @@ export const Reset: Story<AllotmentProps> = (args) => {
 };
 Reset.args = {};
 
-export const DefaultSize: Story = () => {
+export const DefaultSize: Story<AllotmentProps> = (args) => {
   return (
     <div className={styles.container}>
-      <Allotment defaultSizes={[200, 400]}>
+      <Allotment {...args}>
         <div className={styles.content}>div1</div>
         <div className={styles.content}>div2</div>
       </Allotment>
     </div>
   );
 };
-DefaultSize.args = {};
+DefaultSize.args = {
+  defaultSizes: [200, 400],
+};
+
+export const ConfigureSash: Story = ({ sashSize, ...args }) => {
+  useEffect(() => {
+    setSashSize(sashSize);
+  }, [sashSize]);
+
+  return (
+    <div className={styles.container}>
+      <Allotment {...args}>
+        <div className={styles.content}>div1</div>
+        <div className={styles.content}>div2</div>
+      </Allotment>
+    </div>
+  );
+};
+ConfigureSash.args = {
+  sashSize: 4,
+};

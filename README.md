@@ -130,11 +130,11 @@ You can customize the following default variables.
 ```css
 :root {
   --focus-border: #007fd4;
-  --sash-size: 8px;
-  --sash-hover-size: 4px;
   --separator-border: #838383;
 }
 ```
+
+To control the feedback area size of the dragging area between panes you can call the exported `setSashSize` function with desired size in pixels. Set it to a larger value if you feel it's hard to resize the panes using the mouse. On touch devices the feedback area is always set to 20 pixels
 
 ### Programmatic control
 

@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import clamp from "lodash.clamp";
 import React, {
   forwardRef,
   useEffect,
@@ -10,7 +11,7 @@ import React, {
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
-import { Orientation } from "./sash";
+import { Orientation, setGlobalSashSize } from "./sash";
 import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
@@ -257,5 +258,18 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 );
 
 Allotment.displayName = "Allotment";
+
+export function setSashSize(sashSize: number) {
+  const size = clamp(sashSize, 4, 20);
+  const hoverSize = clamp(sashSize, 1, 8);
+
+  document.documentElement.style.setProperty("--sash-size", size + "px");
+  document.documentElement.style.setProperty(
+    "--sash-hover-size",
+    hoverSize + "px"
+  );
+
+  setGlobalSashSize(size);
+}
 
 export default Object.assign(Allotment, { Pane: Pane });
