@@ -4,6 +4,7 @@
 
 .splitView {
   height: 100%;
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
@@ -29,7 +30,6 @@
 .splitView > .splitViewContainer > .splitViewView {
   position: absolute;
   white-space: initial;
-  overflow: hidden;
 }
 
 .splitView > .splitViewContainer > .splitViewView:not(.visible) {

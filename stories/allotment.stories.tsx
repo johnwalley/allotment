@@ -1,4 +1,5 @@
 import { Meta, Story } from "@storybook/react";
+import classNames from "classnames";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -245,3 +246,21 @@ export const ConfigureSash: Story = ({ sashSize, ...args }) => {
 ConfigureSash.args = {
   sashSize: 4,
 };
+
+export const PaneClassName: Story = (args) => {
+  return (
+    <div className={styles.container}>
+      <Allotment {...args}>
+        <Allotment.Pane className={styles.customPane}>
+          <div className={classNames(styles.content, styles.customPaneContent)}>
+            div1
+          </div>
+        </Allotment.Pane>
+        <Allotment.Pane>
+          <div className={styles.content}>div2</div>
+        </Allotment.Pane>
+      </Allotment>
+    </div>
+  );
+};
+PaneClassName.args = {};

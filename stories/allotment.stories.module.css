@@ -16,3 +16,15 @@
   height: 100%;
   justify-content: center;
 }
+
+.customPane {
+  background-color: red;
+  overflow: scroll;
+}
+
+.customPaneContent {
+  width: 200px;
+  background: rgb(222, 222, 222);
+  color: rgb(30, 30, 30);
+  overflow: visible;
+}
