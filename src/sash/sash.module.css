@@ -114,12 +114,12 @@
 
 .sash.vertical:before {
   width: var(--sash-hover-size);
-  left: calc(50% - var(--sash-hover-size) / 2);
+  left: calc(50% - (var(--sash-hover-size) / 2));
 }
 
 .sash.horizontal:before {
   height: var(--sash-hover-size);
-  top: calc(50% - var(--sash-hover-size) / 2);
+  top: calc(50% - (var(--sash-hover-size) / 2));
 }
 
 .sash.hover:before,

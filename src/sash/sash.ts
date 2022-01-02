@@ -2,7 +2,7 @@ import EventEmitter from "eventemitter3";
 import debounce from "lodash.debounce";
 
 import { Disposable } from "../helpers/disposable";
-import { isMacintosh } from "../helpers/platform";
+import { isIOS, isMacintosh } from "../helpers/platform";
 import styles from "./sash.module.css";
 
 export interface SashOptions {
@@ -29,6 +29,15 @@ export enum SashState {
   Enabled = "ENABLED",
 }
 
+let globalSize = isIOS ? 20 : 8;
+
+const onDidChangeGlobalSize = new EventEmitter();
+
+export function setGlobalSashSize(size: number): void {
+  globalSize = size;
+  onDidChangeGlobalSize.emit("onDidChangeGlobalSize", size);
+}
+
 export interface SashLayoutProvider {}
 
 export interface VerticalSashLayoutProvider extends SashLayoutProvider {
@@ -43,10 +52,15 @@ export interface HorizontalSashLayoutProvider extends SashLayoutProvider {
   getHorizontalSashWidth?(sash: Sash): number;
 }
 
+/**
+ * The {@link Sash} is the UI component which allows the user to resize other
+ * components. It's usually an invisible horizontal or vertical line which, when
+ * hovered, becomes highlighted and can be dragged along the perpendicular dimension
+ * to its direction.
+ */
 export class Sash extends EventEmitter implements Disposable {
   private el: HTMLElement;
   private layoutProvider: SashLayoutProvider;
-  private hidden: boolean;
   private orientation!: Orientation;
   private size: number;
   private hoverDelay = 300;
@@ -104,16 +118,23 @@ export class Sash extends EventEmitter implements Disposable {
     this.el.addEventListener("mouseenter", this.onMouseEnter);
     this.el.addEventListener("mouseleave", this.onMouseLeave);
 
-    const cssStyleDeclaration = getComputedStyle(document.documentElement);
+    if (typeof options.size === "number") {
+      this.size = options.size;
 
-    const sashSize = parseInt(
-      cssStyleDeclaration.getPropertyValue("--sash-size").trim(),
-      10
-    );
+      if (options.orientation === Orientation.Vertical) {
+        this.el.style.width = `${this.size}px`;
+      } else {
+        this.el.style.height = `${this.size}px`;
+      }
+    } else {
+      this.size = globalSize;
 
-    this.size = isNaN(sashSize) ? 4 : sashSize;
+      onDidChangeGlobalSize.on("onDidChangeGlobalSize", (size) => {
+        this.size = size;
+        this.layout();
+      });
+    }
 
-    this.hidden = false;
     this.layoutProvider = layoutProvider;
 
     this.orientation = options.orientation ?? Orientation.Vertical;
@@ -227,18 +248,6 @@ export class Sash extends EventEmitter implements Disposable {
           horizontalProvider.getHorizontalSashWidth(this) + "px";
       }
     }
-  }
-
-  show(): void {
-    this.hidden = false;
-    this.el.style.removeProperty("display");
-    this.el.setAttribute("aria-hidden", "false");
-  }
-
-  hide(): void {
-    this.hidden = true;
-    this.el.style.display = "none";
-    this.el.setAttribute("aria-hidden", "true");
   }
 
   public dispose(): void {
