@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/johnwalley/allotment/compare/v1.5.0...v1.5.1) (2022-01-02)
+
+### Bug Fixes
+
+- set css custom variables if touch device detected ([2eb8c38](https://github.com/johnwalley/allotment/commit/2eb8c387009f013bd0440b83f4a41a53277c76ff))
+
 ## [1.5.0](https://github.com/johnwalley/allotment/compare/v1.4.2...v1.5.0) (2021-12-26)
 
 ### Features
