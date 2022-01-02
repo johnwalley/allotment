@@ -17,14 +17,14 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: "React-based",
-    image: "/img/undraw_docusaurus_mountain.svg",
+    image: "/img/react_icon.svg",
     description: (
       <>Integrate effortlessly into your existing React-based application.</>
     ),
   },
   {
     title: "Industry standard look and feel",
-    image: "/img/undraw_docusaurus_tree.svg",
+    image: "/img/vscode.svg",
     description: (
       <>
         Like VS Code's split view implementation? You're in luck! This component
@@ -34,7 +34,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "Dynamic",
-    image: "/img/undraw_docusaurus_react.svg",
+    image: "/img/dynamic.svg",
     description: (
       <>Want to declaratively add and remove panes? We've got you covered.</>
     ),

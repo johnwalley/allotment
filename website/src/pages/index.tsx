@@ -30,10 +30,7 @@ function HomepageHeader() {
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="React split-pane component"
-    >
+    <Layout title={siteConfig.title} description="React split-pane component">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
