@@ -214,6 +214,39 @@ export const Reset: Story<AllotmentProps> = (args) => {
 };
 Reset.args = {};
 
+export const Resize: Story<AllotmentProps> = (args) => {
+  const [sizes, setSizes] = useState([100, 50]);
+  const ref = useRef<AllotmentHandle>(null!);
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          const w = Math.floor(100 * Math.random());
+
+          const sizes = [w, 100 - w];
+          ref.current.resize(sizes);
+          setSizes(sizes);
+        }}
+      >
+        Resize
+      </button>
+      <pre>
+        <code>{JSON.stringify(sizes)}</code>
+      </pre>
+      <div className={styles.container}>
+        <Allotment ref={ref} {...args}>
+          <div className={styles.content}>One</div>
+          <div className={styles.content}>Two</div>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Resize.args = {
+  minSize: 0,
+};
+
 export const DefaultSize: Story<AllotmentProps> = (args) => {
   return (
     <div className={styles.container}>
