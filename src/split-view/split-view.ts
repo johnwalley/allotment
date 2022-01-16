@@ -17,47 +17,131 @@ interface SashEvent {
   readonly current: number;
 }
 
+/**
+ * When adding or removing views, distribute the delta space among
+ * all other views.
+ */
 export type DistributeSizing = { type: "distribute" };
+
+/**
+ * When adding or removing views, split the delta space with another
+ * specific view, indexed by the provided `index`.
+ */
 export type SplitSizing = { type: "split"; index: number };
+
+/**
+ * When adding or removing views, assume the view is invisible.
+ */
 export type InvisibleSizing = { type: "invisible"; cachedVisibleSize: number };
+
+/**
+ * When adding or removing views, the sizing provides fine grained
+ * control over how other views get resized.
+ */
 export type Sizing = DistributeSizing | SplitSizing | InvisibleSizing;
 
 export namespace Sizing {
+  /**
+   * When adding or removing views, distribute the delta space among
+   * all other views.
+   */
   export const Distribute: DistributeSizing = { type: "distribute" };
+
+  /**
+   * When adding or removing views, split the delta space with another
+   * specific view, indexed by the provided `index`.
+   */
   export function Split(index: number): SplitSizing {
     return { type: "split", index };
   }
+
+  /**
+   * When adding or removing views, assume the view is invisible.
+   */
   export function Invisible(cachedVisibleSize: number): InvisibleSizing {
     return { type: "invisible", cachedVisibleSize };
   }
 }
 
+/** A descriptor for a {@link SplitView} instance. */
 export interface SplitViewDescriptor {
+  /** The layout size of the {@link SplitView}. */
   size: number;
+
+  /**
+   * Descriptors for each {@link View view}.
+   */
   views: {
+    /** Whether the {@link View view} is visible. */
     visible?: boolean;
+
+    /** The size of the {@link View view}. */
     size: number;
+
     container: HTMLElement;
     view: View;
   }[];
 }
 
 export interface SplitViewOptions {
+  /** Which axis the views align on. */
   readonly orientation?: Orientation;
-  readonly orthogonalStartSash?: Sash;
-  readonly orthogonalEndSash?: Sash;
-  readonly inverseAltBehavior?: boolean;
+
+  /** Resize each view proportionally when resizing the SplitView. */
   readonly proportionalLayout?: boolean;
+
+  /**
+   * An initial description of this {@link SplitView} instance, allowing
+   * to initialze all views within the ctor.
+   */
   readonly descriptor?: SplitViewDescriptor;
+
+  /** Override the orthogonal size of sashes. */
   readonly getSashOrthogonalSize?: () => number;
 }
 
+/**
+ * The interface to implement for views within a {@link SplitView}.
+ */
 export interface View {
+  /** The DOM element for this view. */
   readonly element: HTMLElement;
+
+  /**
+   * A minimum size for this view.
+   *
+   * @remarks If none, set it to `0`.
+   */
   readonly minimumSize: number;
+
+  /**
+   * A minimum size for this view.
+   *
+   * @remarks If none, set it to `Number.POSITIVE_INFINITY`.
+   */
   readonly maximumSize: number;
+
+  /**
+   * Whether the view will snap whenever the user reaches its minimum size or
+   * attempts to grow it beyond the minimum size.
+   */
   readonly snap?: boolean;
+
+  /**
+   * This will be called by the {@link SplitView} during layout. A view meant to
+   * pass along the layout information down to its descendants.
+   *
+   * @param size The size of this view, in pixels.
+   * @param offset The offset of this view, relative to the start of the {@link SplitView}.
+   */
   layout(size: number, offset: number): void;
+
+  /**
+   * This will be called by the {@link SplitView} whenever this view is made
+   * visible or hidden.
+   *
+   * @param visible Whether the view becomes visible.
+   */
   setVisible?(visible: boolean): void;
 }
 
@@ -191,8 +275,25 @@ interface SashDragState {
   snapAfter: SashDragSnapState | undefined;
 }
 
+/**
+ * The {@link SplitView} is the UI component which implements a one dimensional
+ * flex-like layout algorithm for a collection of {@link View} instances, which
+ * are essentially HTMLElement instances with the following size constraints:
+ *
+ * - {@link View.minimumSize}
+ * - {@link View.maximumSize}
+ * - {@link View.snap}
+ *
+ * In case the SplitView doesn't have enough size to fit all views, it will overflow
+ * its content with a scrollbar.
+ *
+ * In between each pair of views there will be a {@link Sash} allowing the user
+ * to resize the views, making sure the constraints are respected.
+ */
 export class SplitView extends EventEmitter implements Disposable {
+  /**  This {@link SplitView}'s orientation. */
   readonly orientation: Orientation;
+
   private sashContainer: HTMLElement;
   private size = 0;
   private contentSize = 0;
@@ -208,6 +309,10 @@ export class SplitView extends EventEmitter implements Disposable {
   get startSnappingEnabled(): boolean {
     return this._startSnappingEnabled;
   }
+
+  /**
+   * Enable/disable snapping at the beginning of this {@link SplitView}.
+   */
   set startSnappingEnabled(startSnappingEnabled: boolean) {
     if (this._startSnappingEnabled === startSnappingEnabled) {
       return;
@@ -221,6 +326,10 @@ export class SplitView extends EventEmitter implements Disposable {
   get endSnappingEnabled(): boolean {
     return this._endSnappingEnabled;
   }
+
+  /**
+   * Enable/disable snapping at the end of this {@link SplitView}.
+   */
   set endSnappingEnabled(endSnappingEnabled: boolean) {
     if (this._endSnappingEnabled === endSnappingEnabled) {
       return;
@@ -230,6 +339,7 @@ export class SplitView extends EventEmitter implements Disposable {
     this.updateSashEnablement();
   }
 
+  /** Create a new {@link SplitView} instance. */
   constructor(
     container: HTMLElement,
     options: SplitViewOptions = {},
@@ -250,6 +360,7 @@ export class SplitView extends EventEmitter implements Disposable {
     this.sashContainer.classList.add(styles.sashContainer);
     container.prepend(this.sashContainer); // Should always be first child
 
+    // We have an existing set of view, add them now
     if (options.descriptor) {
       this.size = options.descriptor.size;
 
@@ -271,6 +382,15 @@ export class SplitView extends EventEmitter implements Disposable {
     }
   }
 
+  /**
+   * Add a {@link View view} to this {@link SplitView}.
+   *
+   * @param container The container element.
+   * @param view The view to add.
+   * @param size Either a fixed size, or a dynamic {@link Sizing} strategy.
+   * @param index The index to insert the view on.
+   * @param skipLayout Whether layout should be skipped.
+   */
   public addView(
     container: HTMLElement,
     view: View,
@@ -378,6 +498,12 @@ export class SplitView extends EventEmitter implements Disposable {
     }
   }
 
+  /**
+   * Remove a {@link View view} from this {@link SplitView}.
+   *
+   * @param index The index where the {@link View view} is located.
+   * @param sizing Whether to distribute other {@link View view}'s sizes.
+   */
   public removeView(index: number, sizing?: Sizing): View {
     if (index < 0 || index >= this.viewItems.length) {
       throw new Error("Index out of bounds");
@@ -403,6 +529,11 @@ export class SplitView extends EventEmitter implements Disposable {
     return view;
   }
 
+  /**
+   * Layout the {@link SplitView}.
+   *
+   * @param size The entire size of the {@link SplitView}.
+   */
   public layout(size: number): void {
     const previousSize = Math.max(this.size, this.contentSize);
     this.size = size;
@@ -425,6 +556,12 @@ export class SplitView extends EventEmitter implements Disposable {
     this.layoutViews();
   }
 
+  /**
+   * Resize a {@link View view} within the {@link SplitView}.
+   *
+   * @param index The {@link View view} index.
+   * @param size The {@link View view} size.
+   */
   public resizeView(index: number, size: number): void {
     if (index < 0 || index >= this.viewItems.length) {
       return;
@@ -438,6 +575,9 @@ export class SplitView extends EventEmitter implements Disposable {
     this.relayout();
   }
 
+  /**
+   * Returns the size of a {@link View view}.
+   */
   public getViewSize(index: number): number {
     if (index < 0 || index >= this.viewItems.length) {
       return -1;
@@ -446,6 +586,9 @@ export class SplitView extends EventEmitter implements Disposable {
     return this.viewItems[index].size;
   }
 
+  /**
+   * Distribute the entire {@link SplitView} size among all {@link View views}.
+   */
   public distributeViewSizes(): void {
     const flexibleViewItems: ViewItem[] = [];
     let flexibleSize = 0;

@@ -11,6 +11,7 @@ import React, {
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
+import { isIOS } from "./helpers/platform";
 import { Orientation, setGlobalSashSize } from "./sash";
 import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
 
@@ -202,6 +203,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         }
       },
     });
+
+    useEffect(() => {
+      if (isIOS) {
+        setSashSize(20);
+      }
+    }, []);
 
     return (
       <div

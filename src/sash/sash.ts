@@ -6,7 +6,10 @@ import { isIOS, isMacintosh } from "../helpers/platform";
 import styles from "./sash.module.css";
 
 export interface SashOptions {
+  /** Whether a sash is horizontal or vertical. */
   readonly orientation: Orientation;
+
+  /** The width or height of a vertical or horizontal sash, respectively. */
   readonly size?: number;
 }
 
@@ -23,9 +26,26 @@ export enum Orientation {
 }
 
 export enum SashState {
+  /** Disable any UI interaction. */
   Disabled = "DISABLED",
+
+  /**
+   * Allow dragging down or to the right, depending on the sash orientation.
+   *
+   * Some OSs allow customizing the mouse cursor differently whenever
+   * some resizable component can't be any smaller, but can be larger.
+   */
   Minimum = "MINIMUM",
+
+  /**
+   * Allow dragging up or to the left, depending on the sash orientation.
+   *
+   * Some OSs allow customizing the mouse cursor differently whenever
+   * some resizable component can't be any larger, but can be smaller.
+   */
   Maximum = "MAXIMUM",
+
+  /** Enable dragging. */
   Enabled = "ENABLED",
 }
 
@@ -40,12 +60,14 @@ export function setGlobalSashSize(size: number): void {
 
 export interface SashLayoutProvider {}
 
+/** A vertical sash layout provider provides position and height for a sash. */
 export interface VerticalSashLayoutProvider extends SashLayoutProvider {
   getVerticalSashLeft(sash: Sash): number;
   getVerticalSashTop?(sash: Sash): number;
   getVerticalSashHeight?(sash: Sash): number;
 }
 
+/** A horizontal sash layout provider provides position and width for a sash. */
 export interface HorizontalSashLayoutProvider extends SashLayoutProvider {
   getHorizontalSashTop(sash: Sash): number;
   getHorizontalSashLeft?(sash: Sash): number;
@@ -73,6 +95,11 @@ export class Sash extends EventEmitter implements Disposable {
   get state(): SashState {
     return this._state;
   }
+
+  /**
+   * The state of a sash defines whether it can be interacted with by the user
+   * as well as what mouse cursor to use, when hovered.
+   */
   set state(state: SashState) {
     if (this._state === state) {
       return;
@@ -87,11 +114,26 @@ export class Sash extends EventEmitter implements Disposable {
     this.emit("enablementChange", state);
   }
 
+  /**
+   * Create a new vertical sash.
+   *
+   * @param container A DOM node to append the sash to.
+   * @param verticalLayoutProvider A vertical layout provider.
+   * @param options The options.
+   */
   constructor(
     container: HTMLElement,
     layoutProvider: VerticalSashLayoutProvider,
     options: SashOptions
   );
+
+  /**
+   * Create a new horizontal sash.
+   *
+   * @param container A DOM node to append the sash to.
+   * @param horizontalLayoutProvider A horizontal layout provider.
+   * @param options The options.
+   */
   constructor(
     container: HTMLElement,
     layoutProvider: HorizontalSashLayoutProvider,
@@ -215,6 +257,10 @@ export class Sash extends EventEmitter implements Disposable {
     this.el.classList.remove(styles.hover);
   };
 
+  /**
+   * Layout the sash. The sash will size and position itself
+   * based on its provided {@link SashLayoutProvider layout provider}.
+   */
   public layout(): void {
     if (this.orientation === Orientation.Vertical) {
       const verticalProvider = this
