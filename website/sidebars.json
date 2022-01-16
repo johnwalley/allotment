@@ -1,6 +1,7 @@
 {
   "docs": {
     "Getting Started": ["getting-started"],
-    "Advanced Usage": ["faq"]
+    "API reference": ["overview", "allotment", "pane"],
+    "Examples": ["basic", "horizontal"]
   }
 }
