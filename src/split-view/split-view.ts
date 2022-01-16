@@ -415,7 +415,7 @@ export class SplitView extends EventEmitter implements Disposable {
         ? new VerticalViewItem(container, view, viewSize)
         : new HorizontalViewItem(container, view, viewSize);
 
-    this.viewItems.push(item);
+    this.viewItems.splice(index, 0, item);
 
     if (this.viewItems.length > 1) {
       const sash =
@@ -486,7 +486,7 @@ export class SplitView extends EventEmitter implements Disposable {
 
       const sashItem: SashItem = { sash };
 
-      this.sashItems.push(sashItem);
+      this.sashItems.splice(index - 1, 0, sashItem);
     }
 
     if (!skipLayout) {
