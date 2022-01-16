@@ -1,0 +1,27 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.svg {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(209, 213, 219);
+  border-radius: 0.25rem;
+  border-style: dashed;
+  border-width: 2px;
+  color: rgb(229, 231, 235);
+  height: 100%;
+  width: 100%;
+}

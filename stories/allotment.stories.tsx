@@ -10,6 +10,7 @@ import {
 } from "../src";
 import { range } from "../src/helpers/range";
 import styles from "./allotment.stories.module.css";
+import { Content } from "./content";
 
 export default {
   title: "Basic",
@@ -25,8 +26,12 @@ export const Simple: Story = () => {
   return (
     <div className={styles.container}>
       <Allotment vertical>
-        <div className={styles.content}>Pane 1</div>
-        <div className={styles.content}>Pane 2</div>
+        <div className={styles.content}>
+          <Content />
+        </div>
+        <div className={styles.content}>
+          <Content />
+        </div>
       </Allotment>
     </div>
   );
