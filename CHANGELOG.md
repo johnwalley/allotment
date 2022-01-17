@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/johnwalley/allotment/compare/v1.5.2...v1.6.0) (2022-01-17)
+
+### Features
+
+- separator color which works better on light and dark backgrounds ([a769262](https://github.com/johnwalley/allotment/commit/a769262de79658cda4866edbafe4ffb8e5f0773a))
+
+### Bug Fixes
+
+- footer link ([16ec898](https://github.com/johnwalley/allotment/commit/16ec898731902ccaa9276267dc5f34c78d4e6da5))
+
 ### [1.5.2](https://github.com/johnwalley/allotment/compare/v1.5.1...v1.5.2) (2022-01-16)
 
 ### Bug Fixes
