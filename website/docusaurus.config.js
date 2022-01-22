@@ -26,7 +26,6 @@ const config = {
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
           ],
           sidebarPath: require.resolve("./sidebars.json"),
-          editUrl: "https://github.com/johnwalley/allotment/edit/main/website/",
         },
         pages: {
           remarkPlugins: [require("@docusaurus/remark-plugin-npm2yarn")],

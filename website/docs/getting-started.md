@@ -48,5 +48,3 @@ ReactDOM.render(<App />, document.querySelector("#app"));
 Remember to import the required css: `import "allotment/dist/style.css"`
 
 :::
-
-## Next steps
