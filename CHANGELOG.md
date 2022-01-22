@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [1.6.0](https://github.com/johnwalley/allotment/compare/v1.5.2...v1.6.0) (2022-01-17)
+## [1.7.0](https://github.com/johnwalley/allotment/compare/v1.6.0...v1.7.0) (2022-01-22)
 
 ### Features
 
@@ -10,13 +10,17 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-- footer link ([16ec898](https://github.com/johnwalley/allotment/commit/16ec898731902ccaa9276267dc5f34c78d4e6da5))
+- call cancel hover after pointer up ([#129](https://github.com/johnwalley/allotment/issues/129)) ([b9a6e5f](https://github.com/johnwalley/allotment/commit/b9a6e5f10f89298e9935f14c9d52f63ec8527e2c))
 
-### [1.5.2](https://github.com/johnwalley/allotment/compare/v1.5.1...v1.5.2) (2022-01-16)
+### [1.6.0](https://github.com/johnwalley/allotment/compare/v1.5.2...v1.6.0) (2022-01-16)
 
 ### Bug Fixes
 
 - allow changing order of panes ([cc38223](https://github.com/johnwalley/allotment/commit/cc38223e3f4315f61a50126630170c25ab8b5e1f))
+
+### [1.5.2](https://github.com/johnwalley/allotment/compare/v1.5.1...v1.5.2) (2022-01-15)
+
+This release was published without any updates and should be skipped.
 
 ### [1.5.1](https://github.com/johnwalley/allotment/compare/v1.5.0...v1.5.1) (2022-01-02)
 
