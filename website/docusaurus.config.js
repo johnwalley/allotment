@@ -15,7 +15,6 @@ const config = {
   favicon: "img/favicon.ico",
   organizationName: "johnwalley", // Usually your GitHub org/user name.
   projectName: "allotment", // Usually your repo name.
-
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -26,6 +25,10 @@ const config = {
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
           ],
           sidebarPath: require.resolve("./sidebars.json"),
+        },
+        gtag: {
+          trackingID: "G-DNDF9GXNX9",
+          anonymizeIP: true,
         },
         pages: {
           remarkPlugins: [require("@docusaurus/remark-plugin-npm2yarn")],
