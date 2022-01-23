@@ -180,11 +180,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         }
       });
 
-      for (const key of enter) {
-        const props = splitViewPropsRef.current.get(key);
+      for (const enterKey of enter) {
+        const props = splitViewPropsRef.current.get(enterKey);
 
         splitViewRef.current?.addView(
-          splitViewViewRef.current.get(key)!,
+          splitViewViewRef.current.get(enterKey)!,
           {
             element: document.createElement("div"),
             minimumSize: props?.minSize ?? minSize,
@@ -192,7 +192,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             snap: props?.snap ?? snap,
             layout: () => {},
           },
-          Sizing.Distribute
+          Sizing.Distribute,
+          keys.findIndex((key) => key === enterKey)
         );
       }
 

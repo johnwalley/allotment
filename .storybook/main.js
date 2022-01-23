@@ -5,7 +5,11 @@ module.exports = {
     "../stories/**/*.stories.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)",
   ],
-  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "storybook-dark-mode",
+  ],
   webpackFinal: async (baseConfig, options) => {
     // Modify or replace config. Mutating the original reference object can cause unexpected bugs.
     const { module = {} } = baseConfig;

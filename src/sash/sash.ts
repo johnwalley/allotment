@@ -226,7 +226,7 @@ export class Sash extends EventEmitter implements Disposable {
       event.preventDefault();
 
       this.el.classList.remove(styles.active);
-
+      this.hoverDelayer.cancel();
       this.emit("end");
 
       this.el.releasePointerCapture(event.pointerId);

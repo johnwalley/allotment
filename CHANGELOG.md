@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/johnwalley/allotment/compare/v1.6.0...v1.7.0) (2022-01-22)
+
+### Features
+
+- separator color which works better on light and dark backgrounds ([a769262](https://github.com/johnwalley/allotment/commit/a769262de79658cda4866edbafe4ffb8e5f0773a))
+
+### Bug Fixes
+
+- call cancel hover after pointer up ([#129](https://github.com/johnwalley/allotment/issues/129)) ([b9a6e5f](https://github.com/johnwalley/allotment/commit/b9a6e5f10f89298e9935f14c9d52f63ec8527e2c))
+
+### [1.6.0](https://github.com/johnwalley/allotment/compare/v1.5.2...v1.6.0) (2022-01-16)
+
+### Bug Fixes
+
+- allow changing order of panes ([cc38223](https://github.com/johnwalley/allotment/commit/cc38223e3f4315f61a50126630170c25ab8b5e1f))
+
+### [1.5.2](https://github.com/johnwalley/allotment/compare/v1.5.1...v1.5.2) (2022-01-15)
+
+This release was published without any updates and should be skipped.
+
 ### [1.5.1](https://github.com/johnwalley/allotment/compare/v1.5.0...v1.5.1) (2022-01-02)
 
 ### Bug Fixes
