@@ -23,7 +23,7 @@ Please note that react >= 17.0.0 and react-dom >= 17.0.0 are peer dependencies.
 
 ### Quick start
 
-Here's a quick example to get you started, it's literally all you need:
+Here's a quick example to get you started:
 
 ```tsx
 import * as React from "react";
@@ -48,3 +48,29 @@ ReactDOM.render(<App />, document.querySelector("#app"));
 Remember to import the required css: `import "allotment/dist/style.css"`
 
 :::
+
+## Control over individual panes
+
+If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
+
+```tsx
+import * as React from "react";
+import ReactDOM from "react-dom";
+import { Allotment } from "allotment";
+import "allotment/dist/style.css";
+
+function App() {
+  return (
+    <Allotment>
+      <Allotment.Pane minSize={200}>
+        <div>Pane 1</div>
+      </Allotment.Pane>
+      <Allotment.Pane snap>
+        <div>Pane 1</div>
+      </Allotment.Pane>
+    </Allotment>
+  );
+}
+
+ReactDOM.render(<App />, document.querySelector("#app"));
+```
