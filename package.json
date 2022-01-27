@@ -50,7 +50,7 @@
     "@types/jest": "27.4.0",
     "@types/lodash.clamp": "4.0.6",
     "@types/lodash.debounce": "4.0.6",
-    "@typescript-eslint/parser": "5.10.0",
+    "@typescript-eslint/parser": "5.10.1",
     "babel-jest": "27.4.6",
     "babel-loader": "8.2.3",
     "eslint": "8.7.0",
