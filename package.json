@@ -46,7 +46,7 @@
     "@storybook/addon-essentials": "6.4.14",
     "@storybook/addon-links": "6.4.14",
     "@storybook/react": "6.4.14",
-    "@testing-library/dom": "8.11.2",
+    "@testing-library/dom": "8.11.3",
     "@types/jest": "27.4.0",
     "@types/lodash.clamp": "4.0.6",
     "@types/lodash.debounce": "4.0.6",
