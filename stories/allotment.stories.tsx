@@ -226,8 +226,8 @@ export const Resize: Story<AllotmentProps> = (args) => {
       </pre>
       <div className={styles.container}>
         <Allotment ref={ref} defaultSizes={defaultSizes} {...args}>
-          <div className={styles.content}>One</div>
-          <div className={styles.content}>Two</div>
+          <Content />
+          <Content />
         </Allotment>
       </div>
     </div>
