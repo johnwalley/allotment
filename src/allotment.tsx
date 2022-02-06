@@ -61,6 +61,8 @@ export type AllotmentProps = {
   vertical?: boolean;
   /** Callback on drag */
   onChange?: (sizes: number[]) => void;
+  /** Callback on reset */
+  onReset?: () => void;
 } & CommonProps;
 
 const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
@@ -74,6 +76,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       snap = false,
       vertical = false,
       onChange,
+      onReset,
     },
     ref
   ) => {
@@ -148,6 +151,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       );
 
       splitViewRef.current.on("sashreset", (_index: number) => {
+        onReset?.();
         splitViewRef.current?.distributeViewSizes();
       });
 
