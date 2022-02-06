@@ -239,6 +239,7 @@ export const OnReset: Story = (args) => {
   const ref = useRef<AllotmentHandle>(null!);
 
   const handleReset = () => {
+    ref.current.reset();
     alert("reset");
   };
 

@@ -151,8 +151,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       );
 
       splitViewRef.current.on("sashreset", (_index: number) => {
-        onReset?.();
-        splitViewRef.current?.distributeViewSizes();
+        if (onReset) {
+          onReset();
+        } else {
+          splitViewRef.current?.distributeViewSizes();
+        }
       });
 
       const that = splitViewRef.current;
