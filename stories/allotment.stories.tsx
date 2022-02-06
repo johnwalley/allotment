@@ -204,7 +204,8 @@ export const Reset: Story<AllotmentProps> = (args) => {
 Reset.args = {};
 
 export const Resize: Story<AllotmentProps> = (args) => {
-  const [sizes, setSizes] = useState([100, 50]);
+  const defaultSizes = [60, 40];
+  const [sizes, setSizes] = useState(defaultSizes);
   const ref = useRef<AllotmentHandle>(null!);
 
   return (
@@ -224,7 +225,7 @@ export const Resize: Story<AllotmentProps> = (args) => {
         <code>{JSON.stringify(sizes)}</code>
       </pre>
       <div className={styles.container}>
-        <Allotment ref={ref} {...args}>
+        <Allotment ref={ref} defaultSizes={defaultSizes} {...args}>
           <div className={styles.content}>One</div>
           <div className={styles.content}>Two</div>
         </Allotment>
@@ -234,6 +235,7 @@ export const Resize: Story<AllotmentProps> = (args) => {
 };
 Resize.args = {
   minSize: 0,
+  maxSize: Number.POSITIVE_INFINITY,
 };
 
 export const DefaultSize: Story<AllotmentProps> = (args) => {
@@ -272,8 +274,7 @@ export const OnReset: Story = (args) => {
   const ref = useRef<AllotmentHandle>(null!);
 
   const handleReset = () => {
-    ref.current.reset();
-    alert("reset");
+    ref.current.resize([100, 200]);
   };
 
   return (
