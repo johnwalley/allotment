@@ -211,6 +211,8 @@ export const Resize: Story<AllotmentProps> = (args) => {
   return (
     <div>
       <button
+        className={styles.button}
+        type="button"
         onClick={() => {
           const w = Math.floor(100 * Math.random());
 
