@@ -142,7 +142,7 @@ To control the feedback area size of the dragging area between panes you can cal
 
 ### Programmatic control
 
-You can use a ref to get access to the Allotment component instance and call its reset method manually:
+You can use a ref to get access to the Allotment component instance and call its reset and resize methods manually:
 
 ```jsx
 const ref = React.useRef(ref);
@@ -155,6 +155,13 @@ return (
       }}
     >
       Reset
+    </button>
+    <button
+      onClick={() => {
+        ref.current.resize([100, 200]);
+      }}
+    >
+      Resize
     </button>
     <Allotment ref={ref}>
       <div />
