@@ -108,6 +108,10 @@ Direction to split. If true then the panes will be stacked vertically, otherwise
 
 Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback. Passed an array of numbers.
 
+### onReset
+
+Callback that is fired whenever the user double clicks a sash.
+
 ## Allotment.Pane props
 
 ### maxSize
