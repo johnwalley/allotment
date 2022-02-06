@@ -15,11 +15,6 @@ import { Content } from "./content";
 export default {
   title: "Basic",
   Component: Allotment,
-  argTypes: {
-    numViews: {
-      control: { type: "number", min: 1, max: 10, step: 1 },
-    },
-  },
 } as Meta;
 
 export const Simple: Story = () => (
@@ -239,3 +234,22 @@ export const ConfigureSash: Story = ({ sashSize, ...args }) => {
 ConfigureSash.args = {
   sashSize: 4,
 };
+
+export const OnReset: Story = (args) => {
+  const ref = useRef<AllotmentHandle>(null!);
+
+  const handleReset = () => {
+    ref.current.reset();
+    alert("reset");
+  };
+
+  return (
+    <div className={styles.container}>
+      <Allotment ref={ref} {...args} onReset={handleReset}>
+        <Content />
+        <Content />
+      </Allotment>
+    </div>
+  );
+};
+OnReset.args = {};
