@@ -44,7 +44,10 @@ export const Pane = forwardRef<HTMLDivElement, PaneProps>(
 
 Pane.displayName = "Allotment.Pane";
 
-export type AllotmentHandle = { reset: () => void };
+export type AllotmentHandle = {
+  reset: () => void;
+  resize: (sizes: number[]) => void;
+};
 
 export type AllotmentProps = {
   children: React.ReactNode;
@@ -100,6 +103,9 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     useImperativeHandle(ref, () => ({
       reset: () => {
         splitViewRef.current?.distributeViewSizes();
+      },
+      resize: (sizes) => {
+        splitViewRef.current?.resizeViews(sizes);
       },
     }));
 
