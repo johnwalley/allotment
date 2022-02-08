@@ -575,6 +575,27 @@ export class SplitView extends EventEmitter implements Disposable {
     this.relayout();
   }
 
+  public resizeViews(sizes: number[]): void {
+    for (let index = 0; index < sizes.length; index++) {
+      const item = this.viewItems[index];
+      let size = sizes[index];
+
+      size = Math.round(size);
+
+      size = clamp(
+        size,
+        item.minimumSize,
+        Math.min(item.maximumSize, this.size)
+      );
+
+      item.size = size;
+    }
+
+    this.contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
+    this.saveProportions();
+    this.layout(this.size);
+  }
+
   /**
    * Returns the size of a {@link View view}.
    */

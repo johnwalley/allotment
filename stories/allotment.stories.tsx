@@ -15,11 +15,6 @@ import { Content } from "./content";
 export default {
   title: "Basic",
   Component: Allotment,
-  argTypes: {
-    numViews: {
-      control: { type: "number", min: 1, max: 10, step: 1 },
-    },
-  },
 } as Meta;
 
 export const Simple: Story = () => (
@@ -208,6 +203,43 @@ export const Reset: Story<AllotmentProps> = (args) => {
 };
 Reset.args = {};
 
+export const Resize: Story<AllotmentProps> = (args) => {
+  const defaultSizes = [60, 40];
+  const [sizes, setSizes] = useState(defaultSizes);
+  const ref = useRef<AllotmentHandle>(null!);
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          const w = Math.floor(100 * Math.random());
+
+          const sizes = [w, 100 - w];
+          ref.current.resize(sizes);
+          setSizes(sizes);
+        }}
+      >
+        Resize
+      </button>
+      <pre>
+        <code>{JSON.stringify(sizes)}</code>
+      </pre>
+      <div className={styles.container}>
+        <Allotment ref={ref} defaultSizes={defaultSizes} {...args}>
+          <Content />
+          <Content />
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Resize.args = {
+  minSize: 0,
+  maxSize: Number.POSITIVE_INFINITY,
+};
+
 export const DefaultSize: Story<AllotmentProps> = (args) => {
   return (
     <div className={styles.container}>
@@ -266,3 +298,21 @@ export const Visible: Story<AllotmentProps> = (args) => {
   );
 };
 Visible.args = {};
+
+export const OnReset: Story = (args) => {
+  const ref = useRef<AllotmentHandle>(null!);
+
+  const handleReset = () => {
+    ref.current.resize([100, 200]);
+  };
+
+  return (
+    <div className={styles.container}>
+      <Allotment ref={ref} {...args} onReset={handleReset}>
+        <Content />
+        <Content />
+      </Allotment>
+    </div>
+  );
+};
+OnReset.args = {};

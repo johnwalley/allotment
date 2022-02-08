@@ -49,7 +49,10 @@ export const Pane = forwardRef<HTMLDivElement, PaneProps>(
 
 Pane.displayName = "Allotment.Pane";
 
-export type AllotmentHandle = { reset: () => void };
+export type AllotmentHandle = {
+  reset: () => void;
+  resize: (sizes: number[]) => void;
+};
 
 export type AllotmentProps = {
   children: React.ReactNode;
@@ -66,6 +69,8 @@ export type AllotmentProps = {
   vertical?: boolean;
   /** Callback on drag */
   onChange?: (sizes: number[]) => void;
+  /** Callback on reset */
+  onReset?: () => void;
 } & CommonProps;
 
 const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
@@ -79,6 +84,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       snap = false,
       vertical = false,
       onChange,
+      onReset,
     },
     ref
   ) => {
@@ -104,6 +110,9 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     useImperativeHandle(ref, () => ({
       reset: () => {
         splitViewRef.current?.distributeViewSizes();
+      },
+      resize: (sizes) => {
+        splitViewRef.current?.resizeViews(sizes);
       },
     }));
 
@@ -155,7 +164,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       );
 
       splitViewRef.current.on("sashreset", (_index: number) => {
-        splitViewRef.current?.distributeViewSizes();
+        if (onReset) {
+          onReset();
+        } else {
+          splitViewRef.current?.distributeViewSizes();
+        }
       });
 
       const that = splitViewRef.current;

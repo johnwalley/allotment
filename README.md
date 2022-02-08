@@ -108,6 +108,10 @@ Direction to split. If true then the panes will be stacked vertically, otherwise
 
 Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback. Passed an array of numbers.
 
+### onReset
+
+Callback that is fired whenever the user double clicks a sash.
+
 ## Allotment.Pane props
 
 ### maxSize
@@ -142,7 +146,7 @@ To control the feedback area size of the dragging area between panes you can cal
 
 ### Programmatic control
 
-You can use a ref to get access to the Allotment component instance and call its reset method manually:
+You can use a ref to get access to the Allotment component instance and call its reset and resize methods manually:
 
 ```jsx
 const ref = React.useRef(ref);
@@ -155,6 +159,13 @@ return (
       }}
     >
       Reset
+    </button>
+    <button
+      onClick={() => {
+        ref.current.resize([100, 200]);
+      }}
+    >
+      Resize
     </button>
     <Allotment ref={ref}>
       <div />
