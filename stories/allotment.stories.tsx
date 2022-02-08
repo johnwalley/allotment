@@ -8,7 +8,7 @@ import {
   AllotmentProps,
   setSashSize,
 } from "../src";
-import { range } from "../src/helpers/range";
+import { range } from "../src/helpers/array";
 import styles from "./allotment.stories.module.css";
 import { Content } from "./content";
 
@@ -271,6 +271,33 @@ export const ConfigureSash: Story = ({ sashSize, ...args }) => {
 ConfigureSash.args = {
   sashSize: 4,
 };
+
+export const Visible: Story<AllotmentProps> = (args) => {
+  const [visible, setVisible] = useState(true);
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          setVisible((visible) => !visible);
+        }}
+      >
+        {visible ? "Hide" : "Show"}
+      </button>
+      <div className={styles.container}>
+        <Allotment {...args}>
+          <Content />
+          <Allotment.Pane visible={visible}>
+            <Content />
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Visible.args = {};
 
 export const OnReset: Story = (args) => {
   const ref = useRef<AllotmentHandle>(null!);

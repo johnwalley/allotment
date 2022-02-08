@@ -2,8 +2,8 @@ import EventEmitter from "eventemitter3";
 import clamp from "lodash.clamp";
 
 import styles from "../allotment.module.css";
+import { pushToEnd, range } from "../helpers/array";
 import { Disposable } from "../helpers/disposable";
-import { range } from "../helpers/range";
 import {
   Orientation,
   Sash,
@@ -190,7 +190,7 @@ abstract class ViewItem {
     return typeof this._cachedVisibleSize === "undefined";
   }
 
-  setVisible(visible: boolean, size?: number): void {
+  public setVisible(visible: boolean, size?: number): void {
     if (visible === this.visible) {
       return;
     }
@@ -608,6 +608,39 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   /**
+   * Returns whether the {@link View view} is visible.
+   *
+   * @param index The {@link View view} index.
+   */
+  isViewVisible(index: number): boolean {
+    if (index < 0 || index >= this.viewItems.length) {
+      throw new Error("Index out of bounds");
+    }
+
+    const viewItem = this.viewItems[index];
+    return viewItem.visible;
+  }
+
+  /**
+   * Set a {@link View view}'s visibility.
+   *
+   * @param index The {@link View view} index.
+   * @param visible Whether the {@link View view} should be visible.
+   */
+  setViewVisible(index: number, visible: boolean): void {
+    if (index < 0 || index >= this.viewItems.length) {
+      throw new Error("Index out of bounds");
+    }
+
+    const viewItem = this.viewItems[index];
+    viewItem.setVisible(visible);
+
+    this.distributeEmptySpace(index);
+    this.layoutViews();
+    this.saveProportions();
+  }
+
+  /**
    * Distribute the entire {@link SplitView} size among all {@link View views}.
    */
   public distributeViewSizes(): void {
@@ -884,11 +917,15 @@ export class SplitView extends EventEmitter implements Disposable {
     return delta;
   }
 
-  private distributeEmptySpace(): void {
+  private distributeEmptySpace(lowPriorityIndex?: number): void {
     const contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
     let emptyDelta = this.size - contentSize;
 
-    const indexes = range(0, this.viewItems.length);
+    const indexes = range(this.viewItems.length - 1, -1, -1);
+
+    if (typeof lowPriorityIndex === "number") {
+      pushToEnd(indexes, lowPriorityIndex);
+    }
 
     for (let i = 0; emptyDelta !== 0 && i < indexes.length; i++) {
       const item = this.viewItems[indexes[i]];

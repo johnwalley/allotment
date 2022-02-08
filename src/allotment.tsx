@@ -19,6 +19,10 @@ function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
+function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
+  return (props as PaneProps).visible !== undefined;
+}
+
 export interface CommonProps {
   /** Maximum size of each element */
   maxSize?: number;
@@ -30,6 +34,7 @@ export interface CommonProps {
 
 export type PaneProps = {
   children: React.ReactNode;
+  visible?: boolean;
 } & CommonProps;
 
 export const Pane = forwardRef<HTMLDivElement, PaneProps>(
@@ -85,7 +90,9 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
   ) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const previousKeys = useRef<string[]>([]);
-    const splitViewPropsRef = useRef(new Map<React.Key, CommonProps>());
+    const splitViewPropsRef = useRef(
+      new Map<React.Key, AllotmentProps | PaneProps>()
+    );
     const splitViewRef = useRef<SplitView | null>(null);
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
 
@@ -173,12 +180,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     }, []);
 
     /**
-     * Add or remove views as number of children changes
+     * Add, remove or update views as children change
      */
     useEffect(() => {
       const keys = childrenArray.map((child) => child.key as string);
 
       const enter = keys.filter((key) => !previousKeys.current.includes(key));
+      const update = keys.filter((key) => previousKeys.current.includes(key));
       const exit = previousKeys.current.map((key) => !keys.includes(key));
 
       exit.forEach((flag, index) => {
@@ -202,6 +210,21 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           Sizing.Distribute,
           keys.findIndex((key) => key === enterKey)
         );
+      }
+
+      for (const updateKey of update) {
+        const props = splitViewPropsRef.current.get(updateKey);
+        const index = keys.findIndex((key) => key === updateKey);
+
+        if (props && isPaneProps(props)) {
+          if (props.visible !== undefined) {
+            if (splitViewRef.current?.isViewVisible(index) === props.visible) {
+              return;
+            }
+
+            splitViewRef.current?.setViewVisible(index, props.visible);
+          }
+        }
       }
 
       if (enter.length > 0 || exit.length > 0) {

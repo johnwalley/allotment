@@ -126,6 +126,10 @@ Minimum size of this pane. Overrides `minSize` set on parent component.
 
 Enable snap to zero for this pane. Overrides `snap` set on parent component.
 
+### visible
+
+Whether the pane should be visible.
+
 ## Styling
 
 Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling.
