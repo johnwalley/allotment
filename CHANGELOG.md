@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/johnwalley/allotment/compare/v1.7.0...v1.8.0) (2022-02-08)
+
+### Features
+
+- add onReset callback ([#154](https://github.com/johnwalley/allotment/issues/154)) ([904a8e6](https://github.com/johnwalley/allotment/commit/904a8e6acbf3692b4f2cb7fa102799872c70243d))
+- add resize method to component instance ([#121](https://github.com/johnwalley/allotment/issues/121)) ([d25bd91](https://github.com/johnwalley/allotment/commit/d25bd91bde05c33bdebf586868a38a03056d8d57))
+- add visible prop to Pane ([#137](https://github.com/johnwalley/allotment/issues/137)) ([3b0542c](https://github.com/johnwalley/allotment/commit/3b0542c24165c0cb054ee12a682c1b153a2de5ad))
+
+### Bug Fixes
+
+- **deps:** update dependency @svgr/webpack to v6.2.0 ([#135](https://github.com/johnwalley/allotment/issues/135)) ([40cbd8f](https://github.com/johnwalley/allotment/commit/40cbd8f0891b5fb63539a1df2ae43667868f87de))
+- **deps:** update dependency @svgr/webpack to v6.2.1 ([#145](https://github.com/johnwalley/allotment/issues/145)) ([016d504](https://github.com/johnwalley/allotment/commit/016d504bcdcc505f705819c5ce349583700db185))
+
 ## [1.7.0](https://github.com/johnwalley/allotment/compare/v1.6.0...v1.7.0) (2022-01-22)
 
 ### Features
