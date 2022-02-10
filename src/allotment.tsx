@@ -24,6 +24,8 @@ function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
 }
 
 export interface CommonProps {
+  /** Sets a className attribute on the outer component */
+  className?: string;
   /** Maximum size of each element */
   maxSize?: number;
   /** Minimum size of each element */
@@ -38,9 +40,9 @@ export type PaneProps = {
 } & CommonProps;
 
 export const Pane = forwardRef<HTMLDivElement, PaneProps>(
-  ({ children }: PaneProps, ref) => {
+  ({ className, children }: PaneProps, ref) => {
     return (
-      <div ref={ref} className={styles.splitViewView}>
+      <div ref={ref} className={classNames(styles.splitViewView, className)}>
         {children}
       </div>
     );

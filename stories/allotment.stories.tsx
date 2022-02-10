@@ -272,6 +272,21 @@ ConfigureSash.args = {
   sashSize: 4,
 };
 
+export const PaneClassName: Story = (args) => {
+  return (
+    <div className={styles.container}>
+      <Allotment {...args}>
+        <Allotment.Pane className={styles.customPane}>
+          <div className={styles.customPaneContent}>div1</div>
+        </Allotment.Pane>
+        <Allotment.Pane>
+          <Content />
+        </Allotment.Pane>
+      </Allotment>
+    </div>
+  );
+};
+
 export const Visible: Story<AllotmentProps> = (args) => {
   const [visible, setVisible] = useState(true);
 
