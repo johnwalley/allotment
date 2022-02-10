@@ -1,5 +1,5 @@
 :root {
-  --separator-border: #838383;
+  --separator-border: rgba(128, 128, 128, 0.35);
 }
 
 .splitView {

@@ -63,7 +63,7 @@ export const App = () => (
 If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
 
 ```jsx
-<Allotment >
+<Allotment>
   <Allotment.Pane minSize={200}>
     <ComponentA>
   </Allotment.Pane>
@@ -108,6 +108,10 @@ Direction to split. If true then the panes will be stacked vertically, otherwise
 
 Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback. Passed an array of numbers.
 
+### onReset
+
+Callback that is fired whenever the user double clicks a sash.
+
 ## Allotment.Pane props
 
 ### maxSize
@@ -121,6 +125,10 @@ Minimum size of this pane. Overrides `minSize` set on parent component.
 ### snap
 
 Enable snap to zero for this pane. Overrides `snap` set on parent component.
+
+### visible
+
+Whether the pane should be visible.
 
 ## Styling
 
@@ -138,7 +146,7 @@ To control the feedback area size of the dragging area between panes you can cal
 
 ### Programmatic control
 
-You can use a ref to get access to the Allotment component instance and call its reset method manually:
+You can use a ref to get access to the Allotment component instance and call its reset and resize methods manually:
 
 ```jsx
 const ref = React.useRef(ref);
@@ -151,6 +159,13 @@ return (
       }}
     >
       Reset
+    </button>
+    <button
+      onClick={() => {
+        ref.current.resize([100, 200]);
+      }}
+    >
+      Resize
     </button>
     <Allotment ref={ref}>
       <div />
@@ -165,6 +180,16 @@ return (
 ### It's not working/I don't see anything
 
 The Allotment component takes its width and height from the element which contains it. It does not come with an explicit width or height out of the box. It's easy to end up with a div of height zero by accident. For example, adding allotment to a brand new Create React App project without setting a height on a containing div won't work because the default root div itself has no height.
+
+You should also check that the css has been imported/included, for example at the root of your application:
+
+```jsx
+import "allotment/dist/style.css";
+```
+
+### My content is larger than the containing pane. How can I let the user scroll?
+
+The simplest approach is place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
 
 ### Next.js
 

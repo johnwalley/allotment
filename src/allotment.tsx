@@ -11,11 +11,16 @@ import React, {
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
+import { isIOS } from "./helpers/platform";
 import { Orientation, setGlobalSashSize } from "./sash";
 import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
+}
+
+function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
+  return (props as PaneProps).visible !== undefined;
 }
 
 export interface CommonProps {
@@ -31,6 +36,7 @@ export interface CommonProps {
 
 export type PaneProps = {
   children: React.ReactNode;
+  visible?: boolean;
 } & CommonProps;
 
 export const Pane = forwardRef<HTMLDivElement, PaneProps>(
@@ -45,7 +51,10 @@ export const Pane = forwardRef<HTMLDivElement, PaneProps>(
 
 Pane.displayName = "Allotment.Pane";
 
-export type AllotmentHandle = { reset: () => void };
+export type AllotmentHandle = {
+  reset: () => void;
+  resize: (sizes: number[]) => void;
+};
 
 export type AllotmentProps = {
   children: React.ReactNode;
@@ -62,6 +71,8 @@ export type AllotmentProps = {
   vertical?: boolean;
   /** Callback on drag */
   onChange?: (sizes: number[]) => void;
+  /** Callback on reset */
+  onReset?: () => void;
 } & CommonProps;
 
 const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
@@ -75,12 +86,15 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       snap = false,
       vertical = false,
       onChange,
+      onReset,
     },
     ref
   ) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const previousKeys = useRef<string[]>([]);
-    const splitViewPropsRef = useRef(new Map<React.Key, CommonProps>());
+    const splitViewPropsRef = useRef(
+      new Map<React.Key, AllotmentProps | PaneProps>()
+    );
     const splitViewRef = useRef<SplitView | null>(null);
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
 
@@ -98,6 +112,9 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     useImperativeHandle(ref, () => ({
       reset: () => {
         splitViewRef.current?.distributeViewSizes();
+      },
+      resize: (sizes) => {
+        splitViewRef.current?.resizeViews(sizes);
       },
     }));
 
@@ -149,7 +166,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       );
 
       splitViewRef.current.on("sashreset", (_index: number) => {
-        splitViewRef.current?.distributeViewSizes();
+        if (onReset) {
+          onReset();
+        } else {
+          splitViewRef.current?.distributeViewSizes();
+        }
       });
 
       const that = splitViewRef.current;
@@ -161,12 +182,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     }, []);
 
     /**
-     * Add or remove views as number of children changes
+     * Add, remove or update views as children change
      */
     useEffect(() => {
       const keys = childrenArray.map((child) => child.key as string);
 
       const enter = keys.filter((key) => !previousKeys.current.includes(key));
+      const update = keys.filter((key) => previousKeys.current.includes(key));
       const exit = previousKeys.current.map((key) => !keys.includes(key));
 
       exit.forEach((flag, index) => {
@@ -175,11 +197,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         }
       });
 
-      for (const key of enter) {
-        const props = splitViewPropsRef.current.get(key);
+      for (const enterKey of enter) {
+        const props = splitViewPropsRef.current.get(enterKey);
 
         splitViewRef.current?.addView(
-          splitViewViewRef.current.get(key)!,
+          splitViewViewRef.current.get(enterKey)!,
           {
             element: document.createElement("div"),
             minimumSize: props?.minSize ?? minSize,
@@ -187,8 +209,24 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             snap: props?.snap ?? snap,
             layout: () => {},
           },
-          Sizing.Distribute
+          Sizing.Distribute,
+          keys.findIndex((key) => key === enterKey)
         );
+      }
+
+      for (const updateKey of update) {
+        const props = splitViewPropsRef.current.get(updateKey);
+        const index = keys.findIndex((key) => key === updateKey);
+
+        if (props && isPaneProps(props)) {
+          if (props.visible !== undefined) {
+            if (splitViewRef.current?.isViewVisible(index) === props.visible) {
+              return;
+            }
+
+            splitViewRef.current?.setViewVisible(index, props.visible);
+          }
+        }
       }
 
       if (enter.length > 0 || exit.length > 0) {
@@ -204,6 +242,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         }
       },
     });
+
+    useEffect(() => {
+      if (isIOS) {
+        setSashSize(20);
+      }
+    }, []);
 
     return (
       <div

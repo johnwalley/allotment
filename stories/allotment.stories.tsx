@@ -1,5 +1,4 @@
 import { Meta, Story } from "@storybook/react";
-import classNames from "classnames";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -9,29 +8,23 @@ import {
   AllotmentProps,
   setSashSize,
 } from "../src";
-import { range } from "../src/helpers/range";
+import { range } from "../src/helpers/array";
 import styles from "./allotment.stories.module.css";
+import { Content } from "./content";
 
 export default {
   title: "Basic",
   Component: Allotment,
-  argTypes: {
-    numViews: {
-      control: { type: "number", min: 1, max: 10, step: 1 },
-    },
-  },
 } as Meta;
 
-export const Simple: Story = () => {
-  return (
-    <div className={styles.container}>
-      <Allotment vertical>
-        <div className={styles.content}>Pane 1</div>
-        <div className={styles.content}>Pane 2</div>
-      </Allotment>
-    </div>
-  );
-};
+export const Simple: Story = () => (
+  <div className={styles.container}>
+    <Allotment vertical>
+      <Content />
+      <Content />
+    </Allotment>
+  </div>
+);
 
 const Template: Story<AllotmentProps & { numViews: number }> = ({
   numViews,
@@ -43,9 +36,7 @@ const Template: Story<AllotmentProps & { numViews: number }> = ({
     <div className={styles.container}>
       <Allotment {...args}>
         {views.map((view) => (
-          <div key={view.id} className={styles.content}>
-            {view.id}
-          </div>
+          <Content key={view.id} />
         ))}
       </Allotment>
     </div>
@@ -102,9 +93,7 @@ export const PersistSizes: Story<{ numViews: number; vertical: boolean }> = ({
           defaultSizes={sizes}
         >
           {views.map((view) => (
-            <div key={view.id} className={styles.content}>
-              {view.id}
-            </div>
+            <Content key={view.id} />
           ))}
         </Allotment>
       )}
@@ -121,22 +110,20 @@ export const Nested: Story = () => {
     <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
       <Allotment minSize={100}>
         <Allotment.Pane maxSize={400}>
-          <div className={styles.content}>
-            <Allotment vertical>
-              <Allotment.Pane minSize={100}>
-                <div className={styles.content}>One</div>
-              </Allotment.Pane>
-              <Allotment.Pane snap>
-                <div className={styles.content}>Two</div>
-              </Allotment.Pane>
-              <Allotment.Pane snap>
-                <div className={styles.content}>Three</div>
-              </Allotment.Pane>
-            </Allotment>
-          </div>
+          <Allotment vertical>
+            <Allotment.Pane minSize={100}>
+              <Content />
+            </Allotment.Pane>
+            <Allotment.Pane snap>
+              <Content />
+            </Allotment.Pane>
+            <Allotment.Pane snap>
+              <Content />
+            </Allotment.Pane>
+          </Allotment>
         </Allotment.Pane>
         <Allotment.Pane>
-          <div className={styles.content}>Four</div>
+          <Content />
         </Allotment.Pane>
       </Allotment>
     </div>
@@ -151,40 +138,39 @@ export const Closable: Story = () => {
     <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
       <Allotment vertical minSize={100}>
         <Allotment.Pane maxSize={400}>
-          <div className={styles.content}>
-            <Allotment>
-              {panes.map((pane) => (
-                <Allotment.Pane key={pane}>
-                  <div className={styles.content}>{pane}</div>
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <div style={{ position: "absolute", top: 0, right: 0 }}>
-                      <button
-                        onClick={() =>
-                          setPanes((panes) => {
-                            const newPanes = [...panes];
-                            newPanes.splice(pane, 1);
-                            return newPanes;
-                          })
-                        }
-                      >
-                        x
-                      </button>
-                    </div>
+          <Allotment>
+            {panes.map((pane) => (
+              <Allotment.Pane key={pane}>
+                <Content />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <div style={{ position: "absolute", top: 0, right: 0 }}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setPanes((panes) => {
+                          const newPanes = [...panes];
+                          newPanes.splice(pane, 1);
+                          return newPanes;
+                        })
+                      }
+                    >
+                      x
+                    </button>
                   </div>
-                </Allotment.Pane>
-              ))}
-            </Allotment>
-          </div>
+                </div>
+              </Allotment.Pane>
+            ))}
+          </Allotment>
         </Allotment.Pane>
         <Allotment.Pane>
-          <div className={styles.content}>Four</div>
+          <Content />
         </Allotment.Pane>
       </Allotment>
     </div>
@@ -198,6 +184,8 @@ export const Reset: Story<AllotmentProps> = (args) => {
   return (
     <div>
       <button
+        className={styles.button}
+        type="button"
         onClick={() => {
           ref.current.reset();
         }}
@@ -206,8 +194,8 @@ export const Reset: Story<AllotmentProps> = (args) => {
       </button>
       <div className={styles.container}>
         <Allotment ref={ref} {...args}>
-          <div className={styles.content}>One</div>
-          <div className={styles.content}>Two</div>
+          <Content />
+          <Content />
         </Allotment>
       </div>
     </div>
@@ -215,12 +203,49 @@ export const Reset: Story<AllotmentProps> = (args) => {
 };
 Reset.args = {};
 
+export const Resize: Story<AllotmentProps> = (args) => {
+  const defaultSizes = [60, 40];
+  const [sizes, setSizes] = useState(defaultSizes);
+  const ref = useRef<AllotmentHandle>(null!);
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          const w = Math.floor(100 * Math.random());
+
+          const sizes = [w, 100 - w];
+          ref.current.resize(sizes);
+          setSizes(sizes);
+        }}
+      >
+        Resize
+      </button>
+      <pre>
+        <code>{JSON.stringify(sizes)}</code>
+      </pre>
+      <div className={styles.container}>
+        <Allotment ref={ref} defaultSizes={defaultSizes} {...args}>
+          <Content />
+          <Content />
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Resize.args = {
+  minSize: 0,
+  maxSize: Number.POSITIVE_INFINITY,
+};
+
 export const DefaultSize: Story<AllotmentProps> = (args) => {
   return (
     <div className={styles.container}>
       <Allotment {...args}>
-        <div className={styles.content}>div1</div>
-        <div className={styles.content}>div2</div>
+        <Content />
+        <Content />
       </Allotment>
     </div>
   );
@@ -237,8 +262,8 @@ export const ConfigureSash: Story = ({ sashSize, ...args }) => {
   return (
     <div className={styles.container}>
       <Allotment {...args}>
-        <div className={styles.content}>div1</div>
-        <div className={styles.content}>div2</div>
+        <Content />
+        <Content />
       </Allotment>
     </div>
   );
@@ -252,15 +277,57 @@ export const PaneClassName: Story = (args) => {
     <div className={styles.container}>
       <Allotment {...args}>
         <Allotment.Pane className={styles.customPane}>
-          <div className={classNames(styles.content, styles.customPaneContent)}>
-            div1
-          </div>
+          <div className={styles.customPaneContent}>div1</div>
         </Allotment.Pane>
         <Allotment.Pane>
-          <div className={styles.content}>div2</div>
+          <Content />
         </Allotment.Pane>
       </Allotment>
     </div>
   );
 };
-PaneClassName.args = {};
+
+export const Visible: Story<AllotmentProps> = (args) => {
+  const [visible, setVisible] = useState(true);
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          setVisible((visible) => !visible);
+        }}
+      >
+        {visible ? "Hide" : "Show"}
+      </button>
+      <div className={styles.container}>
+        <Allotment {...args}>
+          <Content />
+          <Allotment.Pane visible={visible}>
+            <Content />
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Visible.args = {};
+
+export const OnReset: Story = (args) => {
+  const ref = useRef<AllotmentHandle>(null!);
+
+  const handleReset = () => {
+    ref.current.resize([100, 200]);
+  };
+
+  return (
+    <div className={styles.container}>
+      <Allotment ref={ref} {...args} onReset={handleReset}>
+        <Content />
+        <Content />
+      </Allotment>
+    </div>
+  );
+};
+OnReset.args = {};
