@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/johnwalley/allotment/compare/v1.8.0...v1.9.0) (2022-02-10)
+
+### Features
+
+- add className prop to Allotment.Pane ([#108](https://github.com/johnwalley/allotment/issues/108)) ([9486638](https://github.com/johnwalley/allotment/commit/94866382d2580220a3502f8194c18eb93cd721ec))
+
 ## [1.8.0](https://github.com/johnwalley/allotment/compare/v1.7.0...v1.8.0) (2022-02-08)
 
 ### Features
