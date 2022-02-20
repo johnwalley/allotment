@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.1](https://github.com/johnwalley/allotment/compare/v1.9.0...v1.9.1) (2022-02-20)
+
+### Bug Fixes
+
+- **deps:** update dependency prism-react-renderer to v1.3.1 ([#162](https://github.com/johnwalley/allotment/issues/162)) ([0842718](https://github.com/johnwalley/allotment/commit/0842718abe3917bfdfde28a7d322d3d082218c62))
+- **deps:** update docusaurus monorepo to v2.0.0-beta.15 ([#141](https://github.com/johnwalley/allotment/issues/141)) ([81373a4](https://github.com/johnwalley/allotment/commit/81373a4fbcabd8c2e3ca4ea95a2155648b5f845d))
+- respect visible prop on initial render ([5daeeaf](https://github.com/johnwalley/allotment/commit/5daeeafdc50c810ade14f02492bb73ad343164fc))
+
 ## [1.9.0](https://github.com/johnwalley/allotment/compare/v1.8.0...v1.9.0) (2022-02-10)
 
 ### Features
