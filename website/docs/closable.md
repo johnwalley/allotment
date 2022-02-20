@@ -3,7 +3,7 @@ id: closable
 title: Closable
 ---
 
-# Basic
+# Closable
 
 - [Open in CodeSandbox](https://codesandbox.io/s/closable-dhqlue)
 
