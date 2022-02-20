@@ -214,7 +214,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         );
       }
 
-      for (const updateKey of update) {
+      for (const updateKey of [...enter, ...update]) {
         const props = splitViewPropsRef.current.get(updateKey);
         const index = keys.findIndex((key) => key === updateKey);
 
