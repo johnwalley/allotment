@@ -31,7 +31,7 @@
     "use-resize-observer": "^8.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.17.2",
+    "@babel/core": "7.17.5",
     "@babel/plugin-proposal-class-properties": "7.16.7",
     "@babel/plugin-proposal-private-methods": "7.16.11",
     "@babel/plugin-proposal-private-property-in-object": "7.16.7",
