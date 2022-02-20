@@ -79,6 +79,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
   (
     {
       children,
+      className,
       maxSize = Infinity,
       minSize = 30,
       sizes,
@@ -255,7 +256,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         className={classNames(
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
-          styles.separatorBorder
+          styles.separatorBorder,
+          className
         )}
       >
         <div className={styles.splitViewContainer}>
