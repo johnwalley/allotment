@@ -69,6 +69,8 @@ export type AllotmentProps = {
   sizes?: number[];
   /** Direction to split */
   vertical?: boolean;
+  /** Resize each view proportionally when resizing container */
+  proportionalLayout?: boolean,
   /** Callback on drag */
   onChange?: (sizes: number[]) => void;
   /** Callback on reset */
@@ -86,6 +88,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       defaultSizes = sizes,
       snap = false,
       vertical = false,
+      proportionalLayout = true,
       onChange,
       onReset,
     },
@@ -141,6 +144,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
       const options: SplitViewOptions = {
         orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
+        proportionalLayout,
         ...(initializeSizes &&
           defaultSizes && {
             descriptor: {
