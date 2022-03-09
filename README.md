@@ -96,6 +96,10 @@ Maximum size of any pane.
 
 Minimum size of any pane.
 
+### proportionalLayout (default: `true`)
+
+Resize each view proportionally when resizing container.
+
 ### snap (default: `false`)
 
 Enable snap to zero for all panes.
