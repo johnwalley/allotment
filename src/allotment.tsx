@@ -62,6 +62,8 @@ export type AllotmentProps = {
    * Initial size of each element
    */
   defaultSizes?: number[];
+  /** Resize each view proportionally when resizing container */
+  proportionalLayout?: boolean;
   /**
    * Initial size of each element
    * @deprecated Use {@link AllotmentProps.defaultSizes defaultSizes} instead
@@ -69,8 +71,6 @@ export type AllotmentProps = {
   sizes?: number[];
   /** Direction to split */
   vertical?: boolean;
-  /** Resize each view proportionally when resizing container */
-  proportionalLayout?: boolean,
   /** Callback on drag */
   onChange?: (sizes: number[]) => void;
   /** Callback on reset */
@@ -84,11 +84,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       className,
       maxSize = Infinity,
       minSize = 30,
+      proportionalLayout = true,
       sizes,
       defaultSizes = sizes,
       snap = false,
       vertical = false,
-      proportionalLayout = true,
       onChange,
       onReset,
     },
