@@ -54,7 +54,7 @@
     "babel-jest": "27.5.1",
     "babel-loader": "8.2.3",
     "eslint": "8.10.0",
-    "eslint-config-prettier": "8.4.0",
+    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "husky": "7.0.4",
