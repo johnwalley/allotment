@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/johnwalley/allotment/compare/v1.10.0...v1.11.0) (2022-03-09)
+
+### Features
+
+- add prop for setting proportionalLayout ([#179](https://github.com/johnwalley/allotment/issues/179)) ([4f8f68c](https://github.com/johnwalley/allotment/commit/4f8f68c3d2ae99108b97befc5ab787873c7e3f77))
+
+### Bug Fixes
+
+- **deps:** update docusaurus monorepo to v2.0.0-beta.17 ([#186](https://github.com/johnwalley/allotment/issues/186)) ([e1efbcf](https://github.com/johnwalley/allotment/commit/e1efbcf27a8682f7928f67b7a750f113f55579de))
+
 ## [1.10.0](https://github.com/johnwalley/allotment/compare/v1.9.1...v1.10.0) (2022-02-20)
 
 ### Features
