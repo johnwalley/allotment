@@ -152,17 +152,22 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             views: (
               defaultSizes ||
               repeat(Sizing.Distribute, splitViewViewRef.current.size)
-            ).map((size, index) => ({
-              container: [...splitViewViewRef.current.values()][index],
-              size: size,
-              view: {
-                element: document.createElement("div"),
-                minimumSize: minSize,
-                maximumSize: maxSize,
-                snap: snap,
-                layout: () => {},
-              },
-            })),
+            ).map((size, index) => {
+              const props = splitViewPropsRef.current.get(
+                previousKeys.current[index]
+              );
+              return {
+                container: [...splitViewViewRef.current.values()][index],
+                size: size,
+                view: {
+                  element: document.createElement("div"),
+                  minimumSize: props?.minSize ?? minSize,
+                  maximumSize: props?.maxSize ?? maxSize,
+                  snap: props?.snap ?? snap,
+                  layout: () => {},
+                },
+              };
+            }),
           },
         }),
       };
