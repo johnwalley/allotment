@@ -29,3 +29,14 @@ export function range(start: number, stop: number, step: number = 1): number[] {
 
   return range;
 }
+
+/**
+ * Creates an array from an item with the specified length
+ *
+ * @param item Any item
+ * @param length The length of the resulting array
+ * @returns An array of the item repeated length times
+ */
+export function repeat<T>(item: T, length: number): T[] {
+  return Array.from(Array(length)).map(() => item);
+}

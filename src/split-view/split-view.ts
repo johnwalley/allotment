@@ -76,7 +76,7 @@ export interface SplitViewDescriptor {
     visible?: boolean;
 
     /** The size of the {@link View view}. */
-    size: number;
+    size: number | DistributeSizing;
 
     container: HTMLElement;
     view: View;

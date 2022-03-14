@@ -11,6 +11,7 @@ import React, {
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
+import { repeat } from "./helpers/array";
 import { isIOS } from "./helpers/platform";
 import { Orientation, setGlobalSashSize } from "./sash";
 import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
@@ -136,7 +137,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         );
       }
 
-      if (initializeSizes && defaultSizes) {
+      if (initializeSizes) {
         previousKeys.current = childrenArray.map(
           (child) => child.key as string
         );
@@ -145,23 +146,25 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       const options: SplitViewOptions = {
         orientation: vertical ? Orientation.Vertical : Orientation.Horizontal,
         proportionalLayout,
-        ...(initializeSizes &&
-          defaultSizes && {
-            descriptor: {
-              size: defaultSizes.reduce((a, b) => a + b, 0),
-              views: defaultSizes.map((size, index) => ({
-                container: [...splitViewViewRef.current.values()][index],
-                size: size,
-                view: {
-                  element: document.createElement("div"),
-                  minimumSize: minSize,
-                  maximumSize: maxSize,
-                  snap: snap,
-                  layout: () => {},
-                },
-              })),
-            },
-          }),
+        ...(initializeSizes && {
+          descriptor: {
+            size: defaultSizes ? defaultSizes.reduce((a, b) => a + b, 0) : 0,
+            views: (
+              defaultSizes ||
+              repeat(Sizing.Distribute, splitViewViewRef.current.size)
+            ).map((size, index) => ({
+              container: [...splitViewViewRef.current.values()][index],
+              size: size,
+              view: {
+                element: document.createElement("div"),
+                minimumSize: minSize,
+                maximumSize: maxSize,
+                snap: snap,
+                layout: () => {},
+              },
+            })),
+          },
+        }),
       };
 
       splitViewRef.current = new SplitView(

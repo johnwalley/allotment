@@ -288,7 +288,7 @@ export const PaneClassName: Story = (args) => {
 };
 
 export const Visible: Story<AllotmentProps> = (args) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   return (
     <div>
@@ -312,9 +312,7 @@ export const Visible: Story<AllotmentProps> = (args) => {
     </div>
   );
 };
-Visible.args = {
-  defaultSizes: [400, 100],
-};
+Visible.args = {};
 
 export const OnReset: Story = (args) => {
   const ref = useRef<AllotmentHandle>(null!);
