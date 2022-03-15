@@ -156,7 +156,8 @@ export const Closable: Story = () => {
                       onClick={() =>
                         setPanes((panes) => {
                           const newPanes = [...panes];
-                          newPanes.splice(pane, 1);
+                          const index = newPanes.indexOf(pane);
+                          newPanes.splice(index, 1);
                           return newPanes;
                         })
                       }
