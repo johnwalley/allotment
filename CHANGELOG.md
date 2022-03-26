@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/johnwalley/allotment/compare/v1.11.0...v1.11.1) (2022-03-26)
+
+### Bug Fixes
+
+- visible prop not working as expected ([d06931b](https://github.com/johnwalley/allotment/commit/d06931b7ba37248f4c61f0768d3ba571141b4fdf))
+
 ## [1.11.0](https://github.com/johnwalley/allotment/compare/v1.10.0...v1.11.0) (2022-03-09)
 
 ### Features
