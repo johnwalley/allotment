@@ -225,11 +225,9 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
         if (props && isPaneProps(props)) {
           if (props.visible !== undefined) {
-            if (splitViewRef.current?.isViewVisible(index) === props.visible) {
-              return;
+            if (splitViewRef.current?.isViewVisible(index) !== props.visible) {
+              splitViewRef.current?.setViewVisible(index, props.visible);
             }
-
-            splitViewRef.current?.setViewVisible(index, props.visible);
           }
         }
       }
