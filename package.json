@@ -31,7 +31,7 @@
     "use-resize-observer": "^8.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.17.5",
+    "@babel/core": "7.17.8",
     "@babel/plugin-proposal-class-properties": "7.16.7",
     "@babel/plugin-proposal-private-methods": "7.16.11",
     "@babel/plugin-proposal-private-property-in-object": "7.16.7",
@@ -52,7 +52,7 @@
     "@types/lodash.debounce": "4.0.6",
     "@typescript-eslint/parser": "5.14.0",
     "babel-jest": "27.5.1",
-    "babel-loader": "8.2.3",
+    "babel-loader": "8.2.4",
     "eslint": "8.10.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-react-hooks": "4.3.0",
