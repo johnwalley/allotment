@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2-alpha.0](https://github.com/johnwalley/allotment/compare/v1.11.1...v1.11.2-alpha.0) (2022-03-29)
+
+### Bug Fixes
+
+- **deps:** update docusaurus monorepo to v2.0.0-beta.18 ([#207](https://github.com/johnwalley/allotment/issues/207)) ([c5b4b3c](https://github.com/johnwalley/allotment/commit/c5b4b3c1d06c95d509647b871ea65ab4263f8aaa))
+
 ### [1.11.1](https://github.com/johnwalley/allotment/compare/v1.11.0...v1.11.1) (2022-03-26)
 
 ### Bug Fixes
