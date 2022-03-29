@@ -20,6 +20,7 @@
   "license": "MIT",
   "files": [
     "dist/*.js",
+    "dist/*.mjs",
     "dist/*.css",
     "dist/types/src/**/*.d.ts"
   ],
