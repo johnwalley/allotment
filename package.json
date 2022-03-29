@@ -3,7 +3,7 @@
   "version": "1.11.1",
   "description": "React split-pane component",
   "exports": {
-    ".": "./dist/modern.js",
+    ".": "./dist/modern.mjs",
     "./dist/": "./dist/"
   },
   "main": "./dist/legacy.js",
