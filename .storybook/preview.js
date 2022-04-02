@@ -31,4 +31,9 @@ export const parameters = {
   darkMode: {
     stylePreview: true,
   },
+  options: {
+    storySort: {
+      order: ["Basic", "Advanced"],
+    },
+  },
 };
