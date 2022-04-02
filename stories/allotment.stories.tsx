@@ -334,3 +334,17 @@ export const OnReset: Story = (args) => {
   );
 };
 OnReset.args = {};
+
+export const FixedSize: Story = (args) => {
+  return (
+    <div className={styles.container}>
+      <Allotment>
+        <Allotment.Pane minSize={48} maxSize={48}>
+          <Content />
+        </Allotment.Pane>
+        <Content />
+      </Allotment>
+    </div>
+  );
+};
+FixedSize.args = {};

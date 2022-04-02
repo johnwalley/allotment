@@ -23,4 +23,6 @@ The simplest approach is place your content inside a new div with width and heig
 
 If you get an error when importing allotment in a Next.js project consider [not including the module server-side](https://nextjs.org/docs/advanced-features/dynamic-import#with-no-ssr). Allotment currently only works in a browser. It might be possible to produce sensible results server-side in the future so create an issue requesting this if interested.
 
-See these issues for more discussion: [Example usage with Next.js](https://github.com/johnwalley/allotment/issues/81) and [SyntaxError: Cannot use import statement outside a module](https://github.com/johnwalley/allotment/issues/23).
+### How do I prevent a pane from being resized?
+
+Set `minSize` and `maxSize` props to the same value.
