@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 - defaultSizes should not disable props on Allotment.Pane ([3837d87](https://github.com/johnwalley/allotment/commit/3837d87538089cea6c53635f9a657fcf75296b9e))
-- **deps:** update docusaurus monorepo to v2.0.0-beta.18 ([#207](https://github.com/johnwalley/allotment/issues/207)) ([c5b4b3c](https://github.com/johnwalley/allotment/commit/c5b4b3c1d06c95d509647b871ea65ab4263f8aaa))
 
 ### [1.11.1](https://github.com/johnwalley/allotment/compare/v1.11.0...v1.11.1) (2022-03-26)
 
@@ -20,10 +19,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 - add prop for setting proportionalLayout ([#179](https://github.com/johnwalley/allotment/issues/179)) ([4f8f68c](https://github.com/johnwalley/allotment/commit/4f8f68c3d2ae99108b97befc5ab787873c7e3f77))
-
-### Bug Fixes
-
-- **deps:** update docusaurus monorepo to v2.0.0-beta.17 ([#186](https://github.com/johnwalley/allotment/issues/186)) ([e1efbcf](https://github.com/johnwalley/allotment/commit/e1efbcf27a8682f7928f67b7a750f113f55579de))
 
 ## [1.10.0](https://github.com/johnwalley/allotment/compare/v1.9.1...v1.10.0) (2022-02-20)
 
