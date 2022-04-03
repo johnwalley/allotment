@@ -1,5 +1,6 @@
 .sidebar {
   background-color: rgb(37, 37, 38);
+  height: 100%;
   outline-color: rgba(83, 89, 93, 0.5);
 }
 
@@ -21,7 +22,7 @@
   padding-left: 12px;
 }
 
-.titleLabel > h2 {
+.titleLabel h2 {
   color: rgb(187, 187, 187);
   font-size: 11px;
   cursor: default;
@@ -30,4 +31,20 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.titleActions {
+  flex: 1;
+  padding-left: 5px;
+}
+
+.actionsContainer {
+  justify-content: flex-end;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
 }

@@ -14,24 +14,54 @@ import styles from "./advanced.stories.module.css";
 import { ActivityBar } from "./components/activity-bar";
 import { Editor } from "./components/editor";
 import { Panel } from "./components/panel";
-import { Sidebar } from "./components/side-bar";
+import { Sidebar } from "./components/sidebar";
+
+const ACTIVITIES = [
+  "Explorer",
+  "Search",
+  "Source Control",
+  "Run and Debug",
+  "Extensions",
+];
 
 export default {
   title: "Advanced",
   Component: Allotment,
+  argTypes: {
+    activityBar: {
+      control: { type: "boolean" },
+    },
+    primarySideBar: {
+      control: { type: "boolean" },
+    },
+    primarySideBarPosition: {
+      options: ["left", "right"],
+      control: { type: "radio" },
+    },
+  },
 } as Meta;
 
-export const VisualStudioCode: Story = () => {
+export const VisualStudioCode: Story = ({
+  activityBar,
+  primarySideBar,
+  primarySideBarPosition,
+}) => {
   const [editorVisible, setEditorVisible] = useState(true);
   const [panelVisible, setPanelVisible] = useState(true);
+  const [activity, setActivity] = useState(0);
 
-  console.log(editorVisible, panelVisible);
+  const sidebar = (
+    <Allotment.Pane minSize={170} visible={primarySideBar} snap>
+      <Sidebar title={ACTIVITIES[activity]} />
+    </Allotment.Pane>
+  );
 
   return (
     <div className={styles.container}>
       <Allotment>
-        <Allotment.Pane minSize={48} maxSize={48}>
+        <Allotment.Pane minSize={48} maxSize={48} visible={activityBar}>
           <ActivityBar
+            checked={activity}
             items={[
               "files",
               "search",
@@ -39,11 +69,12 @@ export const VisualStudioCode: Story = () => {
               "debug-alt",
               "extensions",
             ]}
+            onClick={(index) => {
+              setActivity(index);
+            }}
           />
         </Allotment.Pane>
-        <Allotment.Pane minSize={170} snap>
-          <Sidebar />
-        </Allotment.Pane>
+        {primarySideBarPosition === "left" && sidebar}
         <Allotment.Pane minSize={300}>
           <Allotment vertical snap>
             <Allotment.Pane minSize={70} visible={editorVisible}>
@@ -66,7 +97,14 @@ export const VisualStudioCode: Story = () => {
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
+        {primarySideBarPosition === "right" && sidebar}
       </Allotment>
     </div>
   );
+};
+
+VisualStudioCode.args = {
+  activityBar: true,
+  primarySideBar: true,
+  primarySideBarPosition: "left",
 };
