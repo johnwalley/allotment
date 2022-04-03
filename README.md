@@ -116,6 +116,10 @@ Callback that is fired when the pane sizes change (usually on drag). Recommended
 
 Callback that is fired whenever the user double clicks a sash.
 
+### onVisibleChange
+
+Callback that is fired whenever the user changes the visibility of a pane by snapping. Note that this will only be called if the new value is different from the current `visible` prop on the Pane.
+
 ## Allotment.Pane props
 
 ### maxSize

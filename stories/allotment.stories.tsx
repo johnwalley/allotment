@@ -305,7 +305,13 @@ export const Visible: Story<AllotmentProps> = (args) => {
         {visible ? "Hide" : "Show"}
       </button>
       <div className={styles.container}>
-        <Allotment {...args}>
+        <Allotment
+          {...args}
+          snap
+          onVisibleChange={(_index, value) => {
+            setVisible(value);
+          }}
+        >
           <Content />
           <Allotment.Pane visible={visible}>
             <Content />
