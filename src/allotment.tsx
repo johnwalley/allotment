@@ -75,6 +75,8 @@ export type AllotmentProps = {
   onChange?: (sizes: number[]) => void;
   /** Callback on reset */
   onReset?: () => void;
+  /** Callback on visibility change */
+  onVisibleChange?: (index: number, visible: boolean) => void;
 } & CommonProps;
 
 const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
@@ -91,14 +93,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       vertical = false,
       onChange,
       onReset,
+      onVisibleChange,
     },
     ref
   ) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const previousKeys = useRef<string[]>([]);
-    const splitViewPropsRef = useRef(
-      new Map<React.Key, AllotmentProps | PaneProps>()
-    );
+    const splitViewPropsRef = useRef(new Map<React.Key, PaneProps>());
     const splitViewRef = useRef<SplitView | null>(null);
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
 
@@ -175,6 +176,25 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         options,
         onChange
       );
+
+      splitViewRef.current.on("sashchange", (index: number) => {
+        if (onVisibleChange && splitViewRef.current) {
+          const keys = childrenArray.map((child) => child.key as string);
+
+          for (let index = 0; index < keys.length; index++) {
+            const props = splitViewPropsRef.current.get(keys[index]);
+
+            if (props?.visible !== undefined) {
+              if (props.visible !== splitViewRef.current.isViewVisible(index)) {
+                onVisibleChange(
+                  index,
+                  splitViewRef.current.isViewVisible(index)
+                );
+              }
+            }
+          }
+        }
+      });
 
       splitViewRef.current.on("sashreset", (_index: number) => {
         if (onReset) {

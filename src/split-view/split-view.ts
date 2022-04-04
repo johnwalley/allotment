@@ -458,7 +458,9 @@ export class SplitView extends EventEmitter implements Disposable {
         this.onSashChange(sashEventMapper(event))
       );
 
-      sash.on("end", this.onSashEnd);
+      sash.on("end", () =>
+        this.onSashEnd(this.sashItems.findIndex((item) => item.sash === sash))
+      );
 
       sash.on("reset", () => {
         const index = this.sashItems.findIndex((item) => item.sash === sash);
@@ -782,7 +784,7 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   private onSashEnd = (index: number): void => {
-    // TODO: this._onDidSashChange.fire(index);
+    this.emit("sashchange", index);
     this.saveProportions();
 
     for (const item of this.viewItems) {
