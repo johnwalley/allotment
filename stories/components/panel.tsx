@@ -3,11 +3,18 @@ import classNames from "classnames";
 import styles from "./panel.module.css";
 
 export type PanelProps = {
+  maximized: boolean;
   onClose: () => void;
   onMaximize: () => void;
+  onMinimize: () => void;
 };
 
-export const Panel = ({ onClose, onMaximize }: PanelProps) => {
+export const Panel = ({
+  maximized,
+  onClose,
+  onMaximize,
+  onMinimize,
+}: PanelProps) => {
   return (
     <div className={styles.panel}>
       <div className={styles.title}>
@@ -21,15 +28,27 @@ export const Panel = ({ onClose, onMaximize }: PanelProps) => {
         <div>
           <ul className={styles.actionsContainer}>
             <li>
-              <a
-                className={classNames(
-                  "codicon codicon-chevron-up",
-                  styles.actionlabel
-                )}
-                role="button"
-                title="Maximize Panel Size"
-                onClick={onMaximize}
-              ></a>
+              {maximized ? (
+                <a
+                  className={classNames(
+                    "codicon codicon-chevron-down",
+                    styles.actionlabel
+                  )}
+                  role="button"
+                  title="Minimize Panel Size"
+                  onClick={onMinimize}
+                />
+              ) : (
+                <a
+                  className={classNames(
+                    "codicon codicon-chevron-up",
+                    styles.actionlabel
+                  )}
+                  role="button"
+                  title="Maximize Panel Size"
+                  onClick={onMaximize}
+                />
+              )}
             </li>
             <li>
               <a

@@ -76,12 +76,23 @@ export const VisualStudioCode: Story = ({
         </Allotment.Pane>
         {primarySideBarPosition === "left" && sidebar}
         <Allotment.Pane minSize={300}>
-          <Allotment vertical snap>
+          <Allotment
+            vertical
+            snap
+            onVisibleChange={(index, value) => {
+              if (index === 0) {
+                setEditorVisible(value);
+              } else if (index === 1) {
+                setPanelVisible(value);
+              }
+            }}
+          >
             <Allotment.Pane minSize={70} visible={editorVisible}>
               <Editor />
             </Allotment.Pane>
             <Allotment.Pane minSize={78} visible={panelVisible}>
               <Panel
+                maximized={!editorVisible}
                 onClose={() => {
                   console.log("close");
                   setEditorVisible(true);
@@ -91,6 +102,12 @@ export const VisualStudioCode: Story = ({
                   console.log("maximize");
 
                   setEditorVisible(false);
+                  setPanelVisible(true);
+                }}
+                onMinimize={() => {
+                  console.log("minimize");
+
+                  setEditorVisible(true);
                   setPanelVisible(true);
                 }}
               />
