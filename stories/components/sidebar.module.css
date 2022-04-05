@@ -4,6 +4,10 @@
   outline-color: rgba(83, 89, 93, 0.5);
 }
 
+.content {
+  height: 100%;
+}
+
 .title {
   display: flex;
   height: 35px;
@@ -47,4 +51,16 @@
   height: 100%;
   width: 100%;
   align-items: center;
+}
+
+.listRow {
+  padding-left: 22px;
+  display: flex;
+}
+
+.iconLabelContainer {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 }

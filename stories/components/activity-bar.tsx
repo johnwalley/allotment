@@ -17,6 +17,7 @@ export const ActivityBar = ({ checked, items, onClick }: ActivityBarProps) => {
         <ul className={styles.actionsContainer}>
           {items.map((item, index) => (
             <li
+              key={index}
               className={classNames(styles.actionItem, {
                 [styles.checked]: index === checked,
               })}

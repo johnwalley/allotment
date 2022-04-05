@@ -24,6 +24,16 @@ const ACTIVITIES = [
   "Extensions",
 ];
 
+export const DOCUMENTS = [
+  { title: "allotment.tsx", icon: "ts" },
+  { title: "allotment.module.css", icon: "css" },
+];
+
+export interface Document {
+  title: string;
+  icon: string;
+}
+
 export default {
   title: "Advanced",
   Component: Allotment,
@@ -50,9 +60,17 @@ export const VisualStudioCode: Story = ({
   const [panelVisible, setPanelVisible] = useState(true);
   const [activity, setActivity] = useState(0);
 
+  const [documents, setDocuments] = useState<Document[]>(DOCUMENTS);
+
   const sidebar = (
     <Allotment.Pane minSize={170} visible={primarySideBar} snap>
-      <Sidebar title={ACTIVITIES[activity]} />
+      <Sidebar
+        title={ACTIVITIES[activity]}
+        documents={documents}
+        onDocumentsChange={(documents) => {
+          setDocuments(documents);
+        }}
+      />
     </Allotment.Pane>
   );
 
@@ -88,25 +106,25 @@ export const VisualStudioCode: Story = ({
             }}
           >
             <Allotment.Pane minSize={70} visible={editorVisible}>
-              <Editor />
+              <Editor
+                documents={documents}
+                onDocumentsChange={(documents) => {
+                  setDocuments(documents);
+                }}
+              />
             </Allotment.Pane>
             <Allotment.Pane minSize={78} visible={panelVisible}>
               <Panel
                 maximized={!editorVisible}
                 onClose={() => {
-                  console.log("close");
                   setEditorVisible(true);
                   setPanelVisible(false);
                 }}
                 onMaximize={() => {
-                  console.log("maximize");
-
                   setEditorVisible(false);
                   setPanelVisible(true);
                 }}
                 onMinimize={() => {
-                  console.log("minimize");
-
                   setEditorVisible(true);
                   setPanelVisible(true);
                 }}
