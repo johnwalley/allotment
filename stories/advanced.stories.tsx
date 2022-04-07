@@ -63,7 +63,7 @@ export const VisualStudioCode: Story = ({
   const [documents, setDocuments] = useState<Document[]>(DOCUMENTS);
 
   const sidebar = (
-    <Allotment.Pane minSize={170} visible={primarySideBar} snap>
+    <Allotment.Pane key="sidebar" minSize={170} visible={primarySideBar} snap>
       <Sidebar
         title={ACTIVITIES[activity]}
         documents={documents}
