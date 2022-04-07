@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import clamp from "lodash.clamp";
+import isEqual from "lodash.isequal";
 import React, {
   forwardRef,
   useEffect,
@@ -217,6 +218,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
      */
     useEffect(() => {
       const keys = childrenArray.map((child) => child.key as string);
+      const panes = [...previousKeys.current];
 
       const enter = keys.filter((key) => !previousKeys.current.includes(key));
       const update = keys.filter((key) => previousKeys.current.includes(key));
@@ -225,6 +227,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       exit.forEach((flag, index) => {
         if (flag) {
           splitViewRef.current?.removeView(index);
+          panes.splice(index, 1);
         }
       });
 
@@ -243,6 +246,33 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           Sizing.Distribute,
           keys.findIndex((key) => key === enterKey)
         );
+
+        panes.splice(
+          keys.findIndex((key) => key === enterKey),
+          0,
+          enterKey
+        );
+      }
+
+      // Move panes if order has changed
+      while (!isEqual(keys, panes)) {
+        for (const [i, key] of keys.entries()) {
+          const index = panes.findIndex((pane) => pane === key);
+
+          if (index !== i) {
+            splitViewRef.current?.moveView(
+              splitViewViewRef.current.get(key) as HTMLElement,
+              index,
+              i
+            );
+
+            const tempKey = panes[index];
+            panes.splice(index, 1);
+            panes.splice(i, 0, tempKey);
+
+            break;
+          }
+        }
       }
 
       for (const updateKey of [...enter, ...update]) {
