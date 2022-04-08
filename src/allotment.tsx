@@ -200,6 +200,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         if (onReset) {
           onReset();
         } else {
+          // TODO: Opportunity to resize views
+
           splitViewRef.current?.distributeViewSizes();
         }
       });
