@@ -77,7 +77,12 @@ export const VisualStudioCode: Story = ({
   return (
     <div className={styles.container}>
       <Allotment>
-        <Allotment.Pane minSize={48} maxSize={48} visible={activityBar}>
+        <Allotment.Pane
+          key="activityBar"
+          minSize={48}
+          maxSize={48}
+          visible={activityBar}
+        >
           <ActivityBar
             checked={activity}
             items={[
@@ -93,7 +98,7 @@ export const VisualStudioCode: Story = ({
           />
         </Allotment.Pane>
         {primarySideBarPosition === "left" && sidebar}
-        <Allotment.Pane minSize={300}>
+        <Allotment.Pane key="content" minSize={300}>
           <Allotment
             vertical
             snap
@@ -105,7 +110,7 @@ export const VisualStudioCode: Story = ({
               }
             }}
           >
-            <Allotment.Pane minSize={70} visible={editorVisible}>
+            <Allotment.Pane key="editor" minSize={70} visible={editorVisible}>
               <Editor
                 documents={documents}
                 onDocumentsChange={(documents) => {
@@ -113,7 +118,7 @@ export const VisualStudioCode: Story = ({
                 }}
               />
             </Allotment.Pane>
-            <Allotment.Pane minSize={78} visible={panelVisible}>
+            <Allotment.Pane key="terminal" minSize={78} visible={panelVisible}>
               <Panel
                 maximized={!editorVisible}
                 onClose={() => {

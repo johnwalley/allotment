@@ -1,4 +1,5 @@
 import classNames from "classnames";
+
 import styles from "./pane.module.css";
 
 export type PaneProps = {

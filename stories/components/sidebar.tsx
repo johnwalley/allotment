@@ -24,8 +24,6 @@ export const Sidebar = ({
     };
   }, []);
 
-  console.log(documents.length * 22);
-
   return (
     <div className={styles.sidebar}>
       <div className={styles.title}>
@@ -41,8 +39,9 @@ export const Sidebar = ({
       <div className={styles.content}>
         <Allotment vertical>
           <Allotment.Pane
-            maxSize={documents.length * 22}
-            minSize={documents.length * 22}
+            key="openEditors"
+            maxSize={22 + documents.length * 22}
+            minSize={22 + documents.length * 22}
           >
             <Pane expanded title="Open Editors">
               <div className={styles.list}>
@@ -78,7 +77,7 @@ export const Sidebar = ({
               </div>
             </Pane>
           </Allotment.Pane>
-          <Pane expanded title="Allotment">
+          <Pane key="documents" expanded title="Allotment">
             <div className={styles.list}>
               {DOCUMENTS.map((document, index) => (
                 <div key={index} className={styles.listRow}>
@@ -86,24 +85,23 @@ export const Sidebar = ({
                     className="action-label codicon codicon-close"
                     role="button"
                     title="Close Editor (⌘W)"
-                    onClick={() => {
-                      console.log(`Open ${document.title}:${index}`);
-
-                      const newDocuments = [...documents];
-                      newDocuments.push(document);
-
-                      onDocumentsChange(newDocuments);
-                    }}
                   ></a>
                   <div className={styles.iconLabel}>
                     <div className={styles.iconLabelContainer}>
                       <span className={styles.iconNameContainer}>
-                        <a className={styles.labeName}>{document.title}</a>
-                      </span>
-                      <span className={styles.iconDescriptionContainer}>
-                        <span className={styles.labelDescription}>
-                          stories/components
-                        </span>
+                        <a
+                          className={styles.labeName}
+                          onClick={() => {
+                            console.log(`Open ${document.title}:${index}`);
+
+                            const newDocuments = [...documents];
+                            newDocuments.push(document);
+
+                            onDocumentsChange(newDocuments);
+                          }}
+                        >
+                          {document.title}
+                        </a>
                       </span>
                     </div>
                   </div>

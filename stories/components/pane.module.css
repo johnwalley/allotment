@@ -25,3 +25,8 @@ h3.title {
   font-size: 11px;
   min-width: 3ch;
 }
+
+.paneBody {
+  flex: 1;
+  overflow: hidden;
+}

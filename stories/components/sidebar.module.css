@@ -6,6 +6,7 @@
 
 .content {
   height: 100%;
+  font-size: 13px;
 }
 
 .title {
@@ -54,6 +55,8 @@
 }
 
 .listRow {
+  height: 22px;
+  line-height: 22px;
   padding-left: 22px;
   display: flex;
 }
