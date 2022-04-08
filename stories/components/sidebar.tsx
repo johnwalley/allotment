@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useEffect } from "react";
 
 import { Allotment } from "../../src";
@@ -48,7 +49,10 @@ export const Sidebar = ({
                 {documents.map((document, index) => (
                   <div key={index} className={styles.listRow}>
                     <a
-                      className="action-label codicon codicon-close"
+                      className={classNames(
+                        "codicon codicon-close",
+                        styles.actionLabel
+                      )}
                       role="button"
                       title="Close Editor (⌘W)"
                       onClick={() => {
@@ -77,38 +81,64 @@ export const Sidebar = ({
               </div>
             </Pane>
           </Allotment.Pane>
-          <Pane key="documents" expanded title="Allotment">
-            <div className={styles.list}>
-              {DOCUMENTS.map((document, index) => (
-                <div key={index} className={styles.listRow}>
-                  <a
-                    className="action-label codicon codicon-close"
-                    role="button"
-                    title="Close Editor (⌘W)"
-                  ></a>
-                  <div className={styles.iconLabel}>
-                    <div className={styles.iconLabelContainer}>
-                      <span className={styles.iconNameContainer}>
-                        <a
-                          className={styles.labeName}
-                          onClick={() => {
-                            console.log(`Open ${document.title}:${index}`);
+          <Allotment.Pane minSize={142}>
+            <Pane key="allotment" expanded title="Allotment">
+              <div className={styles.list}>
+                {DOCUMENTS.map((document, index) => (
+                  <div key={index} className={styles.listRow}>
+                    <div className={styles.iconLabel}>
+                      <div className={styles.iconLabelContainer}>
+                        <span className={styles.iconNameContainer}>
+                          <a
+                            className={styles.labeName}
+                            onClick={() => {
+                              console.log(`Open ${document.title}:${index}`);
 
-                            const newDocuments = [...documents];
-                            newDocuments.push(document);
+                              const newDocuments = [...documents];
+                              newDocuments.push(document);
 
-                            onDocumentsChange(newDocuments);
-                          }}
-                        >
-                          {document.title}
-                        </a>
-                      </span>
+                              onDocumentsChange(newDocuments);
+                            }}
+                          >
+                            {document.title}
+                          </a>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </Pane>
+                ))}
+              </div>
+            </Pane>
+          </Allotment.Pane>
+          <Allotment.Pane minSize={142}>
+            <Pane key="outline" expanded title="Outline">
+              <div className={styles.list}>
+                {DOCUMENTS.map((document, index) => (
+                  <div key={index} className={styles.listRow}>
+                    <div className={styles.iconLabel}>
+                      <div className={styles.iconLabelContainer}>
+                        <span className={styles.iconNameContainer}>
+                          <a
+                            className={styles.labeName}
+                            onClick={() => {
+                              console.log(`Open ${document.title}:${index}`);
+
+                              const newDocuments = [...documents];
+                              newDocuments.push(document);
+
+                              onDocumentsChange(newDocuments);
+                            }}
+                          >
+                            {document.title}
+                          </a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Pane>
+          </Allotment.Pane>
         </Allotment>
       </div>
     </div>
