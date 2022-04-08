@@ -145,6 +145,39 @@ export interface View {
   setVisible?(visible: boolean): void;
 }
 
+export interface PaneViewOptions {
+  element: HTMLElement;
+  minimumSize?: number;
+  maximumSize?: number;
+  snap?: boolean;
+}
+
+export class PaneView implements View {
+  public minimumSize: number = 0;
+  public maximumSize: number = Number.POSITIVE_INFINITY;
+
+  readonly element: HTMLElement;
+  readonly snap: boolean;
+
+  constructor(options: PaneViewOptions) {
+    this.element = options.element;
+
+    this.minimumSize =
+      typeof options.minimumSize === "number" ? options.minimumSize : 30;
+
+    this.maximumSize =
+      typeof options.maximumSize === "number"
+        ? options.maximumSize
+        : Number.POSITIVE_INFINITY;
+
+    this.snap = typeof options.snap === "boolean" ? options.snap : false;
+  }
+
+  layout(size: number): void {
+    //console.log(size);
+  }
+}
+
 type ViewItemSize = number | { cachedVisibleSize: number };
 
 abstract class ViewItem {
@@ -536,7 +569,7 @@ export class SplitView extends EventEmitter implements Disposable {
    *
    * @param size The entire size of the {@link SplitView}.
    */
-  public layout(size: number): void {
+  public layout(size: number = this.size): void {
     const previousSize = Math.max(this.size, this.contentSize);
     this.size = size;
 

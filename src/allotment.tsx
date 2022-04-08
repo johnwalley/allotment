@@ -13,14 +13,23 @@ import useResizeObserver from "use-resize-observer";
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
 import { Orientation, setGlobalSashSize } from "./sash";
-import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
+import {
+  PaneView,
+  Sizing,
+  SplitView,
+  SplitViewOptions,
+} from "./split-view/split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
 function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
-  return (props as PaneProps).visible !== undefined;
+  return (
+    (props as PaneProps).minSize !== undefined ||
+    (props as PaneProps).maxSize !== undefined ||
+    (props as PaneProps).visible !== undefined
+  );
 }
 
 export interface CommonProps {
@@ -102,6 +111,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     const splitViewPropsRef = useRef(new Map<React.Key, PaneProps>());
     const splitViewRef = useRef<SplitView | null>(null);
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
+    const views = useRef<PaneView[]>([]);
 
     if (process.env.NODE_ENV !== "production" && sizes) {
       console.warn(
@@ -225,23 +235,31 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       exit.forEach((flag, index) => {
         if (flag) {
           splitViewRef.current?.removeView(index);
+          views.current.splice(index, 1);
         }
       });
 
       for (const enterKey of enter) {
         const props = splitViewPropsRef.current.get(enterKey);
 
+        const view = new PaneView({
+          element: document.createElement("div"),
+          minimumSize: props?.minSize ?? minSize,
+          maximumSize: props?.maxSize ?? maxSize,
+          snap: props?.snap ?? snap,
+        });
+
         splitViewRef.current?.addView(
           splitViewViewRef.current.get(enterKey)!,
-          {
-            element: document.createElement("div"),
-            minimumSize: props?.minSize ?? minSize,
-            maximumSize: props?.maxSize ?? maxSize,
-            snap: props?.snap ?? snap,
-            layout: () => {},
-          },
+          view,
           Sizing.Distribute,
           keys.findIndex((key) => key === enterKey)
+        );
+
+        views.current.splice(
+          keys.findIndex((key) => key === enterKey),
+          0,
+          view
         );
       }
 
@@ -255,6 +273,23 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
               splitViewRef.current?.setViewVisible(index, props.visible);
             }
           }
+        }
+      }
+
+      for (const updateKey of update) {
+        const props = splitViewPropsRef.current.get(updateKey);
+        const index = keys.findIndex((key) => key === updateKey);
+
+        if (props && isPaneProps(props)) {
+          if (props.minSize !== undefined) {
+            views.current[index].minimumSize = props.minSize;
+          }
+
+          if (props.maxSize !== undefined) {
+            views.current[index].maximumSize = props.maxSize;
+          }
+
+          splitViewRef.current?.layout();
         }
       }
 
