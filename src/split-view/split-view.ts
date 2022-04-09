@@ -569,12 +569,14 @@ export class SplitView extends EventEmitter implements Disposable {
       return;
     }
 
+    const lowPriorityIndexes = [index];
+
     const item = this.viewItems[index];
     size = Math.round(size);
     size = clamp(size, item.minimumSize, Math.min(item.maximumSize, this.size));
 
     item.size = size;
-    this.relayout();
+    this.relayout(lowPriorityIndexes);
   }
 
   public resizeViews(sizes: number[]): void {
@@ -660,6 +662,7 @@ export class SplitView extends EventEmitter implements Disposable {
 
     for (const item of flexibleViewItems) {
       item.size = clamp(size, item.minimumSize, item.maximumSize);
+      console.log(item.size);
     }
 
     this.relayout();
@@ -672,10 +675,16 @@ export class SplitView extends EventEmitter implements Disposable {
     this.sashContainer.remove();
   }
 
-  private relayout(): void {
+  private relayout(lowPriorityIndexes?: number[]): void {
     const contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
 
-    this.resize(this.viewItems.length - 1, this.size - contentSize, undefined);
+    this.resize(
+      this.viewItems.length - 1,
+      this.size - contentSize,
+      undefined,
+      lowPriorityIndexes
+    );
+
     this.distributeEmptySpace();
     this.layoutViews();
     this.saveProportions();
@@ -777,7 +786,16 @@ export class SplitView extends EventEmitter implements Disposable {
 
     const delta = current - start;
 
-    this.resize(index, delta, sizes, minDelta, maxDelta, snapBefore, snapAfter);
+    this.resize(
+      index,
+      delta,
+      sizes,
+      undefined,
+      minDelta,
+      maxDelta,
+      snapBefore,
+      snapAfter
+    );
 
     this.distributeEmptySpace();
     this.layoutViews();
@@ -810,6 +828,7 @@ export class SplitView extends EventEmitter implements Disposable {
     index: number,
     delta: number,
     sizes = this.viewItems.map((i) => i.size),
+    lowPriorityIndexes?: number[],
     overloadMinDelta: number = Number.NEGATIVE_INFINITY,
     overloadMaxDelta: number = Number.POSITIVE_INFINITY,
     snapBefore?: SashDragSnapState,
@@ -821,6 +840,13 @@ export class SplitView extends EventEmitter implements Disposable {
 
     const upIndexes = range(index, -1, -1);
     const downIndexes = range(index + 1, this.viewItems.length);
+
+    if (lowPriorityIndexes) {
+      for (const index of lowPriorityIndexes) {
+        pushToEnd(upIndexes, index);
+        pushToEnd(downIndexes, index);
+      }
+    }
 
     const upItems = upIndexes.map((i) => this.viewItems[i]);
     const upSizes = upIndexes.map((i) => sizes[i]);
@@ -878,6 +904,7 @@ export class SplitView extends EventEmitter implements Disposable {
         index,
         delta,
         sizes,
+        undefined,
         overloadMinDelta,
         overloadMaxDelta
       );

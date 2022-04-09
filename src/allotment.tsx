@@ -20,7 +20,10 @@ function isPane(item: React.ReactNode): item is typeof Pane {
 }
 
 function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
-  return (props as PaneProps).visible !== undefined;
+  return (
+    (props as PaneProps).preferredSize !== undefined ||
+    (props as PaneProps).visible !== undefined
+  );
 }
 
 export interface CommonProps {
@@ -36,6 +39,7 @@ export interface CommonProps {
 
 export type PaneProps = {
   children: React.ReactNode;
+  preferredSize?: number;
   visible?: boolean;
 } & CommonProps;
 
@@ -177,7 +181,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         onChange
       );
 
-      splitViewRef.current.on("sashchange", (index: number) => {
+      splitViewRef.current.on("sashchange", (_index: number) => {
         if (onVisibleChange && splitViewRef.current) {
           const keys = childrenArray.map((child) => child.key as string);
 
@@ -196,11 +200,36 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         }
       });
 
-      splitViewRef.current.on("sashreset", (_index: number) => {
+      splitViewRef.current.on("sashreset", (index: number) => {
         if (onReset) {
           onReset();
         } else {
-          // TODO: Opportunity to resize views
+          const keys = childrenArray.map((child) => child.key as string);
+
+          const resizeToPreferredSize = (index: number): boolean => {
+            const props = splitViewPropsRef.current.get(keys[index]);
+
+            if (typeof props?.preferredSize !== "number") {
+              return false;
+            }
+
+            splitViewRef.current?.resizeView(
+              index,
+              Math.round(props.preferredSize)
+            );
+
+            return true;
+          };
+
+          if (resizeToPreferredSize(index)) {
+            return;
+          }
+
+          if (resizeToPreferredSize(index + 1)) {
+            return;
+          }
+
+          console.log("distributeViewSizes");
 
           splitViewRef.current?.distributeViewSizes();
         }
