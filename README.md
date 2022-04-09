@@ -15,7 +15,7 @@
   </p>
   
   <p align="center">
-    <img align="center" src="https://user-images.githubusercontent.com/981531/133465908-0f9c28e9-9da3-4faf-959e-ec36393acd0a.gif" />
+    <img align="center" src="https://user-images.githubusercontent.com/981531/161631194-1e24ea10-f46a-42db-bfdb-89bcfa3fc50b.gif" />
   </p>
 </p>
 
@@ -197,7 +197,7 @@ import "allotment/dist/style.css";
 
 ### My content is larger than the containing pane. How can I let the user scroll?
 
-The simplest approach is place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
+The simplest approach is to place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
 
 ### Next.js
 
