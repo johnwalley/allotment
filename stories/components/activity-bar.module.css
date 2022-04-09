@@ -1,0 +1,44 @@
+.activitybar {
+  background-color: rgb(51, 51, 51);
+  height: 100%;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.actionsContainer {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.actionItem {
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.actionItem.checked:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  height: 100%;
+  width: 0;
+  border-left: 2px solid;
+}
+
+.actionLabel {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: rgb(255, 255, 255);
+  font-size: 24px !important;
+}
