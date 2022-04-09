@@ -1,0 +1,48 @@
+@font-face {
+  src: url("../seti.woff") format("woff");
+  font-family: "seti";
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.allotment {
+  overflow-x: scroll;
+}
+
+.editorGroupContainer {
+  height: 100%;
+}
+
+.title {
+  background-color: rgb(37, 37, 38);
+}
+
+.editorContainer {
+  background-color: rgb(30, 30, 30);
+}
+
+.iconLabel {
+  display: flex;
+  line-height: 35px;
+}
+
+.iconLabel::before {
+  color: #519aba;
+  background-image: unset;
+  font-family: "seti";
+  font-size: 150%;
+}
+
+.typescriptReactFileIcon::before {
+  content: "\E099";
+}
+
+.cssLangFileIcon::before {
+  content: "\E01D";
+}
+
+.labelName {
+  cursor: pointer;
+  font-size: 13px;
+}
