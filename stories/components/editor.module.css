@@ -1,0 +1,32 @@
+.content {
+  background-color: rgb(30, 30, 30);
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.watermark {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: calc(50% + 55px);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.watermark dl {
+  display: table-row;
+  opacity: 0.8;
+  cursor: default;
+}
+
+.watermark dt {
+  display: table-cell;
+}
+
+.watermarkBox {
+  display: inline-table;
+  border-collapse: separate;
+  border-spacing: 13px 17px;
+}

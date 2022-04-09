@@ -1,0 +1,83 @@
+.sidebar {
+  background-color: rgb(37, 37, 38);
+  height: 100%;
+  outline-color: rgba(83, 89, 93, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  font-size: 13px;
+}
+
+.title {
+  display: flex;
+  height: 35px;
+  display: flex;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.titleLabel {
+  line-height: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 12px;
+}
+
+.titleLabel h2 {
+  color: rgb(187, 187, 187);
+  font-size: 11px;
+  cursor: default;
+  font-weight: 400;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.titleActions {
+  flex: 1;
+  padding-left: 5px;
+}
+
+.actionsContainer {
+  justify-content: flex-end;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.listRow {
+  height: 22px;
+  line-height: 22px;
+  padding-left: 22px;
+  display: flex;
+}
+
+.actionLabel {
+  align-items: center;
+}
+
+.iconLabelContainer {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.labelDescription {
+  font-style: italic;
+  opacity: 0.8;
+  margin-left: 0.5em;
+  font-size: 0.9em;
+  white-space: pre;
+}

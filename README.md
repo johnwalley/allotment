@@ -197,7 +197,7 @@ import "allotment/dist/style.css";
 
 ### My content is larger than the containing pane. How can I let the user scroll?
 
-The simplest approach is place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
+The simplest approach is to place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
 
 ### Next.js
 
