@@ -7,13 +7,20 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
 import { Orientation, setGlobalSashSize } from "./sash";
-import { Sizing, SplitView, SplitViewOptions } from "./split-view/split-view";
+import {
+  LayoutService,
+  PaneView,
+  Sizing,
+  SplitView,
+  SplitViewOptions,
+} from "./split-view/split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
@@ -39,7 +46,7 @@ export interface CommonProps {
 
 export type PaneProps = {
   children: React.ReactNode;
-  preferredSize?: number;
+  preferredSize?: number | string;
   visible?: boolean;
 } & CommonProps;
 
@@ -106,6 +113,10 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     const splitViewPropsRef = useRef(new Map<React.Key, PaneProps>());
     const splitViewRef = useRef<SplitView | null>(null);
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
+    const layoutService = useRef<LayoutService>(new LayoutService());
+    const views = useRef<PaneView[]>([]);
+
+    const [dimensionsInitialized, setDimensionsInitialized] = useState(false);
 
     if (process.env.NODE_ENV !== "production" && sizes) {
       console.warn(
@@ -159,16 +170,20 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
                   previousKeys.current[index]
                 );
 
+                const view = new PaneView(layoutService.current, {
+                  element: document.createElement("div"),
+                  minimumSize: props?.minSize ?? minSize,
+                  maximumSize: props?.maxSize ?? maxSize,
+                  ...(props?.preferredSize && {
+                    preferredSize: props?.preferredSize,
+                  }),
+                  snap: props?.snap ?? snap,
+                });
+
                 return {
                   container: [...splitViewViewRef.current.values()][index],
                   size: size,
-                  view: {
-                    element: document.createElement("div"),
-                    minimumSize: props?.minSize ?? minSize,
-                    maximumSize: props?.maxSize ?? maxSize,
-                    snap: props?.snap ?? snap,
-                    layout: () => {},
-                  },
+                  view: view,
                 };
               }),
             },
@@ -204,18 +219,16 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         if (onReset) {
           onReset();
         } else {
-          const keys = childrenArray.map((child) => child.key as string);
-
           const resizeToPreferredSize = (index: number): boolean => {
-            const props = splitViewPropsRef.current.get(keys[index]);
+            const view = views.current?.[index];
 
-            if (typeof props?.preferredSize !== "number") {
+            if (typeof view?.preferredSize !== "number") {
               return false;
             }
 
             splitViewRef.current?.resizeView(
               index,
-              Math.round(props.preferredSize)
+              Math.round(view.preferredSize)
             );
 
             return true;
@@ -228,8 +241,6 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           if (resizeToPreferredSize(index + 1)) {
             return;
           }
-
-          console.log("distributeViewSizes");
 
           splitViewRef.current?.distributeViewSizes();
         }
@@ -247,58 +258,85 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
      * Add, remove or update views as children change
      */
     useEffect(() => {
-      const keys = childrenArray.map((child) => child.key as string);
+      if (dimensionsInitialized) {
+        const keys = childrenArray.map((child) => child.key as string);
 
-      const enter = keys.filter((key) => !previousKeys.current.includes(key));
-      const update = keys.filter((key) => previousKeys.current.includes(key));
-      const exit = previousKeys.current.map((key) => !keys.includes(key));
+        const enter = keys.filter((key) => !previousKeys.current.includes(key));
+        const update = keys.filter((key) => previousKeys.current.includes(key));
+        const exit = previousKeys.current.map((key) => !keys.includes(key));
 
-      exit.forEach((flag, index) => {
-        if (flag) {
-          splitViewRef.current?.removeView(index);
-        }
-      });
+        exit.forEach((flag, index) => {
+          if (flag) {
+            splitViewRef.current?.removeView(index);
+            views.current.splice(index, 1);
+          }
+        });
 
-      for (const enterKey of enter) {
-        const props = splitViewPropsRef.current.get(enterKey);
+        for (const enterKey of enter) {
+          const props = splitViewPropsRef.current.get(enterKey);
 
-        splitViewRef.current?.addView(
-          splitViewViewRef.current.get(enterKey)!,
-          {
+          const view = new PaneView(layoutService.current, {
             element: document.createElement("div"),
             minimumSize: props?.minSize ?? minSize,
             maximumSize: props?.maxSize ?? maxSize,
+            ...(props?.preferredSize && {
+              preferredSize: props?.preferredSize,
+            }),
             snap: props?.snap ?? snap,
-            layout: () => {},
-          },
-          Sizing.Distribute,
-          keys.findIndex((key) => key === enterKey)
-        );
-      }
+          });
 
-      for (const updateKey of [...enter, ...update]) {
-        const props = splitViewPropsRef.current.get(updateKey);
-        const index = keys.findIndex((key) => key === updateKey);
+          splitViewRef.current?.addView(
+            splitViewViewRef.current.get(enterKey)!,
+            view,
+            Sizing.Distribute,
+            keys.findIndex((key) => key === enterKey)
+          );
 
-        if (props && isPaneProps(props)) {
-          if (props.visible !== undefined) {
-            if (splitViewRef.current?.isViewVisible(index) !== props.visible) {
-              splitViewRef.current?.setViewVisible(index, props.visible);
+          views.current.splice(
+            keys.findIndex((key) => key === enterKey),
+            0,
+            view
+          );
+        }
+
+        for (const enterKey of enter) {
+          const index = keys.findIndex((key) => key === enterKey);
+
+          const preferredSize = views.current[index].preferredSize;
+
+          if (preferredSize !== undefined) {
+            splitViewRef.current?.resizeView(index, preferredSize);
+          }
+        }
+
+        for (const updateKey of [...enter, ...update]) {
+          const props = splitViewPropsRef.current.get(updateKey);
+          const index = keys.findIndex((key) => key === updateKey);
+
+          if (props && isPaneProps(props)) {
+            if (props.visible !== undefined) {
+              if (
+                splitViewRef.current?.isViewVisible(index) !== props.visible
+              ) {
+                splitViewRef.current?.setViewVisible(index, props.visible);
+              }
             }
           }
         }
-      }
 
-      if (enter.length > 0 || exit.length > 0) {
-        previousKeys.current = keys;
+        if (enter.length > 0 || exit.length > 0) {
+          previousKeys.current = keys;
+        }
       }
-    }, [childrenArray, maxSize, minSize, snap]);
+    }, [childrenArray, dimensionsInitialized, maxSize, minSize, snap]);
 
     useResizeObserver({
       ref: containerRef,
       onResize: ({ width, height }) => {
         if (width && height) {
           splitViewRef.current?.layout(vertical ? height : width);
+          layoutService.current.layout(vertical ? height : width);
+          setDimensionsInitialized(true);
         }
       },
     });
@@ -320,7 +358,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         )}
       >
         <div className={styles.splitViewContainer}>
-          {React.Children.toArray(children).map((child, index) => {
+          {React.Children.toArray(children).map((child) => {
             if (!React.isValidElement(child)) {
               return null;
             }

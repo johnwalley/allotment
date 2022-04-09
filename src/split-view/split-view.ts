@@ -4,6 +4,7 @@ import clamp from "lodash.clamp";
 import styles from "../allotment.module.css";
 import { pushToEnd, range } from "../helpers/array";
 import { Disposable } from "../helpers/disposable";
+import { endsWith } from "../helpers/string";
 import {
   Orientation,
   Sash,
@@ -143,6 +144,92 @@ export interface View {
    * @param visible Whether the view becomes visible.
    */
   setVisible?(visible: boolean): void;
+}
+
+export class LayoutService {
+  private _size!: number;
+
+  get size() {
+    return this._size;
+  }
+
+  public layout(size: number) {
+    this._size = size;
+  }
+}
+
+export interface PaneViewOptions {
+  element: HTMLElement;
+  minimumSize?: number;
+  maximumSize?: number;
+  preferredSize?: number | string;
+  snap?: boolean;
+}
+
+export class PaneView implements View {
+  public minimumSize: number = 0;
+  public maximumSize: number = Number.POSITIVE_INFINITY;
+
+  readonly element: HTMLElement;
+  readonly snap: boolean;
+
+  private layoutService: LayoutService;
+  private _preferredSize: () => number | undefined;
+
+  get preferredSize() {
+    return this._preferredSize();
+  }
+
+  constructor(layoutService: LayoutService, options: PaneViewOptions) {
+    this.layoutService = layoutService;
+    this.element = options.element;
+
+    this.minimumSize =
+      typeof options.minimumSize === "number" ? options.minimumSize : 30;
+
+    this.maximumSize =
+      typeof options.maximumSize === "number"
+        ? options.maximumSize
+        : Number.POSITIVE_INFINITY;
+
+    if (typeof options.preferredSize === "number") {
+      this._preferredSize = () => {
+        return options.preferredSize as number;
+      };
+    } else if (typeof options.preferredSize === "string") {
+      if (endsWith(options.preferredSize, "%")) {
+        const percentage = Number(options.preferredSize.slice(0, -1)) / 100;
+
+        this._preferredSize = () => {
+          return percentage * this.layoutService.size;
+        };
+      } else if (endsWith(options.preferredSize, "px")) {
+        const pixels = Number(options.preferredSize.slice(0, -2)) / 100;
+
+        this._preferredSize = () => {
+          return pixels;
+        };
+      } else if (Number.parseFloat(options.preferredSize)) {
+        const number = Number.parseFloat(options.preferredSize);
+
+        this._preferredSize = () => {
+          return number;
+        };
+      } else {
+        this._preferredSize = () => {
+          return undefined;
+        };
+      }
+    } else {
+      this._preferredSize = () => {
+        return undefined;
+      };
+    }
+
+    this.snap = typeof options.snap === "boolean" ? options.snap : false;
+  }
+
+  layout(_size: number): void {}
 }
 
 type ViewItemSize = number | { cachedVisibleSize: number };
@@ -662,7 +749,6 @@ export class SplitView extends EventEmitter implements Disposable {
 
     for (const item of flexibleViewItems) {
       item.size = clamp(size, item.minimumSize, item.maximumSize);
-      console.log(item.size);
     }
 
     this.relayout();

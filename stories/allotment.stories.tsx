@@ -385,3 +385,19 @@ export const FixedSize: Story = (args) => {
   );
 };
 FixedSize.args = {};
+
+export const PreferredSize: Story = (args) => {
+  return (
+    <div className={styles.container}>
+      <Allotment>
+        <Allotment.Pane preferredSize={"33%"}>
+          <Content />
+        </Allotment.Pane>
+        <Allotment.Pane>
+          <Content />
+        </Allotment.Pane>
+      </Allotment>
+    </div>
+  );
+};
+PreferredSize.args = {};
