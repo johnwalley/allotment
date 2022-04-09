@@ -1,15 +1,9 @@
 import "@vscode/codicons/dist/codicon.css";
 
 import { Meta, Story } from "@storybook/react";
-import { debounce } from "lodash";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 
-import {
-  Allotment,
-  AllotmentHandle,
-  AllotmentProps,
-  setSashSize,
-} from "../src";
+import { Allotment } from "../src";
 import styles from "./advanced.stories.module.css";
 import { ActivityBar } from "./components/activity-bar";
 import { Editor } from "./components/editor";
@@ -24,7 +18,7 @@ const ACTIVITIES = [
   "Extensions",
 ];
 
-export const DOCUMENTS = [
+const DOCUMENTS = [
   { title: "allotment.tsx", icon: "ts" },
   { title: "allotment.module.css", icon: "css" },
 ];
@@ -60,15 +54,16 @@ export const VisualStudioCode: Story = ({
   const [panelVisible, setPanelVisible] = useState(true);
   const [activity, setActivity] = useState(0);
 
-  const [documents, setDocuments] = useState<Document[]>(DOCUMENTS);
+  const [openEditors, setOpenEditors] = useState<Document[]>(DOCUMENTS);
 
   const sidebar = (
     <Allotment.Pane key="sidebar" minSize={170} visible={primarySideBar} snap>
       <Sidebar
         title={ACTIVITIES[activity]}
-        documents={documents}
-        onDocumentsChange={(documents) => {
-          setDocuments(documents);
+        documents={DOCUMENTS}
+        openEditors={openEditors}
+        onOpenEditorsChange={(openEditor) => {
+          setOpenEditors(openEditor);
         }}
       />
     </Allotment.Pane>
@@ -112,9 +107,9 @@ export const VisualStudioCode: Story = ({
           >
             <Allotment.Pane key="editor" minSize={70} visible={editorVisible}>
               <Editor
-                documents={documents}
+                documents={openEditors}
                 onDocumentsChange={(documents) => {
-                  setDocuments(documents);
+                  setOpenEditors(documents);
                 }}
               />
             </Allotment.Pane>

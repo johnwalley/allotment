@@ -2,20 +2,22 @@ import classNames from "classnames";
 import { useEffect } from "react";
 
 import { Allotment } from "../../src";
-import { Document, DOCUMENTS } from "../advanced.stories";
+import { Document } from "../advanced.stories";
 import { Pane } from "./pane";
 import styles from "./sidebar.module.css";
 
 export type SidebarProps = {
   title: string;
   documents: Document[];
-  onDocumentsChange: (documents: Document[]) => void;
+  openEditors: Document[];
+  onOpenEditorsChange: (documents: Document[]) => void;
 };
 
 export const Sidebar = ({
   title,
   documents,
-  onDocumentsChange,
+  openEditors,
+  onOpenEditorsChange,
 }: SidebarProps) => {
   useEffect(() => {
     console.log("Mount");
@@ -41,12 +43,12 @@ export const Sidebar = ({
         <Allotment vertical>
           <Allotment.Pane
             key="openEditors"
-            maxSize={22 + documents.length * 22}
-            minSize={22 + documents.length * 22}
+            maxSize={22 + openEditors.length * 22}
+            minSize={22 + openEditors.length * 22}
           >
             <Pane expanded title="Open Editors">
               <div className={styles.list}>
-                {documents.map((document, index) => (
+                {openEditors.map((document, index) => (
                   <div key={index} className={styles.listRow}>
                     <a
                       className={classNames(
@@ -58,10 +60,10 @@ export const Sidebar = ({
                       onClick={() => {
                         console.log(`Close ${document.title}:${index}`);
 
-                        const newDocuments = [...documents];
+                        const newDocuments = [...openEditors];
                         newDocuments.splice(index, 1);
 
-                        onDocumentsChange(newDocuments);
+                        onOpenEditorsChange(newDocuments);
                       }}
                     ></a>
                     <div className={styles.iconLabel}>
@@ -84,7 +86,7 @@ export const Sidebar = ({
           <Allotment.Pane minSize={142}>
             <Pane key="allotment" expanded title="Allotment">
               <div className={styles.list}>
-                {DOCUMENTS.map((document, index) => (
+                {documents.map((document, index) => (
                   <div key={index} className={styles.listRow}>
                     <div className={styles.iconLabel}>
                       <div className={styles.iconLabelContainer}>
@@ -94,10 +96,10 @@ export const Sidebar = ({
                             onClick={() => {
                               console.log(`Open ${document.title}:${index}`);
 
-                              const newDocuments = [...documents];
+                              const newDocuments = [...openEditors];
                               newDocuments.push(document);
 
-                              onDocumentsChange(newDocuments);
+                              onOpenEditorsChange(newDocuments);
                             }}
                           >
                             {document.title}
@@ -113,7 +115,7 @@ export const Sidebar = ({
           <Allotment.Pane minSize={142}>
             <Pane key="outline" expanded title="Outline">
               <div className={styles.list}>
-                {DOCUMENTS.map((document, index) => (
+                {documents.map((document, index) => (
                   <div key={index} className={styles.listRow}>
                     <div className={styles.iconLabel}>
                       <div className={styles.iconLabelContainer}>
@@ -123,10 +125,10 @@ export const Sidebar = ({
                             onClick={() => {
                               console.log(`Open ${document.title}:${index}`);
 
-                              const newDocuments = [...documents];
+                              const newDocuments = [...openEditors];
                               newDocuments.push(document);
 
-                              onDocumentsChange(newDocuments);
+                              onOpenEditorsChange(newDocuments);
                             }}
                           >
                             {document.title}
