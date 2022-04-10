@@ -385,3 +385,45 @@ export const FixedSize: Story = (args) => {
   );
 };
 FixedSize.args = {};
+
+export const PreferredSize: Story = (args) => {
+  const ref = useRef<AllotmentHandle>(null!);
+  const [preferredSize, setPreferredSize] = useState(100);
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          ref.current.reset();
+        }}
+      >
+        Reset
+      </button>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          setPreferredSize(Math.round(200 * Math.random()));
+        }}
+      >
+        {`Random preferredSize: ${preferredSize}`}
+      </button>
+      <div className={styles.container}>
+        <Allotment ref={ref}>
+          <Allotment.Pane preferredSize={"20%"}>
+            <Content />
+          </Allotment.Pane>
+          <Allotment.Pane>
+            <Content />
+          </Allotment.Pane>
+          <Allotment.Pane preferredSize={preferredSize}>
+            <Content></Content>
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+PreferredSize.args = {};

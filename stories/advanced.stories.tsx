@@ -57,7 +57,13 @@ export const VisualStudioCode: Story = ({
   const [openEditors, setOpenEditors] = useState<Document[]>(DOCUMENTS);
 
   const sidebar = (
-    <Allotment.Pane key="sidebar" minSize={170} visible={primarySideBar} snap>
+    <Allotment.Pane
+      key="sidebar"
+      minSize={170}
+      preferredSize={300}
+      visible={primarySideBar}
+      snap
+    >
       <Sidebar
         title={ACTIVITIES[activity]}
         documents={DOCUMENTS}
@@ -113,7 +119,12 @@ export const VisualStudioCode: Story = ({
                 }}
               />
             </Allotment.Pane>
-            <Allotment.Pane key="terminal" minSize={78} visible={panelVisible}>
+            <Allotment.Pane
+              key="terminal"
+              minSize={78}
+              preferredSize="40%"
+              visible={panelVisible}
+            >
               <Panel
                 maximized={!editorVisible}
                 onClose={() => {
