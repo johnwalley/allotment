@@ -196,6 +196,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
                   snap: props?.snap ?? snap,
                 });
 
+                views.current.push(view);
+
                 return {
                   container: [...splitViewViewRef.current.values()][index],
                   size: size,
