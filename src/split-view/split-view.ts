@@ -566,6 +566,38 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   /**
+   * Move a {@link View view} to a different index.
+   *
+   * @param from The source index.
+   * @param to The target index.
+   */
+  public moveView(container: HTMLElement, from: number, to: number): void {
+    const cachedVisibleSize = this.getViewCachedVisibleSize(from);
+
+    const sizing =
+      typeof cachedVisibleSize === "undefined"
+        ? this.getViewSize(from)
+        : Sizing.Invisible(cachedVisibleSize);
+
+    const view = this.removeView(from);
+    this.addView(container, view, sizing, to);
+  }
+
+  /**
+   * Returns the {@link View view}'s size previously to being hidden.
+   *
+   * @param index The {@link View view} index.
+   */
+  private getViewCachedVisibleSize(index: number): number | undefined {
+    if (index < 0 || index >= this.viewItems.length) {
+      throw new Error("Index out of bounds");
+    }
+
+    const viewItem = this.viewItems[index];
+    return viewItem.cachedVisibleSize;
+  }
+
+  /**
    * Layout the {@link SplitView}.
    *
    * @param size The entire size of the {@link SplitView}.

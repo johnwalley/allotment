@@ -28,6 +28,7 @@
     "eventemitter3": "^4.0.0",
     "lodash.clamp": "^4.0.0",
     "lodash.debounce": "^4.0.0",
+    "lodash.isequal": "^4.5.0",
     "use-resize-observer": "^8.0.0"
   },
   "devDependencies": {
@@ -50,6 +51,7 @@
     "@types/jest": "27.4.1",
     "@types/lodash.clamp": "4.0.6",
     "@types/lodash.debounce": "4.0.6",
+    "@types/lodash.isequal": "4.5.5",
     "@typescript-eslint/parser": "5.18.0",
     "@vscode/codicons": "0.0.29",
     "babel-jest": "27.5.1",
