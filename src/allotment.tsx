@@ -25,6 +25,8 @@ function isPane(item: React.ReactNode): item is typeof Pane {
 
 function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
   return (
+    (props as PaneProps).minSize !== undefined ||
+    (props as PaneProps).maxSize !== undefined ||
     (props as PaneProps).preferredSize !== undefined ||
     (props as PaneProps).visible !== undefined
   );
@@ -327,8 +329,33 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           const index = keys.findIndex((key) => key === updateKey);
 
           if (props && isPaneProps(props)) {
-            if (props.preferredSize !== undefined) {
+            if (
+              props.preferredSize !== undefined &&
+              views.current[index].preferredSize !== props.preferredSize
+            ) {
               views.current[index].preferredSize = props.preferredSize;
+            }
+
+            let sizeChanged = false;
+
+            if (
+              props.minSize !== undefined &&
+              views.current[index].minimumSize !== props.minSize
+            ) {
+              views.current[index].minimumSize = props.minSize;
+              sizeChanged = true;
+            }
+
+            if (
+              props.maxSize !== undefined &&
+              views.current[index].maximumSize !== props.maxSize
+            ) {
+              views.current[index].maximumSize = props.maxSize;
+              sizeChanged = true;
+            }
+
+            if (sizeChanged) {
+              splitViewRef.current?.layout();
             }
           }
         }
