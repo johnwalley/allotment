@@ -130,6 +130,12 @@ Maximum size of this pane. Overrides `maxSize` set on parent component.
 
 Minimum size of this pane. Overrides `minSize` set on parent component.
 
+### preferredSize
+
+Preferred size of this pane. Allotment will attempt to use this size when adding this pane (including on initial mount) as well as when a user double clicks a sash, or the `reset` method is called on the Allotment instance.
+
+The size can either be a number or a string. If it is a number it will be interpreted as a number of pixels. If it is a string it should end in either "px" or "%". If it ends in "px" it will be interpreted as a number of pixels, e.g. "120px". If it ends in "%" it will be interpreted as a percentage of the size of the Allotment component, e.g. "50%".
+
 ### snap
 
 Enable snap to zero for this pane. Overrides `snap` set on parent component.
