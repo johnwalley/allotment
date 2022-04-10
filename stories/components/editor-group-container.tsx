@@ -29,12 +29,7 @@ export const EditorGroupContainer = ({
               <a className={styles.labelName}>{document.title}</a>
             </div>
           </div>
-        </div>
-        <div className={styles.editorActions}></div>
-      </div>
-      <div className={styles.editorContainer}>
-        <ul>
-          <li>
+          <div className={styles.tabActions}>
             <a
               className={classNames(
                 "codicon codicon-close",
@@ -44,8 +39,6 @@ export const EditorGroupContainer = ({
               title="Close (⌘W)"
               onClick={onClose}
             />
-          </li>
-          <li>
             <a
               className={classNames(
                 "codicon codicon-split-horizontal",
@@ -56,9 +49,11 @@ export const EditorGroupContainer = ({
 [⌥] Split Editor Down"
               onClick={onSplitEditor}
             />
-          </li>
-        </ul>
+          </div>
+        </div>
+        <div className={styles.editorActions}></div>
       </div>
+      <div className={styles.editorContainer}></div>
     </div>
   );
 };

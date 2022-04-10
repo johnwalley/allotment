@@ -3,6 +3,7 @@ import "xterm/css/xterm.css";
 import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import { Terminal } from "xterm";
+import { FitAddon } from "xterm-addon-fit";
 
 import styles from "./panel.module.css";
 
@@ -27,7 +28,13 @@ export const Panel = ({
       theme: { background: "rgb(30,30,30)" },
     });
 
+    const fitAddon = new FitAddon();
+
+    term.loadAddon(fitAddon);
+
     term.open(ref.current);
+
+    fitAddon.fit();
 
     const prompt = () => {
       term.write("\r\n$ ");

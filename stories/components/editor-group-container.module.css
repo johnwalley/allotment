@@ -14,6 +14,17 @@
   height: 100%;
 }
 
+.tabList {
+  display: flex;
+}
+
+.tabActions {
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 28px;
+}
+
 .title {
   background-color: rgb(37, 37, 38);
 }
@@ -45,4 +56,11 @@
 .labelName {
   cursor: pointer;
   font-size: 13px;
+}
+
+.actionLabel {
+  font-size: 16px !important;
+  padding: 2px;
+  width: 16px;
+  height: 16px;
 }

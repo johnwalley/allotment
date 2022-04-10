@@ -57,10 +57,15 @@
 }
 
 .listRow {
+  cursor: pointer;
   height: 22px;
   line-height: 22px;
   padding-left: 22px;
   display: flex;
+}
+
+.listRow:hover {
+  background-color: #2a2d2e;
 }
 
 .actionLabel {
