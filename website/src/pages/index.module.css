@@ -16,6 +16,11 @@
   }
 }
 
+.heroImage {
+  height: 240px;
+  padding-bottom: 20px;
+}
+
 .buttons {
   display: flex;
   align-items: center;

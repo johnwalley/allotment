@@ -1,5 +1,6 @@
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import VSCodeExampleImageUrl from "@site/static/img/vs-code-example.gif";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
 import React from "react";
@@ -14,6 +15,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <img className={styles.heroImage} src={VSCodeExampleImageUrl} />
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
