@@ -19,14 +19,6 @@ export const Sidebar = ({
   openEditors,
   onOpenEditorsChange,
 }: SidebarProps) => {
-  useEffect(() => {
-    console.log("Mount");
-
-    return () => {
-      console.log("Unmount");
-    };
-  }, []);
-
   return (
     <div className={styles.sidebar}>
       <div className={styles.title}>
