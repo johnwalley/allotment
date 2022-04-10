@@ -4,6 +4,7 @@ import clamp from "lodash.clamp";
 import styles from "../allotment.module.css";
 import { pushToEnd, range } from "../helpers/array";
 import { Disposable } from "../helpers/disposable";
+import { endsWith } from "../helpers/string";
 import {
   Orientation,
   Sash,
@@ -143,6 +144,39 @@ export interface View {
    * @param visible Whether the view becomes visible.
    */
   setVisible?(visible: boolean): void;
+}
+
+export interface PaneViewOptions {
+  element: HTMLElement;
+  minimumSize?: number;
+  maximumSize?: number;
+  snap?: boolean;
+}
+
+export class PaneView implements View {
+  public minimumSize: number = 0;
+  public maximumSize: number = Number.POSITIVE_INFINITY;
+
+  readonly element: HTMLElement;
+  readonly snap: boolean;
+
+  constructor(options: PaneViewOptions) {
+    this.element = options.element;
+
+    this.minimumSize =
+      typeof options.minimumSize === "number" ? options.minimumSize : 30;
+
+    this.maximumSize =
+      typeof options.maximumSize === "number"
+        ? options.maximumSize
+        : Number.POSITIVE_INFINITY;
+
+    this.snap = typeof options.snap === "boolean" ? options.snap : false;
+  }
+
+  layout(size: number): void {
+    //console.log(size);
+  }
 }
 
 type ViewItemSize = number | { cachedVisibleSize: number };
@@ -568,7 +602,7 @@ export class SplitView extends EventEmitter implements Disposable {
    *
    * @param size The entire size of the {@link SplitView}.
    */
-  public layout(size: number): void {
+  public layout(size: number = this.size): void {
     const previousSize = Math.max(this.size, this.contentSize);
     this.size = size;
 
@@ -601,12 +635,14 @@ export class SplitView extends EventEmitter implements Disposable {
       return;
     }
 
+    const lowPriorityIndexes = [index];
+
     const item = this.viewItems[index];
     size = Math.round(size);
     size = clamp(size, item.minimumSize, Math.min(item.maximumSize, this.size));
 
     item.size = size;
-    this.relayout();
+    this.relayout(lowPriorityIndexes);
   }
 
   public resizeViews(sizes: number[]): void {
@@ -704,10 +740,16 @@ export class SplitView extends EventEmitter implements Disposable {
     this.sashContainer.remove();
   }
 
-  private relayout(): void {
+  private relayout(lowPriorityIndexes?: number[]): void {
     const contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
 
-    this.resize(this.viewItems.length - 1, this.size - contentSize, undefined);
+    this.resize(
+      this.viewItems.length - 1,
+      this.size - contentSize,
+      undefined,
+      lowPriorityIndexes
+    );
+
     this.distributeEmptySpace();
     this.layoutViews();
     this.saveProportions();
@@ -809,7 +851,16 @@ export class SplitView extends EventEmitter implements Disposable {
 
     const delta = current - start;
 
-    this.resize(index, delta, sizes, minDelta, maxDelta, snapBefore, snapAfter);
+    this.resize(
+      index,
+      delta,
+      sizes,
+      undefined,
+      minDelta,
+      maxDelta,
+      snapBefore,
+      snapAfter
+    );
 
     this.distributeEmptySpace();
     this.layoutViews();
@@ -842,6 +893,7 @@ export class SplitView extends EventEmitter implements Disposable {
     index: number,
     delta: number,
     sizes = this.viewItems.map((i) => i.size),
+    lowPriorityIndexes?: number[],
     overloadMinDelta: number = Number.NEGATIVE_INFINITY,
     overloadMaxDelta: number = Number.POSITIVE_INFINITY,
     snapBefore?: SashDragSnapState,
@@ -853,6 +905,13 @@ export class SplitView extends EventEmitter implements Disposable {
 
     const upIndexes = range(index, -1, -1);
     const downIndexes = range(index + 1, this.viewItems.length);
+
+    if (lowPriorityIndexes) {
+      for (const index of lowPriorityIndexes) {
+        pushToEnd(upIndexes, index);
+        pushToEnd(downIndexes, index);
+      }
+    }
 
     const upItems = upIndexes.map((i) => this.viewItems[i]);
     const upSizes = upIndexes.map((i) => sizes[i]);
@@ -910,6 +969,7 @@ export class SplitView extends EventEmitter implements Disposable {
         index,
         delta,
         sizes,
+        undefined,
         overloadMinDelta,
         overloadMaxDelta
       );
