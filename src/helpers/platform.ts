@@ -19,8 +19,6 @@ if (typeof navigator === "object") {
       _userAgent.indexOf("iPhone") >= 0) &&
     !!navigator.maxTouchPoints &&
     navigator.maxTouchPoints > 0;
-} else {
-  console.error("Unable to resolve platform.");
 }
 
 export const isIOS = _isIOS;

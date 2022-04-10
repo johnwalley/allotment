@@ -2,6 +2,7 @@ import classNames from "classnames";
 import clamp from "lodash.clamp";
 import React, {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
@@ -13,14 +14,10 @@ import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
+import { LayoutService } from "./layout-service";
+import { PaneView } from "./pane-view";
 import { Orientation, setGlobalSashSize } from "./sash";
-import {
-  LayoutService,
-  PaneView,
-  Sizing,
-  SplitView,
-  SplitViewOptions,
-} from "./split-view/split-view";
+import { Sizing, SplitView, SplitViewOptions } from "./split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
@@ -129,9 +126,25 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       [children]
     );
 
+    const resizeToPreferredSize = useCallback((index: number): boolean => {
+      const view = views.current?.[index];
+
+      if (typeof view?.preferredSize !== "number") {
+        return false;
+      }
+
+      splitViewRef.current?.resizeView(index, Math.round(view.preferredSize));
+
+      return true;
+    }, []);
+
     useImperativeHandle(ref, () => ({
       reset: () => {
         splitViewRef.current?.distributeViewSizes();
+
+        for (let index = 0; index < views.current.length; index++) {
+          resizeToPreferredSize(index);
+        }
       },
       resize: (sizes) => {
         splitViewRef.current?.resizeViews(sizes);
@@ -219,21 +232,6 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         if (onReset) {
           onReset();
         } else {
-          const resizeToPreferredSize = (index: number): boolean => {
-            const view = views.current?.[index];
-
-            if (typeof view?.preferredSize !== "number") {
-              return false;
-            }
-
-            splitViewRef.current?.resizeView(
-              index,
-              Math.round(view.preferredSize)
-            );
-
-            return true;
-          };
-
           if (resizeToPreferredSize(index)) {
             return;
           }
@@ -324,6 +322,17 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           }
         }
 
+        for (const updateKey of update) {
+          const props = splitViewPropsRef.current.get(updateKey);
+          const index = keys.findIndex((key) => key === updateKey);
+
+          if (props && isPaneProps(props)) {
+            if (props.preferredSize !== undefined) {
+              views.current[index].preferredSize = props.preferredSize;
+            }
+          }
+        }
+
         if (enter.length > 0 || exit.length > 0) {
           previousKeys.current = keys;
         }
@@ -335,7 +344,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       onResize: ({ width, height }) => {
         if (width && height) {
           splitViewRef.current?.layout(vertical ? height : width);
-          layoutService.current.layout(vertical ? height : width);
+          layoutService.current.setSize(vertical ? height : width);
           setDimensionsInitialized(true);
         }
       },
