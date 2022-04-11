@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/johnwalley/allotment/compare/v1.11.2...v1.12.0) (2022-04-11)
+
+### Features
+
+- add onVisibleChange callback ([#222](https://github.com/johnwalley/allotment/issues/222)) ([39f9bec](https://github.com/johnwalley/allotment/commit/39f9bec2627b7496ee6270fe3ff67e8a1f90e94e))
+- add preferredSize prop ([#229](https://github.com/johnwalley/allotment/issues/229)) ([3be2144](https://github.com/johnwalley/allotment/commit/3be21441660475a5c71c604dbb11ac84630df913))
+- avoid unmounting pane with same key which changes position ([#226](https://github.com/johnwalley/allotment/issues/226)) ([f7d077a](https://github.com/johnwalley/allotment/commit/f7d077a1d71d51139ce7386be0538dcdd29c08e1))
+- dynamic minSize and maxSize ([#227](https://github.com/johnwalley/allotment/issues/227)) ([d764ebe](https://github.com/johnwalley/allotment/commit/d764ebe241faead5bdecd9311135ff1f39a40935))
+
+### Bug Fixes
+
+- **deps:** update react monorepo to v18 ([#214](https://github.com/johnwalley/allotment/issues/214)) ([3263b4b](https://github.com/johnwalley/allotment/commit/3263b4b2a5a24e9d97e8ff4a2db3f783240ee97a))
+- preferredSize should work with defaultSizes ([5398f2f](https://github.com/johnwalley/allotment/commit/5398f2fe6fa466fe6ed05fb3e7ced61745b8ca51))
+- use custom onReset callback for programatic reset ([978c0be](https://github.com/johnwalley/allotment/commit/978c0be46b1427056b7ecc0101fe2090720354ad))
+
 ### [1.11.2](https://github.com/johnwalley/allotment/compare/v1.11.1...v1.11.2) (2022-04-02)
 
 ### Bug Fixes
