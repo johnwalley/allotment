@@ -3,7 +3,7 @@
   "version": "1.12.0",
   "description": "React split-pane component",
   "exports": {
-    ".": "./dist/modern.js",
+    ".": "./dist/modern.mjs",
     "./dist/": "./dist/"
   },
   "main": "./dist/legacy.js",
@@ -20,6 +20,7 @@
   "license": "MIT",
   "homepage": "https://allotment.mulberryhousesoftware.com/",
   "files": [
+    "dist/*.mjs",
     "dist/*.js",
     "dist/*.css",
     "dist/types/src/**/*.d.ts"
