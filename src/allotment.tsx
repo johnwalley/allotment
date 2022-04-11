@@ -143,10 +143,14 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
     useImperativeHandle(ref, () => ({
       reset: () => {
-        splitViewRef.current?.distributeViewSizes();
+        if (onReset) {
+          onReset();
+        } else {
+          splitViewRef.current?.distributeViewSizes();
 
-        for (let index = 0; index < views.current.length; index++) {
-          resizeToPreferredSize(index);
+          for (let index = 0; index < views.current.length; index++) {
+            resizeToPreferredSize(index);
+          }
         }
       },
       resize: (sizes) => {
