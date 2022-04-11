@@ -9,7 +9,7 @@ import {
   setSashSize,
 } from "../src";
 import { range } from "../src/helpers/array";
-import styles from "./allotment.stories.module.css";
+import styles from "./basic.stories.module.css";
 import { Content } from "./content";
 
 export default {
