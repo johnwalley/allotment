@@ -18,6 +18,7 @@
   "repository": "https://github.com/johnwalley/allotment.git",
   "author": "johnwalley <john@walley.org.uk>",
   "license": "MIT",
+  "homepage": "https://allotment.mulberryhousesoftware.com/",
   "files": [
     "dist/*.js",
     "dist/*.css",
