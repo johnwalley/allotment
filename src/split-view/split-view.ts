@@ -325,6 +325,8 @@ interface SashDragState {
  * to resize the views, making sure the constraints are respected.
  */
 export class SplitView extends EventEmitter implements Disposable {
+  public onDidChange: ((sizes: number[]) => void) | undefined;
+
   /**  This {@link SplitView}'s orientation. */
   readonly orientation: Orientation;
 
@@ -337,7 +339,6 @@ export class SplitView extends EventEmitter implements Disposable {
   private sashDragState: SashDragState | undefined;
   private proportionalLayout: boolean;
   private readonly getSashOrthogonalSize: { (): number } | undefined;
-  private readonly onDidChange: ((sizes: number[]) => void) | undefined;
 
   private _startSnappingEnabled = true;
   get startSnappingEnabled(): boolean {
