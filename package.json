@@ -57,7 +57,7 @@
     "@typescript-eslint/parser": "5.18.0",
     "@vscode/codicons": "0.0.29",
     "babel-jest": "27.5.1",
-    "babel-loader": "8.2.4",
+    "babel-loader": "8.2.5",
     "eslint": "8.13.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-react-hooks": "4.4.0",
