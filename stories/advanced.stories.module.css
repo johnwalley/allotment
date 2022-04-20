@@ -4,4 +4,6 @@
   font-family: sans-serif;
   height: 480px;
   width: 1024px;
+  overflow: scroll;
+  resize: both;
 }

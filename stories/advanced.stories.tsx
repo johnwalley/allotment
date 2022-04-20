@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Allotment } from "../src";
 import styles from "./advanced.stories.module.css";
 import { ActivityBar } from "./components/activity-bar";
+import { AuxiliaryBar } from "./components/auxiliary-bar";
 import { Editor } from "./components/editor";
 import { Panel } from "./components/panel";
 import { Sidebar } from "./components/sidebar";
@@ -49,6 +50,7 @@ export const VisualStudioCode: Story = ({
   activityBar,
   primarySideBar,
   primarySideBarPosition,
+  secondarySideBar,
 }) => {
   const [editorVisible, setEditorVisible] = useState(true);
   const [panelVisible, setPanelVisible] = useState(true);
@@ -75,6 +77,18 @@ export const VisualStudioCode: Story = ({
     </Allotment.Pane>
   );
 
+  const auxiliarySidebar = (
+    <Allotment.Pane
+      key="auxiliarySidebar"
+      minSize={170}
+      preferredSize={300}
+      visible={secondarySideBar}
+      snap
+    >
+      <AuxiliaryBar />
+    </Allotment.Pane>
+  );
+
   return (
     <div className={styles.container}>
       <Allotment>
@@ -98,7 +112,7 @@ export const VisualStudioCode: Story = ({
             }}
           />
         </Allotment.Pane>
-        {primarySideBarPosition === "left" && sidebar}
+        {primarySideBarPosition === "left" ? sidebar : auxiliarySidebar}
         <Allotment.Pane key="content" minSize={300}>
           <Allotment
             vertical
@@ -143,7 +157,7 @@ export const VisualStudioCode: Story = ({
             </Allotment.Pane>
           </Allotment>
         </Allotment.Pane>
-        {primarySideBarPosition === "right" && sidebar}
+        {primarySideBarPosition === "right" ? sidebar : auxiliarySidebar}
       </Allotment>
     </div>
   );
@@ -153,4 +167,5 @@ VisualStudioCode.args = {
   activityBar: true,
   primarySideBar: true,
   primarySideBarPosition: "left",
+  secondarySideBar: true,
 };
