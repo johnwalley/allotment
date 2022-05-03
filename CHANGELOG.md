@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/johnwalley/allotment/compare/v1.12.1...v1.13.0) (2022-05-03)
+
+### Features
+
+- add layout priority prop ([#267](https://github.com/johnwalley/allotment/issues/267)) ([f8bb905](https://github.com/johnwalley/allotment/commit/f8bb905085faf85a738e8d4ac5e4899964ef358f))
+
+### Bug Fixes
+
+- onChange prop can now be updated ([#239](https://github.com/johnwalley/allotment/issues/239)) ([ea96c28](https://github.com/johnwalley/allotment/commit/ea96c28c3e99d149774d8e46359eddb439dcd504))
+
 ### [1.12.1](https://github.com/johnwalley/allotment/compare/v1.12.0...v1.12.1) (2022-04-11)
 
 ## [1.12.0](https://github.com/johnwalley/allotment/compare/v1.11.2...v1.12.0) (2022-04-11)
