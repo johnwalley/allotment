@@ -130,6 +130,12 @@ Maximum size of this pane. Overrides `maxSize` set on parent component.
 
 Minimum size of this pane. Overrides `minSize` set on parent component.
 
+### priority
+
+The priority of the pane when the layout algorithm runs. Panes with higher priority will be resized first.
+
+Only used when `proportionalLayout` is false.
+
 ### preferredSize
 
 Preferred size of this pane. Allotment will attempt to use this size when adding this pane (including on initial mount) as well as when a user double clicks a sash, or the `reset` method is called on the Allotment instance.

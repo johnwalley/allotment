@@ -2,9 +2,8 @@ import EventEmitter from "eventemitter3";
 import clamp from "lodash.clamp";
 
 import styles from "../allotment.module.css";
-import { pushToEnd, range } from "../helpers/array";
+import { pushToEnd, pushToStart, range } from "../helpers/array";
 import { Disposable } from "../helpers/disposable";
-import { endsWith } from "../helpers/string";
 import {
   Orientation,
   Sash,
@@ -101,6 +100,12 @@ export interface SplitViewOptions {
   readonly getSashOrthogonalSize?: () => number;
 }
 
+export const enum LayoutPriority {
+  Normal = "NORMAL",
+  Low = "LOW",
+  High = "HIGH",
+}
+
 /**
  * The interface to implement for views within a {@link SplitView}.
  */
@@ -121,6 +126,14 @@ export interface View {
    * @remarks If none, set it to `Number.POSITIVE_INFINITY`.
    */
   readonly maximumSize: number;
+
+  /**
+   * The priority of the view when the {@link SplitView.resize layout} algorithm
+   * runs. Views with higher priority will be resized first.
+   *
+   * @remarks Only used when `proportionalLayout` is false.
+   */
+  readonly priority?: LayoutPriority;
 
   /**
    * Whether the view will snap whenever the user reaches its minimum size or
@@ -174,9 +187,7 @@ export class PaneView implements View {
     this.snap = typeof options.snap === "boolean" ? options.snap : false;
   }
 
-  layout(size: number): void {
-    //console.log(size);
-  }
+  layout(_size: number): void {}
 }
 
 type ViewItemSize = number | { cachedVisibleSize: number };
@@ -209,6 +220,10 @@ abstract class ViewItem {
 
   get size(): number {
     return this._size;
+  }
+
+  get priority(): LayoutPriority | undefined {
+    return this.view.priority;
   }
 
   get snap(): boolean {
@@ -608,7 +623,23 @@ export class SplitView extends EventEmitter implements Disposable {
     this.size = size;
 
     if (!this.proportions) {
-      this.resize(this.viewItems.length - 1, size - previousSize, undefined);
+      const indexes = range(0, this.viewItems.length);
+
+      const lowPriorityIndexes = indexes.filter(
+        (i) => this.viewItems[i].priority === LayoutPriority.Low
+      );
+
+      const highPriorityIndexes = indexes.filter(
+        (i) => this.viewItems[i].priority === LayoutPriority.High
+      );
+
+      this.resize(
+        this.viewItems.length - 1,
+        size - previousSize,
+        undefined,
+        lowPriorityIndexes,
+        highPriorityIndexes
+      );
     } else {
       for (let i = 0; i < this.viewItems.length; i++) {
         const item = this.viewItems[i];
@@ -636,14 +667,25 @@ export class SplitView extends EventEmitter implements Disposable {
       return;
     }
 
-    const lowPriorityIndexes = [index];
+    const indexes = range(0, this.viewItems.length).filter((i) => i !== index);
+
+    const lowPriorityIndexes = [
+      ...indexes.filter(
+        (i) => this.viewItems[i].priority === LayoutPriority.Low
+      ),
+      index,
+    ];
+
+    const highPriorityIndexes = indexes.filter(
+      (i) => this.viewItems[i].priority === LayoutPriority.High
+    );
 
     const item = this.viewItems[index];
     size = Math.round(size);
     size = clamp(size, item.minimumSize, Math.min(item.maximumSize, this.size));
 
     item.size = size;
-    this.relayout(lowPriorityIndexes);
+    this.relayout(lowPriorityIndexes, highPriorityIndexes);
   }
 
   public resizeViews(sizes: number[]): void {
@@ -731,7 +773,17 @@ export class SplitView extends EventEmitter implements Disposable {
       item.size = clamp(size, item.minimumSize, item.maximumSize);
     }
 
-    this.relayout();
+    const indexes = range(0, this.viewItems.length);
+
+    const lowPriorityIndexes = indexes.filter(
+      (i) => this.viewItems[i].priority === LayoutPriority.Low
+    );
+
+    const highPriorityIndexes = indexes.filter(
+      (i) => this.viewItems[i].priority === LayoutPriority.High
+    );
+
+    this.relayout(lowPriorityIndexes, highPriorityIndexes);
   }
 
   public dispose(): void {
@@ -741,14 +793,18 @@ export class SplitView extends EventEmitter implements Disposable {
     this.sashContainer.remove();
   }
 
-  private relayout(lowPriorityIndexes?: number[]): void {
+  private relayout(
+    lowPriorityIndexes?: number[],
+    highPriorityIndexes?: number[]
+  ): void {
     const contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
 
     this.resize(
       this.viewItems.length - 1,
       this.size - contentSize,
       undefined,
-      lowPriorityIndexes
+      lowPriorityIndexes,
+      highPriorityIndexes
     );
 
     this.distributeEmptySpace();
@@ -852,10 +908,12 @@ export class SplitView extends EventEmitter implements Disposable {
 
     const delta = current - start;
 
+    // TODO: Should this be conditional on alt?
     this.resize(
       index,
       delta,
       sizes,
+      undefined,
       undefined,
       minDelta,
       maxDelta,
@@ -895,6 +953,7 @@ export class SplitView extends EventEmitter implements Disposable {
     delta: number,
     sizes = this.viewItems.map((i) => i.size),
     lowPriorityIndexes?: number[],
+    highPriorityIndexes?: number[],
     overloadMinDelta: number = Number.NEGATIVE_INFINITY,
     overloadMaxDelta: number = Number.POSITIVE_INFINITY,
     snapBefore?: SashDragSnapState,
@@ -906,6 +965,13 @@ export class SplitView extends EventEmitter implements Disposable {
 
     const upIndexes = range(index, -1, -1);
     const downIndexes = range(index + 1, this.viewItems.length);
+
+    if (highPriorityIndexes) {
+      for (const index of highPriorityIndexes) {
+        pushToStart(upIndexes, index);
+        pushToStart(downIndexes, index);
+      }
+    }
 
     if (lowPriorityIndexes) {
       for (const index of lowPriorityIndexes) {
@@ -970,7 +1036,8 @@ export class SplitView extends EventEmitter implements Disposable {
         index,
         delta,
         sizes,
-        undefined,
+        lowPriorityIndexes,
+        highPriorityIndexes,
         overloadMinDelta,
         overloadMaxDelta
       );

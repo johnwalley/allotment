@@ -18,7 +18,12 @@ import { isIOS } from "./helpers/platform";
 import { LayoutService } from "./layout-service";
 import { PaneView } from "./pane-view";
 import { Orientation, setGlobalSashSize } from "./sash";
-import { Sizing, SplitView, SplitViewOptions } from "./split-view";
+import {
+  LayoutPriority,
+  Sizing,
+  SplitView,
+  SplitViewOptions,
+} from "./split-view";
 
 function isPane(item: React.ReactNode): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
@@ -29,6 +34,7 @@ function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
     (props as PaneProps).minSize !== undefined ||
     (props as PaneProps).maxSize !== undefined ||
     (props as PaneProps).preferredSize !== undefined ||
+    (props as PaneProps).priority !== undefined ||
     (props as PaneProps).visible !== undefined
   );
 }
@@ -47,6 +53,7 @@ export interface CommonProps {
 export type PaneProps = {
   children: React.ReactNode;
   preferredSize?: number | string;
+  priority?: LayoutPriority;
   visible?: boolean;
 } & CommonProps;
 
@@ -194,6 +201,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
                   element: document.createElement("div"),
                   minimumSize: props?.minSize ?? minSize,
                   maximumSize: props?.maxSize ?? maxSize,
+                  priority: props?.priority ?? LayoutPriority.Normal,
                   ...(props?.preferredSize && {
                     preferredSize: props?.preferredSize,
                   }),
@@ -288,6 +296,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             element: document.createElement("div"),
             minimumSize: props?.minSize ?? minSize,
             maximumSize: props?.maxSize ?? maxSize,
+            priority: props?.priority ?? LayoutPriority.Normal,
             ...(props?.preferredSize && {
               preferredSize: props?.preferredSize,
             }),
