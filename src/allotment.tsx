@@ -402,6 +402,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       }
     }, [childrenArray, dimensionsInitialized, maxSize, minSize, snap]);
 
+    useEffect(() => {
+      if (splitViewRef.current) {
+        splitViewRef.current.onDidChange = onChange;
+      }
+    }, [onChange]);
+
     useResizeObserver({
       ref: containerRef,
       onResize: ({ width, height }) => {
