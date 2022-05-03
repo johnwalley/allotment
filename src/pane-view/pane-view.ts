@@ -1,6 +1,6 @@
 import { endsWith } from "../helpers/string";
 import { LayoutService } from "../layout-service";
-import { View } from "../split-view";
+import { LayoutPriority, View } from "../split-view";
 
 export interface Layout {
   getPreferredSize: () => number | undefined;
@@ -42,6 +42,7 @@ export interface PaneViewOptions {
   element: HTMLElement;
   minimumSize?: number;
   maximumSize?: number;
+  priority?: LayoutPriority;
   preferredSize?: number | string;
   snap?: boolean;
 }
@@ -51,6 +52,7 @@ export class PaneView implements View {
   public maximumSize: number = Number.POSITIVE_INFINITY;
 
   readonly element: HTMLElement;
+  readonly priority?: LayoutPriority | undefined;
   readonly snap: boolean;
 
   private layoutService: LayoutService;
@@ -127,6 +129,8 @@ export class PaneView implements View {
     } else {
       this.layoutStrategy = new NullLayout();
     }
+
+    this.priority = options.priority ?? LayoutPriority.Normal;
 
     this.snap = typeof options.snap === "boolean" ? options.snap : false;
   }

@@ -4,6 +4,7 @@ import { Meta, Story } from "@storybook/react";
 import { useState } from "react";
 
 import { Allotment } from "../src";
+import { LayoutPriority } from "../src/split-view";
 import styles from "./advanced.stories.module.css";
 import { ActivityBar } from "./components/activity-bar";
 import { AuxiliaryBar } from "./components/auxiliary-bar";
@@ -62,6 +63,7 @@ export const VisualStudioCode: Story = ({
     <Allotment.Pane
       key="sidebar"
       minSize={170}
+      priority={LayoutPriority.Low}
       preferredSize={300}
       visible={primarySideBar}
       snap
@@ -81,6 +83,7 @@ export const VisualStudioCode: Story = ({
     <Allotment.Pane
       key="auxiliarySidebar"
       minSize={170}
+      priority={LayoutPriority.Low}
       preferredSize={300}
       visible={secondarySideBar}
       snap
@@ -91,7 +94,7 @@ export const VisualStudioCode: Story = ({
 
   return (
     <div className={styles.container}>
-      <Allotment>
+      <Allotment proportionalLayout={false}>
         <Allotment.Pane
           key="activityBar"
           minSize={48}
@@ -113,7 +116,11 @@ export const VisualStudioCode: Story = ({
           />
         </Allotment.Pane>
         {primarySideBarPosition === "left" ? sidebar : auxiliarySidebar}
-        <Allotment.Pane key="content" minSize={300}>
+        <Allotment.Pane
+          key="content"
+          minSize={300}
+          priority={LayoutPriority.High}
+        >
           <Allotment
             vertical
             snap

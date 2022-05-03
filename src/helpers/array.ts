@@ -1,4 +1,16 @@
 /**
+ * Pushes an element to the start of the array, if found.
+ */
+export function pushToStart<T>(arr: T[], value: T): void {
+  const index = arr.indexOf(value);
+
+  if (index > -1) {
+    arr.splice(index, 1);
+    arr.unshift(value);
+  }
+}
+
+/**
  * Pushes an element to the end of the array, if found.
  */
 export function pushToEnd<T>(arr: T[], value: T): void {
