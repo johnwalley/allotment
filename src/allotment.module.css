@@ -28,6 +28,7 @@
 }
 
 .splitView > .splitViewContainer > .splitViewView {
+  overflow: hidden;
   position: absolute;
   white-space: initial;
 }
