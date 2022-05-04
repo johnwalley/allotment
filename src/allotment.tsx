@@ -52,11 +52,23 @@ export interface CommonProps {
 
 export type PaneProps = {
   children: React.ReactNode;
+  /**
+   * Preferred size of this pane. Allotment will attempt to use this size when adding this pane (including on initial mount) as well as when a user double clicks a sash, or the `reset` method is called on the Allotment instance.
+   * @remarks The size can either be a number or a string. If it is a number it will be interpreted as a number of pixels. If it is a string it should end in either "px" or "%". If it ends in "px" it will be interpreted as a number of pixels, e.g. "120px". If it ends in "%" it will be interpreted as a percentage of the size of the Allotment component, e.g. "50%".
+   */
   preferredSize?: number | string;
+  /**
+   * The priority of the pane when the layout algorithm runs. Panes with higher priority will be resized first.
+   * @remarks Only used when `proportionalLayout` is false.
+   */
   priority?: LayoutPriority;
+  /** Whether the pane should be visible */
   visible?: boolean;
 } & CommonProps;
 
+/**
+ * Pane component.
+ */
 export const Pane = forwardRef<HTMLDivElement, PaneProps>(
   ({ className, children }: PaneProps, ref) => {
     return (
@@ -76,9 +88,7 @@ export type AllotmentHandle = {
 
 export type AllotmentProps = {
   children: React.ReactNode;
-  /**
-   * Initial size of each element
-   */
+  /** Initial size of each element */
   defaultSizes?: number[];
   /** Resize each view proportionally when resizing container */
   proportionalLayout?: boolean;
@@ -97,6 +107,9 @@ export type AllotmentProps = {
   onVisibleChange?: (index: number, visible: boolean) => void;
 } & CommonProps;
 
+/**
+ * React split-pane component.
+ */
 const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
   (
     {
@@ -491,6 +504,11 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
 Allotment.displayName = "Allotment";
 
+/**
+ * Set sash size. This is set in both css and js and this function keeps the two in sync.
+ *
+ * @param sashSize Sash size in pixels
+ */
 export function setSashSize(sashSize: number) {
   const size = clamp(sashSize, 4, 20);
   const hoverSize = clamp(sashSize, 1, 8);
