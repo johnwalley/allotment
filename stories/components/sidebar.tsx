@@ -50,8 +50,6 @@ export const Sidebar = ({
                       role="button"
                       title="Close Editor (⌘W)"
                       onClick={() => {
-                        console.log(`Close ${document.title}:${index}`);
-
                         const newDocuments = [...openEditors];
                         newDocuments.splice(index, 1);
 
@@ -86,8 +84,6 @@ export const Sidebar = ({
                           <a
                             className={styles.labeName}
                             onClick={() => {
-                              console.log(`Open ${document.title}:${index}`);
-
                               const newDocuments = [...openEditors];
                               newDocuments.push(document);
 
@@ -115,8 +111,6 @@ export const Sidebar = ({
                           <a
                             className={styles.labeName}
                             onClick={() => {
-                              console.log(`Open ${document.title}:${index}`);
-
                               const newDocuments = [...openEditors];
                               newDocuments.push(document);
 

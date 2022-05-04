@@ -20,16 +20,12 @@ export const Editor = ({ documents, onDocumentsChange }: EditorProps) => {
               key={index}
               document={document}
               onClose={() => {
-                console.log(`Close ${document.title}:${index}`);
-
                 const newDocuments = [...documents];
                 newDocuments.splice(index, 1);
 
                 onDocumentsChange(newDocuments);
               }}
               onSplitEditor={() => {
-                console.log("Split editor");
-
                 const newDocuments = [...documents];
                 newDocuments.splice(index, 0, document);
 
