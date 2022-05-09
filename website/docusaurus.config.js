@@ -57,13 +57,13 @@ const config = {
             label: "Docs",
           },
           {
-            href: "https://allotment-storybook.netlify.app",
-            label: "Storybook",
+            href: "https://github.com/johnwalley/allotment",
+            label: "GitHub",
             position: "right",
           },
           {
-            href: "https://github.com/johnwalley/allotment",
-            label: "GitHub",
+            href: "https://allotment-storybook.netlify.app",
+            label: "Storybook",
             position: "right",
           },
         ],
@@ -86,6 +86,10 @@ const config = {
               {
                 label: "GitHub",
                 href: "https://github.com/johnwalley/allotment",
+              },
+              {
+                label: "Storybook",
+                href: "https://allotment-storybook.netlify.app",
               },
             ],
           },
