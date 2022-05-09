@@ -62,7 +62,7 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-react-hooks": "4.5.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
-    "husky": "7.0.4",
+    "husky": "8.0.1",
     "jest": "28.1.0",
     "jest-environment-jsdom": "28.1.0",
     "postcss": "8.4.13",
