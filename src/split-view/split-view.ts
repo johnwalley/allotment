@@ -159,37 +159,6 @@ export interface View {
   setVisible?(visible: boolean): void;
 }
 
-export interface PaneViewOptions {
-  element: HTMLElement;
-  minimumSize?: number;
-  maximumSize?: number;
-  snap?: boolean;
-}
-
-export class PaneView implements View {
-  public minimumSize: number = 0;
-  public maximumSize: number = Number.POSITIVE_INFINITY;
-
-  readonly element: HTMLElement;
-  readonly snap: boolean;
-
-  constructor(options: PaneViewOptions) {
-    this.element = options.element;
-
-    this.minimumSize =
-      typeof options.minimumSize === "number" ? options.minimumSize : 30;
-
-    this.maximumSize =
-      typeof options.maximumSize === "number"
-        ? options.maximumSize
-        : Number.POSITIVE_INFINITY;
-
-    this.snap = typeof options.snap === "boolean" ? options.snap : false;
-  }
-
-  layout(_size: number): void {}
-}
-
 type ViewItemSize = number | { cachedVisibleSize: number };
 
 abstract class ViewItem {
