@@ -8,13 +8,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 - apply overflow hidden to panes ([#271](https://github.com/johnwalley/allotment/issues/271)) ([9d8d7c9](https://github.com/johnwalley/allotment/commit/9d8d7c918d1454a849c7c49968a1873259869246))
 
-### Bug Fixes
-
-- **deps:** update dependency prism-react-renderer to v1.3.3 ([#289](https://github.com/johnwalley/allotment/issues/289)) ([2cf01bc](https://github.com/johnwalley/allotment/commit/2cf01bc7ba0f9fd462c3ab5eeb788dd6590b932c))
-- **deps:** update dependency use-resize-observer to v9 ([#290](https://github.com/johnwalley/allotment/issues/290)) ([cfedecb](https://github.com/johnwalley/allotment/commit/cfedecb282ae16f024b6a621dd00effeb98b9f98))
-- **deps:** update docusaurus monorepo to v2.0.0-beta.19 ([#270](https://github.com/johnwalley/allotment/issues/270)) ([040e77f](https://github.com/johnwalley/allotment/commit/040e77fa6f6af3d63c1f231495ea50de59b92676))
-- **deps:** update docusaurus monorepo to v2.0.0-beta.20 ([#273](https://github.com/johnwalley/allotment/issues/273)) ([33aa52a](https://github.com/johnwalley/allotment/commit/33aa52a54877c663234ca07199dc81a25de87843))
-
 ## [1.13.0](https://github.com/johnwalley/allotment/compare/v1.12.1...v1.13.0) (2022-05-03)
 
 ### Features
