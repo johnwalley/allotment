@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.1](https://github.com/johnwalley/allotment/compare/v1.14.0...v1.14.1) (2022-05-25)
+
+### Bug Fixes
+
+- set text-align to initial for sashes ([#307](https://github.com/johnwalley/allotment/issues/307)) ([aef12f9](https://github.com/johnwalley/allotment/commit/aef12f973e310c016bbf99a20f9193320d7bce79))
+
 ## [1.14.0](https://github.com/johnwalley/allotment/compare/v1.13.0...v1.14.0) (2022-05-20)
 
 ### Features
