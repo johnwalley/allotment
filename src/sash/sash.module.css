@@ -9,6 +9,7 @@
   z-index: 35;
   touch-action: none;
   pointer-events: auto;
+  text-align: initial;
 }
 
 .sash.disabled {
