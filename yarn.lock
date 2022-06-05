@@ -9657,19 +9657,19 @@ json-stringify-safe@^5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
-json5@2.x, json5@^2.1.2, json5@^2.1.3:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
-  integrity sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==
-  dependencies:
-    minimist "^1.2.5"
-
 json5@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
   integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
   dependencies:
     minimist "^1.2.0"
+
+json5@^2.1.2, json5@^2.1.3:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
+  integrity sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==
+  dependencies:
+    minimist "^1.2.5"
 
 json5@^2.2.1:
   version "2.2.1"
@@ -13488,15 +13488,15 @@ ts-dedent@^2.0.0:
   resolved "https://registry.yarnpkg.com/ts-dedent/-/ts-dedent-2.2.0.tgz#39e4bd297cd036292ae2394eb3412be63f563bb5"
   integrity sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==
 
-ts-jest@28.0.1:
-  version "28.0.1"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-28.0.1.tgz#626b4d7d5c386f88f4813d959ffc4ca0a8ffef96"
-  integrity sha512-PbkbitaT/9ZYAqqzk3UYTvCq080Seo46T3m/AdwcZ0D8WH2uBhG6PvA8oOAWsZIknzPQU66fYobvFCL8IqIhmg==
+ts-jest@28.0.4:
+  version "28.0.4"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-28.0.4.tgz#0ab705a60fc4b9f3506f35e26edfa9e9c915c31b"
+  integrity sha512-S6uRDDdCJBvnZqyGjB4VCnwbQrbgdL8WPeP4jevVSpYsBaeGRQAIS08o3Svav2Ex+oXwLgJ/m7F24TNq62kA1A==
   dependencies:
     bs-logger "0.x"
     fast-json-stable-stringify "2.x"
     jest-util "^28.0.0"
-    json5 "2.x"
+    json5 "^2.2.1"
     lodash.memoize "4.x"
     make-error "1.x"
     semver "7.x"
