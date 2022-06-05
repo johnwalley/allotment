@@ -3,7 +3,7 @@
     {
       "Getting Started": ["getting-started"],
       "API reference": ["overview", "allotment", "pane"],
-      "Examples": ["basic", "nested", "closable", "reset"]
+      "Examples": ["basic", "nested", "closable", "reset", "visible"]
     },
     { "type": "doc", "id": "faq" }
   ]
