@@ -58,7 +58,7 @@
     "@vscode/codicons": "0.0.30",
     "babel-jest": "28.1.0",
     "babel-loader": "8.2.5",
-    "eslint": "8.16.0",
+    "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-react-hooks": "4.5.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
