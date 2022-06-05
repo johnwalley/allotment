@@ -294,13 +294,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         const update = keys.filter((key) => previousKeys.current.includes(key));
         const exit = previousKeys.current.map((key) => !keys.includes(key));
 
-        exit.forEach((flag, index) => {
-          if (flag) {
+        for (let index = exit.length - 1; index >= 0; index--) {
+          if (exit[index]) {
             splitViewRef.current?.removeView(index);
             panes.splice(index, 1);
             views.current.splice(index, 1);
           }
-        });
+        }
 
         for (const enterKey of enter) {
           const props = splitViewPropsRef.current.get(enterKey);
