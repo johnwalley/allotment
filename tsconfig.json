@@ -17,7 +17,8 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "declarationDir": "dist/types",
-    "declarationMap": true
+    "declarationMap": true,
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": ["src", "stories"]
 }
