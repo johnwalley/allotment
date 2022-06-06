@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.2](https://github.com/johnwalley/allotment/compare/v1.14.1...v1.14.2) (2022-06-06)
+
+### Bug Fixes
+
+- support removing more than one pane at a time ([#320](https://github.com/johnwalley/allotment/issues/320)) ([8b3b444](https://github.com/johnwalley/allotment/commit/8b3b44497ea9a732c7c7f229701dbe197cc81c64))
+
 ### [1.14.1](https://github.com/johnwalley/allotment/compare/v1.14.0...v1.14.1) (2022-05-25)
 
 ### Bug Fixes
