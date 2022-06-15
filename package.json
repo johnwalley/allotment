@@ -75,7 +75,7 @@
     "rollup-plugin-terser": "7.0.2",
     "standard-version": "9.5.0",
     "storybook-dark-mode": "1.1.0",
-    "ts-jest": "28.0.4",
+    "ts-jest": "28.0.5",
     "ts-node": "10.8.1",
     "typescript": "4.7.3",
     "xterm": "4.18.0",
