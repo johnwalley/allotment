@@ -49,7 +49,7 @@
     "@storybook/addon-essentials": "6.5.9",
     "@storybook/addon-links": "6.5.9",
     "@storybook/react": "6.5.9",
-    "@testing-library/dom": "8.13.0",
+    "@testing-library/dom": "8.14.0",
     "@types/jest": "28.1.1",
     "@types/lodash.clamp": "4.0.7",
     "@types/lodash.debounce": "4.0.7",
