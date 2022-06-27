@@ -4255,10 +4255,10 @@
     "@typescript-eslint/types" "5.29.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vscode/codicons@0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.30.tgz#67c265c1f3ff7214da475333efa6d381710b0335"
-  integrity sha512-/quu8pLXEyrShoDjTImQwJ2H28y1XhANigyw7E7JvN9NNWc3XCkoIWpcb/tUhdf7XQpopLVVYbkMjXpdPPuMXg==
+"@vscode/codicons@0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.31.tgz#1dc56f9442c3928b1c851965cf360e7e051e6511"
+  integrity sha512-fldpXy7pHsQAMlU1pnGI23ypQ6xLk5u6SiABMFoAmlj4f2MR0iwg7C19IB1xvAEGG+dkxOfRSrbKF8ry7QqGQA==
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
