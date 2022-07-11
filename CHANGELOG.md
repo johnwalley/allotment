@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.3](https://github.com/johnwalley/allotment/compare/v1.14.1...v1.14.3) (2022-07-11)
+
+### Bug Fixes
+
+- **deps:** update dependency prism-react-renderer to v1.3.5 ([#349](https://github.com/johnwalley/allotment/issues/349)) ([fe48689](https://github.com/johnwalley/allotment/commit/fe4868977239fb8e21583e38b74ac4bfd4a2dd07))
+- **deps:** update docusaurus monorepo to v2.0.0-beta.21 ([#311](https://github.com/johnwalley/allotment/issues/311)) ([07b1b75](https://github.com/johnwalley/allotment/commit/07b1b75f1e9179b90a97d4264933c7a3a63105ad))
+- export LayoutPriority enum ([#357](https://github.com/johnwalley/allotment/issues/357)) ([4b85d01](https://github.com/johnwalley/allotment/commit/4b85d01fcd7e46597d5d2a198fb9973f8d6efdfa))
+- support removing more than one pane at a time ([#320](https://github.com/johnwalley/allotment/issues/320)) ([8b3b444](https://github.com/johnwalley/allotment/commit/8b3b44497ea9a732c7c7f229701dbe197cc81c64))
+
 ### [1.14.2](https://github.com/johnwalley/allotment/compare/v1.14.1...v1.14.2) (2022-06-06)
 
 ### Bug Fixes
