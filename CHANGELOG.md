@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.5](https://github.com/johnwalley/allotment/compare/v1.14.4...v1.14.5) (2022-07-11)
+
+### Bug Fixes
+
+- export LayoutPriority as enum and not const enum ([#359](https://github.com/johnwalley/allotment/issues/359)) ([eb5403b](https://github.com/johnwalley/allotment/commit/eb5403b619be3c01fb96502d474e3cefbc508d41))
+
 ### [1.14.4](https://github.com/johnwalley/allotment/compare/v1.14.3...v1.14.4) (2022-07-11)
 
 ### Bug Fixes
