@@ -100,7 +100,7 @@ export interface SplitViewOptions {
   readonly getSashOrthogonalSize?: () => number;
 }
 
-export const enum LayoutPriority {
+export enum LayoutPriority {
   Normal = "NORMAL",
   Low = "LOW",
   High = "HIGH",
