@@ -2823,6 +2823,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@juggle/resize-observer@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
+  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
+
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.3.tgz#0300943770e04231041a51bd39f0439b5c7ab4f0"
@@ -3292,6 +3297,11 @@
   dependencies:
     "@types/node" "*"
 
+"@vscode/codicons@^0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.31.tgz#1dc56f9442c3928b1c851965cf360e7e051e6511"
+  integrity sha512-fldpXy7pHsQAMlU1pnGI23ypQ6xLk5u6SiABMFoAmlj4f2MR0iwg7C19IB1xvAEGG+dkxOfRSrbKF8ry7QqGQA==
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"
@@ -3557,6 +3567,18 @@ algoliasearch@^4.13.1:
     "@algolia/requester-common" "4.13.1"
     "@algolia/requester-node-http" "4.13.1"
     "@algolia/transporter" "4.13.1"
+
+allotment@^1.14.5:
+  version "1.14.5"
+  resolved "https://registry.yarnpkg.com/allotment/-/allotment-1.14.5.tgz#c952f5a7d43ac17649f27cb699e543d85cb6169a"
+  integrity sha512-o/OsKW8HQPDkUoGpzRIULzAy1R3UmbkUw8oBGyJo91YtB7QhiRtUOU5kEUsJX/M8lpnHtJFFo3DWTgH6HXB5TA==
+  dependencies:
+    classnames "^2.3.0"
+    eventemitter3 "^4.0.0"
+    lodash.clamp "^4.0.0"
+    lodash.debounce "^4.0.0"
+    lodash.isequal "^4.5.0"
+    use-resize-observer "^9.0.0"
 
 ansi-align@^3.0.0, ansi-align@^3.0.1:
   version "3.0.1"
@@ -4100,6 +4122,11 @@ ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
+
+classnames@^2.3.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
 
 clean-css@^5.1.5:
   version "5.2.2"
@@ -6290,12 +6317,17 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash.clamp@^4.0.0:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/lodash.clamp/-/lodash.clamp-4.0.3.tgz#5c24bedeeeef0753560dc2b4cb4671f90a6ddfaa"
+  integrity sha512-HvzRFWjtcguTW7yd8NJBshuNaCa8aqNFtnswdT7f/cMd/1YKy5Zzoq4W/Oxvnx9l7aeY258uSdDfM793+eLsVg==
+
 lodash.curry@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
   integrity sha1-JI42By7ekGUB11lmIAqG2riyMXA=
 
-lodash.debounce@^4.0.8:
+lodash.debounce@^4.0.0, lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
@@ -6304,6 +6336,11 @@ lodash.flow@^3.3.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/lodash.flow/-/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
   integrity sha1-h79AKSuM+D5OjOGjrkIJ4gBxZ1o=
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -7585,6 +7622,10 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+"react-dom@link:../node_modules/react-dom/index.js":
+  version "0.0.0"
+  uid ""
+
 react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
@@ -7695,6 +7736,10 @@ react@18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+"react@link:../node_modules/react/index.js":
+  version "0.0.0"
+  uid ""
 
 readable-stream@^2.0.1:
   version "2.3.7"
@@ -8881,6 +8926,13 @@ use-latest@^1.0.0:
   integrity sha512-d2TEuG6nSLKQLAfW3By8mKr8HurOlTkul0sOpxbClIv4SQ4iOd7BYr7VIzdbktUCnv7dua/60xzd8igMU6jmyw==
   dependencies:
     use-isomorphic-layout-effect "^1.0.0"
+
+use-resize-observer@^9.0.0:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/use-resize-observer/-/use-resize-observer-9.0.2.tgz#25830221933d9b6e931850023305eb9d24379a6b"
+  integrity sha512-JOzsmF3/IDmtjG7OE5qXOP69LEpBpwhpLSiT1XgSr+uFRX0ftJHQnDaP7Xq+uhbljLYkJt67sqsbnyXBjiY8ig==
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"

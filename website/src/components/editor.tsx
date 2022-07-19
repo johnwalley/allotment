@@ -1,6 +1,8 @@
+import React from "react";
+
 import "@vscode/codicons/dist/codicon.css";
 
-import { Allotment } from "../../src";
+import { Allotment } from "allotment";
 import { Document } from "./app";
 import styles from "./editor.module.css";
 import { EditorGroupContainer } from "./editor-group-container";

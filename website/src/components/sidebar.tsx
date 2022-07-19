@@ -1,6 +1,8 @@
+import React from "react";
+
 import classNames from "classnames";
 
-import { Allotment } from "../../src";
+import { Allotment } from "allotment";
 import { Document } from "./app";
 import { Pane } from "./pane";
 import styles from "./sidebar.module.css";
