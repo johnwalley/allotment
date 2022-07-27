@@ -1,10 +1,10 @@
+import BrowserOnly from "@docusaurus/BrowserOnly";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
 import React from "react";
 
-import { App } from "../components/app";
 import HomepageFeatures from "../components/HomepageFeatures";
 import styles from "./index.module.css";
 
@@ -24,7 +24,12 @@ function HomepageHeader() {
             marginBottom: "20px",
           }}
         >
-          <App />
+          <BrowserOnly fallback={<div>Loading...</div>}>
+            {() => {
+              const LibComponent = require("../components/app").App;
+              return <LibComponent />;
+            }}
+          </BrowserOnly>{" "}
         </div>
         <div className={styles.buttons}>
           <Link
