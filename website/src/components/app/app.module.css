@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.app {
+  color: rgb(255, 255, 255);
+}
+
 .app a {
   color: inherit;
 }

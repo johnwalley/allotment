@@ -8,6 +8,7 @@ import { AuxiliaryBar } from "../auxiliary-bar";
 import { Editor } from "../editor";
 import { Panel } from "../panel";
 import { Sidebar } from "../sidebar";
+import { Statusbar } from "../statusbar";
 import { Titlebar } from "../titlebar";
 import styles from "./app.module.css";
 
@@ -159,6 +160,9 @@ export const App = () => {
           </Allotment.Pane>
           {primarySideBarPosition === "right" ? sidebar : auxiliarySidebar}
         </Allotment>
+      </Allotment.Pane>
+      <Allotment.Pane minSize={22} maxSize={22}>
+        <Statusbar />
       </Allotment.Pane>
     </Allotment>
   );
