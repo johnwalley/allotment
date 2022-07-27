@@ -19,7 +19,7 @@ function HomepageHeader() {
         <div
           style={{
             height: "360px",
-            width: "600px",
+            width: "800px",
             margin: "auto",
             marginBottom: "20px",
           }}
