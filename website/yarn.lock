@@ -7622,10 +7622,6 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-"react-dom@link:../node_modules/react-dom/index.js":
-  version "0.0.0"
-  uid ""
-
 react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
@@ -7736,10 +7732,6 @@ react@18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
-
-"react@link:../node_modules/react/index.js":
-  version "0.0.0"
-  uid ""
 
 readable-stream@^2.0.1:
   version "2.3.7"
@@ -9243,6 +9235,16 @@ xtend@^4.0.0, xtend@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
+
+xterm-addon-fit@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/xterm-addon-fit/-/xterm-addon-fit-0.5.0.tgz#2d51b983b786a97dcd6cde805e700c7f913bc596"
+  integrity sha512-DsS9fqhXHacEmsPxBJZvfj2la30Iz9xk+UKjhQgnYNkrUIN5CYLbw7WEfz117c7+S86S/tpHPfvNxJsF5/G8wQ==
+
+xterm@^4.19.0:
+  version "4.19.0"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-4.19.0.tgz#c0f9d09cd61de1d658f43ca75f992197add9ef6d"
+  integrity sha512-c3Cp4eOVsYY5Q839dR5IejghRPpxciGmLWWaP9g+ppfMeBChMeLa1DCA+pmX/jyDZ+zxFOmlJL/82qVdayVoGQ==
 
 yallist@^4.0.0:
   version "4.0.0"
