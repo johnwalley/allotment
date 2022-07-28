@@ -25,7 +25,7 @@ import {
   SplitViewOptions,
 } from "./split-view";
 
-function isPane(item: React.ReactNode): item is typeof Pane {
+function isPane(item: React.ReactNode | typeof Pane): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
