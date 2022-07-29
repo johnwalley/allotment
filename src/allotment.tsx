@@ -72,7 +72,14 @@ export type PaneProps = {
 export const Pane = forwardRef<HTMLDivElement, PaneProps>(
   ({ className, children }: PaneProps, ref) => {
     return (
-      <div ref={ref} className={classNames(styles.splitViewView, className)}>
+      <div
+        ref={ref}
+        className={classNames(
+          "split-view-view",
+          styles.splitViewView,
+          className
+        )}
+      >
         {children}
       </div>
     );
@@ -451,13 +458,20 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       <div
         ref={containerRef}
         className={classNames(
+          "split-view",
+          vertical ? "split-view-vertical" : "split-view-horizontal",
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
           styles.separatorBorder,
           className
         )}
       >
-        <div className={styles.splitViewContainer}>
+        <div
+          className={classNames(
+            "split-view-container",
+            styles.splitViewContainer
+          )}
+        >
           {React.Children.toArray(children).map((child) => {
             if (!React.isValidElement(child)) {
               return null;
