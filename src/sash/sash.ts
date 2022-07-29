@@ -87,7 +87,7 @@ export class Sash extends EventEmitter implements Disposable {
   private size: number;
   private hoverDelay = 300;
   private hoverDelayer = debounce(
-    (el) => el.classList.add("hover", styles.hover),
+    (el) => el.classList.add("sash-hover", styles.hover),
     this.hoverDelay
   );
 
@@ -106,11 +106,11 @@ export class Sash extends EventEmitter implements Disposable {
     }
 
     this.el.classList.toggle(styles.disabled, state === SashState.Disabled);
-    this.el.classList.toggle("disabled", state === SashState.Disabled);
+    this.el.classList.toggle("dash-disabled", state === SashState.Disabled);
     this.el.classList.toggle(styles.minimum, state === SashState.Minimum);
-    this.el.classList.toggle("minimum", state === SashState.Minimum);
+    this.el.classList.toggle("sash-minimum", state === SashState.Minimum);
     this.el.classList.toggle(styles.maximum, state === SashState.Maximum);
-    this.el.classList.toggle("maximum", state === SashState.Maximum);
+    this.el.classList.toggle("sash-maximum", state === SashState.Maximum);
 
     this._state = state;
 
@@ -155,7 +155,7 @@ export class Sash extends EventEmitter implements Disposable {
     container.append(this.el);
 
     if (isMacintosh) {
-      this.el.classList.add("mac", styles.mac);
+      this.el.classList.add("sash-mac", styles.mac);
     }
 
     this.el.addEventListener("pointerdown", this.onPointerStart);
@@ -185,11 +185,11 @@ export class Sash extends EventEmitter implements Disposable {
     this.orientation = options.orientation ?? Orientation.Vertical;
 
     if (this.orientation === Orientation.Horizontal) {
-      this.el.classList.add("horizontal", styles.horizontal);
-      this.el.classList.remove("vertical", styles.vertical);
+      this.el.classList.add("sash-horizontal", styles.horizontal);
+      this.el.classList.remove("sash-vertical", styles.vertical);
     } else {
-      this.el.classList.remove("horizontal", styles.horizontal);
-      this.el.classList.add("vertical", styles.vertical);
+      this.el.classList.remove("sash-horizontal", styles.horizontal);
+      this.el.classList.add("sash-vertical", styles.vertical);
     }
 
     this.layout();
@@ -206,7 +206,7 @@ export class Sash extends EventEmitter implements Disposable {
       currentY: startY,
     };
 
-    this.el.classList.add("active", styles.active);
+    this.el.classList.add("sash-active", styles.active);
 
     this.emit("start", startEvent);
 
@@ -228,7 +228,7 @@ export class Sash extends EventEmitter implements Disposable {
     const onPointerUp = (event: PointerEvent): void => {
       event.preventDefault();
 
-      this.el.classList.remove("active", styles.active);
+      this.el.classList.remove("sash-active", styles.active);
       this.hoverDelayer.cancel();
       this.emit("end");
 
@@ -249,7 +249,7 @@ export class Sash extends EventEmitter implements Disposable {
   private onMouseEnter = (): void => {
     if (this.el.classList.contains(styles.active)) {
       this.hoverDelayer.cancel();
-      this.el.classList.add("hover", styles.hover);
+      this.el.classList.add("sash-hover", styles.hover);
     } else {
       this.hoverDelayer(this.el);
     }
@@ -257,7 +257,7 @@ export class Sash extends EventEmitter implements Disposable {
 
   private onMouseLeave = (): void => {
     this.hoverDelayer.cancel();
-    this.el.classList.remove("hover", styles.hover);
+    this.el.classList.remove("sash-hover", styles.hover);
   };
 
   /**
