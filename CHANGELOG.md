@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/johnwalley/allotment/compare/v1.14.4...v1.15.0) (2022-07-29)
+
+### Features
+
+- add stable classnames to child elements ([#375](https://github.com/johnwalley/allotment/issues/375)) ([326f771](https://github.com/johnwalley/allotment/commit/326f771d9c4a3d7dba1fc4f1b1596d50f723a7cd))
+
+### Bug Fixes
+
+- **deps:** update dependency @svgr/webpack to v6.3.1 ([#368](https://github.com/johnwalley/allotment/issues/368)) ([1891e38](https://github.com/johnwalley/allotment/commit/1891e38ca850219910472815752c4bdebcd989e9))
+- **deps:** update docusaurus monorepo to v2.0.0-rc.1 ([#354](https://github.com/johnwalley/allotment/issues/354)) ([4158c5b](https://github.com/johnwalley/allotment/commit/4158c5b5fae9079305654ff991626c6f452ea8e7))
+- export LayoutPriority as enum and not const enum ([#359](https://github.com/johnwalley/allotment/issues/359)) ([eb5403b](https://github.com/johnwalley/allotment/commit/eb5403b619be3c01fb96502d474e3cefbc508d41))
+
 ### [1.14.5](https://github.com/johnwalley/allotment/compare/v1.14.4...v1.14.5) (2022-07-11)
 
 ### Bug Fixes
