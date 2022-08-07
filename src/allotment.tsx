@@ -97,6 +97,8 @@ export type AllotmentProps = {
   children: React.ReactNode;
   /** Initial size of each element */
   defaultSizes?: number[];
+  /** The gaps (gutters) between panes */
+  gap?: number;
   /** Resize each view proportionally when resizing container */
   proportionalLayout?: boolean;
   /**
@@ -122,6 +124,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     {
       children,
       className,
+      gap,
       maxSize = Infinity,
       minSize = 30,
       proportionalLayout = true,
@@ -454,6 +457,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       }
     }, []);
 
+    useEffect(() => {
+      if (gap) {
+        document.documentElement.style.setProperty("--gap-size", gap + "px");
+      }
+    }, [gap]);
+
     return (
       <div
         ref={containerRef}
@@ -463,6 +472,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
           styles.separatorBorder,
+          { [styles.gap]: gap !== undefined },
           className
         )}
       >

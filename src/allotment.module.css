@@ -41,8 +41,32 @@
   width: 100%;
 }
 
+.splitView.vertical.gap
+  > .splitViewContainer
+  > .splitViewView:not(:first-child) {
+  padding-top: var(--gap-size);
+}
+
+.splitView.vertical.gap
+  > .splitViewContainer
+  > .splitViewView:not(:last-child) {
+  padding-bottom: var(--gap-size);
+}
+
 .splitView.horizontal > .splitViewContainer > .splitViewView {
   height: 100%;
+}
+
+.splitView.horizontal.gap
+  > .splitViewContainer
+  > .splitViewView:not(:first-child) {
+  padding-left: var(--gap-size);
+}
+
+.splitView.horizontal.gap
+  > .splitViewContainer
+  > .splitViewView:not(:last-child) {
+  padding-right: var(--gap-size);
 }
 
 .splitView.separatorBorder
