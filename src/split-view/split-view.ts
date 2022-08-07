@@ -170,13 +170,13 @@ abstract class ViewItem {
     this.container = container;
     this.view = view;
 
-    this.container.classList.add(styles.splitViewView);
+    this.container.classList.add("split-view-view", styles.splitViewView);
     this.container.dataset.testid = "split-view-view";
 
     if (typeof size === "number") {
       this._size = size;
       this._cachedVisibleSize = undefined;
-      container.classList.add(styles.visible);
+      container.classList.add("split-view-view-visible", styles.visible);
     } else {
       this._size = 0;
       this._cachedVisibleSize = size.cachedVisibleSize;
@@ -225,7 +225,8 @@ abstract class ViewItem {
       this.size = 0;
     }
 
-    this.container.classList.toggle("visible", visible);
+    this.container.classList.toggle(styles.visible, visible);
+    this.container.classList.toggle("split-view-view-visible", visible);
 
     if (this.view.setVisible) {
       this.view.setVisible(visible);
@@ -376,7 +377,7 @@ export class SplitView extends EventEmitter implements Disposable {
 
     this.sashContainer = document.createElement("div");
 
-    this.sashContainer.classList.add(styles.sashContainer);
+    this.sashContainer.classList.add("sash-container", styles.sashContainer);
     container.prepend(this.sashContainer); // Should always be first child
 
     // We have an existing set of view, add them now

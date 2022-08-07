@@ -2,6 +2,7 @@
   "docs": [
     {
       "Getting Started": ["getting-started"],
+      "How To Guides": ["styling"],
       "API reference": ["overview", "allotment", "pane"],
       "Examples": ["basic", "nested", "closable", "reset", "visible"]
     },
