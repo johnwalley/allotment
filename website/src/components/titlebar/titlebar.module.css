@@ -1,0 +1,49 @@
+.titlebar {
+  align-items: center;
+  background-color: rgb(60, 60, 60);
+  border-radius: 8px 8px 0 0;
+  color: rgb(204, 204, 204);
+  display: flex;
+  flex-direction: row;
+  height: 28px;
+}
+
+.layoutControls {
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.actionBar {
+  line-height: 27px;
+}
+
+.actionsContainer {
+  list-style-type: none;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.actionItem {
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  font-size: 11px;
+  padding: 2px 10px;
+  display: flex;
+}
+
+.actionLabel {
+  font-size: 11px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.actionLabel:hover {
+  background-color: rgba(90, 93, 94, 0.31);
+}

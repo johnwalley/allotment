@@ -1,6 +1,6 @@
+import BrowserOnly from "@docusaurus/BrowserOnly";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import VSCodeExampleImageUrl from "@site/static/img/vs-code-example.gif";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
 import React from "react";
@@ -10,12 +10,20 @@ import styles from "./index.module.css";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
+
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <img className={styles.heroImage} src={VSCodeExampleImageUrl} />
+        <div className={styles.heroDemo}>
+          <BrowserOnly fallback={<div>Loading...</div>}>
+            {() => {
+              const LibComponent = require("../components/app").App;
+              return <LibComponent />;
+            }}
+          </BrowserOnly>
+        </div>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"

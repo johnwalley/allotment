@@ -1,0 +1,17 @@
+.auxiliaryBar {
+  background-color: rgb(37, 37, 38);
+  height: 100%;
+  width: 100%;
+}
+
+.messageArea {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 13px;
+  white-space: normal;
+}
