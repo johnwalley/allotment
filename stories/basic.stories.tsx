@@ -427,3 +427,16 @@ export const PreferredSize: Story = (args) => {
   );
 };
 PreferredSize.args = {};
+
+export const Gap: Story = (args) => (
+  <div className={styles.container}>
+    <Allotment {...args}>
+      <Content />
+      <Content />
+    </Allotment>
+  </div>
+);
+Gap.args = {
+  gap: 10,
+  vertical: true,
+};
