@@ -16,20 +16,13 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div
-          style={{
-            height: "360px",
-            width: "800px",
-            margin: "auto",
-            marginBottom: "20px",
-          }}
-        >
+        <div className={styles.heroDemo}>
           <BrowserOnly fallback={<div>Loading...</div>}>
             {() => {
               const LibComponent = require("../components/app").App;
               return <LibComponent />;
             }}
-          </BrowserOnly>{" "}
+          </BrowserOnly>
         </div>
         <div className={styles.buttons}>
           <Link
