@@ -10,8 +10,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-- **deps:** update dependency @svgr/webpack to v6.3.1 ([#368](https://github.com/johnwalley/allotment/issues/368)) ([1891e38](https://github.com/johnwalley/allotment/commit/1891e38ca850219910472815752c4bdebcd989e9))
-- **deps:** update docusaurus monorepo to v2.0.0-rc.1 ([#354](https://github.com/johnwalley/allotment/issues/354)) ([4158c5b](https://github.com/johnwalley/allotment/commit/4158c5b5fae9079305654ff991626c6f452ea8e7))
 - export LayoutPriority as enum and not const enum ([#359](https://github.com/johnwalley/allotment/issues/359)) ([eb5403b](https://github.com/johnwalley/allotment/commit/eb5403b619be3c01fb96502d474e3cefbc508d41))
 
 ### [1.14.5](https://github.com/johnwalley/allotment/compare/v1.14.4...v1.14.5) (2022-07-11)
@@ -74,7 +72,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-- **deps:** update react monorepo to v18 ([#214](https://github.com/johnwalley/allotment/issues/214)) ([3263b4b](https://github.com/johnwalley/allotment/commit/3263b4b2a5a24e9d97e8ff4a2db3f783240ee97a))
 - preferredSize should work with defaultSizes ([5398f2f](https://github.com/johnwalley/allotment/commit/5398f2fe6fa466fe6ed05fb3e7ced61745b8ca51))
 - use custom onReset callback for programatic reset ([978c0be](https://github.com/johnwalley/allotment/commit/978c0be46b1427056b7ecc0101fe2090720354ad))
 
