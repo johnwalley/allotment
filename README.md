@@ -100,6 +100,10 @@ Minimum size of any pane.
 
 Resize each view proportionally when resizing container.
 
+### separator (default: `true`)
+
+Whether to render a separator between panes.
+
 ### snap (default: `false`)
 
 Enable snap to zero for all panes.
