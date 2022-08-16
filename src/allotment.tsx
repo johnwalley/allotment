@@ -99,6 +99,8 @@ export type AllotmentProps = {
   defaultSizes?: number[];
   /** Resize each view proportionally when resizing container */
   proportionalLayout?: boolean;
+  /** Whether to render a separator between panes */
+  separator?: boolean;
   /**
    * Initial size of each element
    * @deprecated Use {@link AllotmentProps.defaultSizes defaultSizes} instead
@@ -125,6 +127,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       maxSize = Infinity,
       minSize = 30,
       proportionalLayout = true,
+      separator = true,
       sizes,
       defaultSizes = sizes,
       snap = false,
@@ -462,7 +465,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           vertical ? "split-view-vertical" : "split-view-horizontal",
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
-          styles.separatorBorder,
+          { [styles.separatorBorder]: separator },
           className
         )}
       >

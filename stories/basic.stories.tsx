@@ -427,3 +427,15 @@ export const PreferredSize: Story = (args) => {
   );
 };
 PreferredSize.args = {};
+
+export const NoSeparator: Story = ({ separator }) => (
+  <div className={styles.container}>
+    <Allotment vertical separator={separator}>
+      <Content />
+      <Content />
+    </Allotment>
+  </div>
+);
+NoSeparator.args = {
+  separator: false,
+};
