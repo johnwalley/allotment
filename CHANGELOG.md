@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/johnwalley/allotment/compare/v1.15.0...v1.16.0) (2022-08-16)
+
+### Features
+
+- support disabling separator ([#388](https://github.com/johnwalley/allotment/issues/388)) ([283d01d](https://github.com/johnwalley/allotment/commit/283d01d6d761bc346b3fe871cdda5e81382044bd))
+
+### Bug Fixes
+
+- **deps:** update docusaurus monorepo to v2.0.1 ([#379](https://github.com/johnwalley/allotment/issues/379)) ([586fb5e](https://github.com/johnwalley/allotment/commit/586fb5e0d29313f54a9f7d66674cdbc31f73f58d))
+
 ## [1.15.0](https://github.com/johnwalley/allotment/compare/v1.14.4...v1.15.0) (2022-07-29)
 
 ### Features
