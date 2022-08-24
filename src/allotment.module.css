@@ -33,10 +33,6 @@
   white-space: initial;
 }
 
-.splitView > .splitViewContainer > .splitViewView:not(.visible) {
-  display: none;
-}
-
 .splitView.vertical > .splitViewContainer > .splitViewView {
   width: 100%;
 }
