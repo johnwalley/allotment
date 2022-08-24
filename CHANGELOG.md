@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/johnwalley/allotment/compare/v1.16.0...v1.17.0) (2022-08-24)
+
+### Features
+
+- add split-view-separator-border class ([#406](https://github.com/johnwalley/allotment/issues/406)) ([8843ff4](https://github.com/johnwalley/allotment/commit/8843ff450e1021393f839882be5ff17cbe526d0e))
+
 ## [1.16.0](https://github.com/johnwalley/allotment/compare/v1.15.0...v1.16.0) (2022-08-16)
 
 ### Features
