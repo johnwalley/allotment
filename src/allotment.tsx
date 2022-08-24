@@ -463,6 +463,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         className={classNames(
           "split-view",
           vertical ? "split-view-vertical" : "split-view-horizontal",
+          { "split-view-separator-border": separator },
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
           { [styles.separatorBorder]: separator },
