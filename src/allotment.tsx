@@ -487,7 +487,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             if (isPane(child)) {
               splitViewPropsRef.current.set(key, child.props);
 
-              return React.cloneElement(child, {
+              return React.cloneElement(child as React.ReactElement, {
                 key: key,
                 ref: (el: HTMLElement | null) => {
                   if (el) {
