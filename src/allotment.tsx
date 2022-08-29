@@ -6,7 +6,6 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -15,6 +14,7 @@ import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
+import useIsomorphicLayoutEffect from "./helpers/use-isomorphic-layout-effect";
 import { LayoutService } from "./layout-service";
 import { PaneView } from "./pane-view";
 import { Orientation, setGlobalSashSize } from "./sash";
@@ -188,7 +188,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       },
     }));
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       let initializeSizes = true;
 
       if (
