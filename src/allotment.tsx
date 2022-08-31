@@ -295,7 +295,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     /**
      * Add, remove or update views as children change
      */
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (dimensionsInitialized) {
         const keys = childrenArray.map((child) => child.key as string);
         const panes = [...previousKeys.current];

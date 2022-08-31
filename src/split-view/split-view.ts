@@ -176,7 +176,7 @@ abstract class ViewItem {
     if (typeof size === "number") {
       this._size = size;
       this._cachedVisibleSize = undefined;
-      container.classList.add("split-view-view-visible", styles.visible);
+      container.classList.add("split-view-view-visible");
     } else {
       this._size = 0;
       this._cachedVisibleSize = size.cachedVisibleSize;
@@ -225,7 +225,6 @@ abstract class ViewItem {
       this.size = 0;
     }
 
-    this.container.classList.toggle(styles.visible, visible);
     this.container.classList.toggle("split-view-view-visible", visible);
 
     if (this.view.setVisible) {
