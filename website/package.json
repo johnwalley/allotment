@@ -20,7 +20,7 @@
     "@docusaurus/remark-plugin-npm2yarn": "2.0.1",
     "@mdx-js/react": "1.6.22",
     "@svgr/webpack": "6.3.1",
-    "@vscode/codicons": "^0.0.31",
+    "@vscode/codicons": "^0.0.32",
     "allotment": "^1.14.5",
     "clsx": "^1.1.1",
     "file-loader": "6.2.0",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.1",
     "@tsconfig/docusaurus": "1.0.6",
-    "typescript": "4.7.4"
+    "typescript": "4.8.2"
   },
   "browserslist": {
     "production": [

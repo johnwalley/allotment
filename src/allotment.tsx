@@ -6,7 +6,6 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -15,6 +14,7 @@ import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
+import useIsomorphicLayoutEffect from "./helpers/use-isomorphic-layout-effect";
 import { LayoutService } from "./layout-service";
 import { PaneView } from "./pane-view";
 import { Orientation, setGlobalSashSize } from "./sash";
@@ -188,7 +188,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       },
     }));
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       let initializeSizes = true;
 
       if (
@@ -463,6 +463,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         className={classNames(
           "split-view",
           vertical ? "split-view-vertical" : "split-view-horizontal",
+          { "split-view-separator-border": separator },
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
           { [styles.separatorBorder]: separator },
@@ -486,7 +487,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             if (isPane(child)) {
               splitViewPropsRef.current.set(key, child.props);
 
-              return React.cloneElement(child, {
+              return React.cloneElement(child as React.ReactElement, {
                 key: key,
                 ref: (el: HTMLElement | null) => {
                   if (el) {
