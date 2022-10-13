@@ -72,7 +72,6 @@ const config = {
     commonjs(),
     postcss({
       autoModules: true,
-      extract: path.resolve("dist/style.css"),
     }),
     babel({
       extensions,
