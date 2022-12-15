@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.1](https://github.com/johnwalley/allotment/compare/v1.17.0...v1.17.1) (2022-12-15)
+
+### Bug Fixes
+
+- **deps:** update dependency @svgr/webpack to v6.4.0 ([#451](https://github.com/johnwalley/allotment/issues/451)) ([7a84e1d](https://github.com/johnwalley/allotment/commit/7a84e1dd80d5efa5f289ec7d33b5fe37927dcf7b))
+- **deps:** update dependency @svgr/webpack to v6.5.0 ([#462](https://github.com/johnwalley/allotment/issues/462)) ([d4fb352](https://github.com/johnwalley/allotment/commit/d4fb352c1c8aefe082a8d1187e3abaeabada8fe0))
+- **deps:** update dependency @vscode/codicons to v0.0.32 ([#382](https://github.com/johnwalley/allotment/issues/382)) ([667e87d](https://github.com/johnwalley/allotment/commit/667e87da10167c03b0dd1b4a49b4ce6d3b3a156f))
+- **deps:** update dependency xterm to v5 ([#436](https://github.com/johnwalley/allotment/issues/436)) ([eea5749](https://github.com/johnwalley/allotment/commit/eea57491ba33687b32416abe28e48c39720a4661))
+- **deps:** update dependency xterm-addon-fit to v0.6.0 ([#435](https://github.com/johnwalley/allotment/issues/435)) ([16a83f1](https://github.com/johnwalley/allotment/commit/16a83f171d1028261a45e9ebead83028d0b52dda))
+- **deps:** update docusaurus monorepo to v2.1.0 ([#418](https://github.com/johnwalley/allotment/issues/418)) ([d8770e1](https://github.com/johnwalley/allotment/commit/d8770e19a36b9141e336d97a1f349fea6d1d0d39))
+- **deps:** update docusaurus monorepo to v2.2.0 ([#478](https://github.com/johnwalley/allotment/issues/478)) ([cc99635](https://github.com/johnwalley/allotment/commit/cc996352755e90fb343be797f573869a586ad072))
+- enable pane content focus on mount ([#404](https://github.com/johnwalley/allotment/issues/404)) ([bfb34cd](https://github.com/johnwalley/allotment/commit/bfb34cd562c96c556871c1739c2eab822b470e84))
+
 ## [1.17.0](https://github.com/johnwalley/allotment/compare/v1.16.0...v1.17.0) (2022-08-24)
 
 ### Features
