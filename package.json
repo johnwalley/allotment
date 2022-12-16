@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "classnames": "^2.3.0",
-    "eventemitter3": "^4.0.0",
+    "eventemitter3": "^5.0.0",
     "lodash.clamp": "^4.0.0",
     "lodash.debounce": "^4.0.0",
     "lodash.isequal": "^4.5.0",
