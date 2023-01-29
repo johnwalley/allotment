@@ -43,3 +43,15 @@
   color: rgb(30, 30, 30);
   overflow: visible;
 }
+
+/* Styles for VisibleWithAnimation demo */
+.leftPane,
+.rightPane {
+  transition: all 0.15s ease-in-out;
+  will-change: width;
+}
+.splitViewContainer:global(.split-view-sash-dragging) .leftPane,
+.splitViewContainer:global(.split-view-sash-dragging) .rightPane {
+  /* disable animation while sash dragging */
+  transition: none;
+}

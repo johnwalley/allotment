@@ -354,6 +354,42 @@ export const Visible: Story<AllotmentProps> = (args) => {
 };
 Visible.args = {};
 
+export const VisibleWithAnimation: Story<AllotmentProps> = (args) => {
+  const [visible, setVisible] = useState(true);
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => {
+          setVisible((visible) => !visible);
+        }}
+      >
+        {visible ? "Hide" : "Show"}
+      </button>
+      <div className={styles.container}>
+        <Allotment
+          {...args}
+          className={styles.splitViewContainer}
+          snap
+          onVisibleChange={(_index, value) => {
+            setVisible(value);
+          }}
+        >
+          <Allotment.Pane visible={visible} className={styles.leftPane}>
+            <Content />
+          </Allotment.Pane>
+          <Allotment.Pane className={styles.rightPane}>
+            <Content />
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+VisibleWithAnimation.args = {};
+
 export const OnReset: Story = (args) => {
   const ref = useRef<AllotmentHandle>(null!);
 
