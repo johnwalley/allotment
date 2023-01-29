@@ -469,17 +469,19 @@ export class SplitView extends EventEmitter implements Disposable {
               current: e.currentX,
             });
 
-      sash.on("start", (event: BaseSashEvent) =>
-        this.onSashStart(sashEventMapper(event))
-      );
+      sash.on("start", (event: BaseSashEvent) => {
+        this.emit("sashDragStart");
+        this.onSashStart(sashEventMapper(event));
+      });
 
       sash.on("change", (event: BaseSashEvent) =>
         this.onSashChange(sashEventMapper(event))
       );
 
-      sash.on("end", () =>
-        this.onSashEnd(this.sashItems.findIndex((item) => item.sash === sash))
-      );
+      sash.on("end", () => {
+        this.emit("sashDragEnd");
+        this.onSashEnd(this.sashItems.findIndex((item) => item.sash === sash));
+      });
 
       sash.on("reset", () => {
         const index = this.sashItems.findIndex((item) => item.sash === sash);
