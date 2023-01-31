@@ -58,7 +58,7 @@
     "@types/lodash.isequal": "4.5.6",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
-    "@typescript-eslint/parser": "5.48.0",
+    "@typescript-eslint/parser": "5.50.0",
     "@vscode/codicons": "0.0.32",
     "babel-jest": "29.4.1",
     "babel-loader": "9.1.2",
