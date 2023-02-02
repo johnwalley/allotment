@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/johnwalley/allotment/compare/v1.17.0...v1.18.0) (2023-02-02)
+
+### Features
+
+- add classname `split-view-sash-dragging` for top-level container ([#536](https://github.com/johnwalley/allotment/issues/536)) ([a59c774](https://github.com/johnwalley/allotment/commit/a59c774eec366070614bd95033157839139b0263))
+
+### Bug Fixes
+
+- initialize dimensions before first paint ([#526](https://github.com/johnwalley/allotment/issues/526)) ([2706777](https://github.com/johnwalley/allotment/commit/2706777f3a7e84b3f12ad8f9684681e1328041c3))
+
 ### [1.17.1](https://github.com/johnwalley/allotment/compare/v1.17.0...v1.17.1) (2022-12-15)
 
 ### Bug Fixes
