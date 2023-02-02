@@ -249,6 +249,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         onChange
       );
 
+      splitViewRef.current.on("sashDragStart", () => {
+        containerRef.current?.classList.add("split-view-sash-dragging");
+      });
+      splitViewRef.current.on("sashDragEnd", () => {
+        containerRef.current?.classList.remove("split-view-sash-dragging");
+      });
+
       splitViewRef.current.on("sashchange", (_index: number) => {
         if (onVisibleChange && splitViewRef.current) {
           const keys = childrenArray.map((child) => child.key as string);
