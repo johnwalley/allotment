@@ -116,7 +116,7 @@ export class PaneView implements View {
           this.layoutService
         );
       } else if (endsWith(preferredSize, "px")) {
-        const pixels = Number(preferredSize.slice(0, -2)) / 100;
+        const pixels = Number(preferredSize.slice(0, -2));
 
         this.layoutStrategy = new PixelLayout(pixels);
       } else if (typeof Number.parseFloat(preferredSize) === "number") {
