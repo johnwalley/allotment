@@ -1,6 +1,6 @@
 {
   "name": "allotment",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "description": "React split-pane component",
   "exports": {
     ".": "./dist/modern.mjs",

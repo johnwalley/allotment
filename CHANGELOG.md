@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.18.1](https://github.com/johnwalley/allotment/compare/v1.18.0...v1.18.1) (2023-02-12)
+
+### Bug Fixes
+
+- handle preferredSize correctly if unit is px ([#552](https://github.com/johnwalley/allotment/issues/552)) ([c02f059](https://github.com/johnwalley/allotment/commit/c02f05909b5d9ff18a051beb352ef37ded04f514))
+
 ## [1.18.0](https://github.com/johnwalley/allotment/compare/v1.17.0...v1.18.0) (2023-02-02)
 
 ### Features
