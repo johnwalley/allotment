@@ -310,6 +310,8 @@ interface SashDragState {
  */
 export class SplitView extends EventEmitter implements Disposable {
   public onDidChange: ((sizes: number[]) => void) | undefined;
+  public onDidDragStart: ((sizes: number[]) => void) | undefined;
+  public onDidDragEnd: ((sizes: number[]) => void) | undefined;
 
   /**  This {@link SplitView}'s orientation. */
   readonly orientation: Orientation;
@@ -362,7 +364,9 @@ export class SplitView extends EventEmitter implements Disposable {
   constructor(
     container: HTMLElement,
     options: SplitViewOptions = {},
-    onDidChange?: (sizes: number[]) => void
+    onDidChange?: (sizes: number[]) => void,
+    onDidDragStart?: (sizes: number[]) => void,
+    onDidDragEnd?: (sizes: number[]) => void
   ) {
     super();
 
@@ -372,6 +376,14 @@ export class SplitView extends EventEmitter implements Disposable {
 
     if (onDidChange) {
       this.onDidChange = onDidChange;
+    }
+
+    if(onDidDragStart){
+      this.onDidDragStart = onDidDragStart;
+    }
+
+    if(onDidDragEnd){
+      this.onDidDragEnd = onDidDragEnd;
     }
 
     this.sashContainer = document.createElement("div");
@@ -472,6 +484,8 @@ export class SplitView extends EventEmitter implements Disposable {
       sash.on("start", (event: BaseSashEvent) => {
         this.emit("sashDragStart");
         this.onSashStart(sashEventMapper(event));
+        const sizes = this.viewItems.map((i) => i.size);
+        this.onDidDragStart?.(sizes)
       });
 
       sash.on("change", (event: BaseSashEvent) =>
@@ -481,6 +495,9 @@ export class SplitView extends EventEmitter implements Disposable {
       sash.on("end", () => {
         this.emit("sashDragEnd");
         this.onSashEnd(this.sashItems.findIndex((item) => item.sash === sash));
+        const sizes = this.viewItems.map((i) => i.size);
+        this.onDidDragEnd?.(sizes)
+ 
       });
 
       sash.on("reset", () => {
@@ -1088,6 +1105,7 @@ export class SplitView extends EventEmitter implements Disposable {
     }
 
     this.onDidChange?.(this.viewItems.map((viewItem) => viewItem.size));
+
 
     // Layout sashes
     this.sashItems.forEach((item) => item.sash.layout());
