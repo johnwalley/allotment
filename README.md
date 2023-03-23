@@ -116,6 +116,10 @@ Direction to split. If true then the panes will be stacked vertically, otherwise
 
 Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback. Passed an array of numbers.
 
+### onChangeEnd
+
+Callback that is fired *once* when the pane sizes change (when a drag ends, or when the layout is reset). It's the same idea as `onChange`, but only gets called once per drag-interaction.
+
 ### onReset
 
 Callback that is fired whenever the user double clicks a sash.
