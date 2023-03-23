@@ -111,7 +111,7 @@ export type AllotmentProps = {
   /** Callback on drag */
   onChange?: (sizes: number[]) => void;
   /** Callback when user stops dragging the sash*/
-  onDragEnd?: (sizes: number[]) => void;
+  onChangeEnd?: (sizes: number[]) => void;
   /** Callback on reset */
   onReset?: () => void;
   /** Callback on visibility change */
@@ -135,7 +135,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       snap = false,
       vertical = false,
       onChange,
-      onDragEnd,
+      onChangeEnd,
       onReset,
       onVisibleChange,
     }: AllotmentProps,
@@ -185,6 +185,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             resizeToPreferredSize(index);
           }
         }
+        onChangeEnd?.(splitViewRef.current?.getViewSizes() ?? []);
       },
       resize: (sizes) => {
         splitViewRef.current?.resizeViews(sizes);
@@ -250,7 +251,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         containerRef.current,
         options,
         onChange,
-        onDragEnd
+        onChangeEnd
       );
 
       splitViewRef.current.on("sashDragStart", () => {
@@ -293,6 +294,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
           splitViewRef.current?.distributeViewSizes();
         }
+        onChangeEnd?.(splitViewRef.current?.getViewSizes() ?? []);
       });
 
       const that = splitViewRef.current;
@@ -453,9 +455,9 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     
     useEffect(() => {
       if (splitViewRef.current) {
-        splitViewRef.current.onDragEnd = onDragEnd;
+        splitViewRef.current.onChangeEnd = onChangeEnd;
       }
-    }, [onDragEnd])
+    }, [onChangeEnd])
 
     useResizeObserver({
       ref: containerRef,

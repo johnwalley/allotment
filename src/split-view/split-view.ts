@@ -310,7 +310,7 @@ interface SashDragState {
  */
 export class SplitView extends EventEmitter implements Disposable {
   public onDidChange: ((sizes: number[]) => void) | undefined;
-  public onDragEnd: ((sizes: number[]) => void) | undefined;
+  public onChangeEnd: ((sizes: number[]) => void) | undefined;
 
   /**  This {@link SplitView}'s orientation. */
   readonly orientation: Orientation;
@@ -364,7 +364,7 @@ export class SplitView extends EventEmitter implements Disposable {
     container: HTMLElement,
     options: SplitViewOptions = {},
     onDidChange?: (sizes: number[]) => void,
-    onDragEnd?: (sizes: number[]) => void
+    onChangeEnd?: (sizes: number[]) => void
   ) {
     super();
 
@@ -376,8 +376,8 @@ export class SplitView extends EventEmitter implements Disposable {
       this.onDidChange = onDidChange;
     }
 
-    if (onDragEnd) {
-      this.onDragEnd = onDragEnd;
+    if (onChangeEnd) {
+      this.onChangeEnd = onChangeEnd;
     }
 
     this.sashContainer = document.createElement("div");
@@ -697,6 +697,11 @@ export class SplitView extends EventEmitter implements Disposable {
     return this.viewItems[index].size;
   }
 
+  /** Returns all of the sizes of the split-view's {@link View views}. */
+  public getViewSizes(): number[] {
+    return this.viewItems.map((i) => i.size);
+  }
+
   /**
    * Returns whether the {@link View view} is visible.
    *
@@ -911,7 +916,7 @@ export class SplitView extends EventEmitter implements Disposable {
     }
 
     const sizes = this.viewItems.map(i => i.size);
-    this.onDragEnd?.(sizes);
+    this.onChangeEnd?.(sizes);
   };
 
   private getSashPosition(sash: Sash): number {
