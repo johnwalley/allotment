@@ -310,6 +310,7 @@ interface SashDragState {
  */
 export class SplitView extends EventEmitter implements Disposable {
   public onDidChange: ((sizes: number[]) => void) | undefined;
+  public onDragEnd: ((sizes: number[]) => void) | undefined;
 
   /**  This {@link SplitView}'s orientation. */
   readonly orientation: Orientation;
@@ -362,7 +363,8 @@ export class SplitView extends EventEmitter implements Disposable {
   constructor(
     container: HTMLElement,
     options: SplitViewOptions = {},
-    onDidChange?: (sizes: number[]) => void
+    onDidChange?: (sizes: number[]) => void,
+    onDragEnd?: (sizes: number[]) => void
   ) {
     super();
 
@@ -372,6 +374,10 @@ export class SplitView extends EventEmitter implements Disposable {
 
     if (onDidChange) {
       this.onDidChange = onDidChange;
+    }
+
+    if (onDragEnd) {
+      this.onDragEnd = onDragEnd;
     }
 
     this.sashContainer = document.createElement("div");
@@ -903,6 +909,9 @@ export class SplitView extends EventEmitter implements Disposable {
     for (const item of this.viewItems) {
       item.enabled = true;
     }
+
+    const sizes = this.viewItems.map(i => i.size);
+    this.onDragEnd?.(sizes);
   };
 
   private getSashPosition(sash: Sash): number {
