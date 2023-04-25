@@ -114,6 +114,10 @@ export type AllotmentProps = {
   onReset?: () => void;
   /** Callback on visibility change */
   onVisibleChange?: (index: number, visible: boolean) => void;
+  /** Callback on drag start */
+  onDragStart?: (sizes: number[]) => void;
+  /** Callback on drag end */
+  onDragEnd?: (sizes: number[]) => void;
 } & CommonProps;
 
 /**
@@ -135,6 +139,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       onChange,
       onReset,
       onVisibleChange,
+      onDragStart,
+      onDragEnd
     },
     ref
   ) => {
@@ -213,40 +219,43 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         proportionalLayout,
         ...(initializeSizes &&
           defaultSizes && {
-            descriptor: {
-              size: defaultSizes.reduce((a, b) => a + b, 0),
-              views: defaultSizes.map((size, index) => {
-                const props = splitViewPropsRef.current.get(
-                  previousKeys.current[index]
-                );
+          descriptor: {
+            size: defaultSizes.reduce((a, b) => a + b, 0),
+            views: defaultSizes.map((size, index) => {
+              const props = splitViewPropsRef.current.get(
+                previousKeys.current[index]
+              );
 
-                const view = new PaneView(layoutService.current, {
-                  element: document.createElement("div"),
-                  minimumSize: props?.minSize ?? minSize,
-                  maximumSize: props?.maxSize ?? maxSize,
-                  priority: props?.priority ?? LayoutPriority.Normal,
-                  ...(props?.preferredSize && {
-                    preferredSize: props?.preferredSize,
-                  }),
-                  snap: props?.snap ?? snap,
-                });
+              const view = new PaneView(layoutService.current, {
+                element: document.createElement("div"),
+                minimumSize: props?.minSize ?? minSize,
+                maximumSize: props?.maxSize ?? maxSize,
+                priority: props?.priority ?? LayoutPriority.Normal,
+                ...(props?.preferredSize && {
+                  preferredSize: props?.preferredSize,
+                }),
+                snap: props?.snap ?? snap,
+              });
 
-                views.current.push(view);
+              views.current.push(view);
 
-                return {
-                  container: [...splitViewViewRef.current.values()][index],
-                  size: size,
-                  view: view,
-                };
-              }),
-            },
-          }),
+              return {
+                container: [...splitViewViewRef.current.values()][index],
+                size: size,
+                view: view,
+              };
+            }),
+          },
+        }),
       };
 
       splitViewRef.current = new SplitView(
         containerRef.current,
         options,
-        onChange
+        onChange,
+        onDragStart,
+        onDragEnd,
+        
       );
 
       splitViewRef.current.on("sashDragStart", () => {
@@ -446,6 +455,18 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         splitViewRef.current.onDidChange = onChange;
       }
     }, [onChange]);
+
+    useEffect(() => {
+      if (splitViewRef.current) {
+        splitViewRef.current.onDidDragStart = onDragStart;
+      }
+    }, [onDragStart]);
+
+    useEffect(() => {
+      if (splitViewRef.current) {
+        splitViewRef.current.onDidDragEnd = onDragEnd;
+      }
+    }, [onDragEnd]);
 
     useResizeObserver({
       ref: containerRef,
