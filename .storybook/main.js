@@ -16,6 +16,10 @@ module.exports = {
   features: {
     postcss: false,
   },
+  framework: {
+    name: "@storybook/react-webpack5",
+    options: {},
+  },
   webpackFinal: async (baseConfig, options) => {
     // Modify or replace config. Mutating the original reference object can cause unexpected bugs.
     const { module = {} } = baseConfig;
