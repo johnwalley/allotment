@@ -50,7 +50,7 @@
     "@storybook/addon-links": "7.0.23",
     "@storybook/react": "7.0.23",
     "@storybook/react-webpack5": "7.0.23",
-    "@testing-library/dom": "9.3.0",
+    "@testing-library/dom": "9.3.1",
     "@types/jest": "29.5.2",
     "@types/lodash.clamp": "4.0.7",
     "@types/lodash.debounce": "4.0.7",
