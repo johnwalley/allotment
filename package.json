@@ -44,7 +44,7 @@
     "@babel/preset-typescript": "7.22.5",
     "@rollup/plugin-babel": "6.0.3",
     "@rollup/plugin-commonjs": "25.0.2",
-    "@rollup/plugin-node-resolve": "15.0.2",
+    "@rollup/plugin-node-resolve": "15.1.0",
     "@storybook/addon-actions": "7.0.23",
     "@storybook/addon-essentials": "7.0.23",
     "@storybook/addon-links": "7.0.23",
