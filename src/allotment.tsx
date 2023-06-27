@@ -523,23 +523,22 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             if (isPane(child)) {
               splitViewPropsRef.current.set(key, child.props);
 
-              return React.cloneElement<any, HTMLDivElement>(
-                child as React.ReactElement,
-                {
-                  key: key,
-                  ref: (el: HTMLElement | null) => {
-                    if (child.ref) {
-                      child.ref.current = el;
-                    }
+              return React.cloneElement(child as React.ReactElement, {
+                key: key,
+                ref: (el: HTMLElement | null) => {
+                  const ref = (child as any).ref;
 
-                    if (el) {
-                      splitViewViewRef.current.set(key, el);
-                    } else {
-                      splitViewViewRef.current.delete(key);
-                    }
-                  },
-                }
-              );
+                  if (ref) {
+                    ref.current = el;
+                  }
+
+                  if (el) {
+                    splitViewViewRef.current.set(key, el);
+                  } else {
+                    splitViewViewRef.current.delete(key);
+                  }
+                },
+              });
             } else {
               return (
                 <Pane
