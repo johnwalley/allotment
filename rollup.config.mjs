@@ -1,10 +1,10 @@
 import { babel, getBabelOutputPlugin } from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+import terser from "@rollup/plugin-terser";
 import { readFileSync } from "fs";
 import path from "path";
 import postcss from "rollup-plugin-postcss";
-import { terser } from "rollup-plugin-terser";
 
 const meta = JSON.parse(readFileSync("./package.json"));
 
