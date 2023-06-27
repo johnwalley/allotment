@@ -15,12 +15,12 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "2.4.0",
-    "@docusaurus/preset-classic": "2.4.0",
-    "@docusaurus/remark-plugin-npm2yarn": "2.4.0",
+    "@docusaurus/core": "2.4.1",
+    "@docusaurus/preset-classic": "2.4.1",
+    "@docusaurus/remark-plugin-npm2yarn": "2.4.1",
     "@mdx-js/react": "1.6.22",
     "@svgr/webpack": "7.0.0",
-    "@vscode/codicons": "^0.0.32",
+    "@vscode/codicons": "^0.0.33",
     "allotment": "^1.14.5",
     "clsx": "^1.1.1",
     "file-loader": "6.2.0",
@@ -32,7 +32,7 @@
     "xterm-addon-fit": "0.6.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.4.0",
+    "@docusaurus/module-type-aliases": "2.4.1",
     "@tsconfig/docusaurus": "1.0.7",
     "typescript": "5.0.4"
   },
