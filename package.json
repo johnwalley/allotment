@@ -3,14 +3,8 @@
   "version": "1.19.1",
   "description": "React split-pane component",
   "exports": {
-    ".": {
-      "main": "./dist/modern.mjs",
-      "types": "./dist/types/src/index.d.ts"
-    },
-    "./dist/": {
-      "main": "./dist/",
-      "types": "./dist/types/src/index.d.ts"
-    }
+    ".": "./dist/modern.mjs",
+    "./dist/": "./dist/"
   },
   "main": "./dist/legacy.js",
   "module": "./dist/module.js",
