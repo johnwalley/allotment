@@ -489,16 +489,13 @@ export const MeasureSize: Story = () => {
   const { width: paneWidth, height: paneHeight } =
     useResizeObserver<HTMLDivElement>({ ref: paneRef });
 
-  console.log(containerRef);
-  console.log(paneRef);
-
   return (
     <div>
       <div>
-        container dimensions: {containerWidth} x {containerHeight}
+        Container dimensions: {containerWidth} x {containerHeight}
       </div>
       <div>
-        pane dimensions: {paneWidth} x {paneHeight}
+        Pane dimensions: {paneWidth} x {paneHeight}
       </div>
       <div
         className={styles.container}
