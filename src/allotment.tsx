@@ -140,7 +140,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       onReset,
       onVisibleChange,
       onDragStart,
-      onDragEnd
+      onDragEnd,
     },
     ref
   ) => {
@@ -219,34 +219,34 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         proportionalLayout,
         ...(initializeSizes &&
           defaultSizes && {
-          descriptor: {
-            size: defaultSizes.reduce((a, b) => a + b, 0),
-            views: defaultSizes.map((size, index) => {
-              const props = splitViewPropsRef.current.get(
-                previousKeys.current[index]
-              );
+            descriptor: {
+              size: defaultSizes.reduce((a, b) => a + b, 0),
+              views: defaultSizes.map((size, index) => {
+                const props = splitViewPropsRef.current.get(
+                  previousKeys.current[index]
+                );
 
-              const view = new PaneView(layoutService.current, {
-                element: document.createElement("div"),
-                minimumSize: props?.minSize ?? minSize,
-                maximumSize: props?.maxSize ?? maxSize,
-                priority: props?.priority ?? LayoutPriority.Normal,
-                ...(props?.preferredSize && {
-                  preferredSize: props?.preferredSize,
-                }),
-                snap: props?.snap ?? snap,
-              });
+                const view = new PaneView(layoutService.current, {
+                  element: document.createElement("div"),
+                  minimumSize: props?.minSize ?? minSize,
+                  maximumSize: props?.maxSize ?? maxSize,
+                  priority: props?.priority ?? LayoutPriority.Normal,
+                  ...(props?.preferredSize && {
+                    preferredSize: props?.preferredSize,
+                  }),
+                  snap: props?.snap ?? snap,
+                });
 
-              views.current.push(view);
+                views.current.push(view);
 
-              return {
-                container: [...splitViewViewRef.current.values()][index],
-                size: size,
-                view: view,
-              };
-            }),
-          },
-        }),
+                return {
+                  container: [...splitViewViewRef.current.values()][index],
+                  size: size,
+                  view: view,
+                };
+              }),
+            },
+          }),
       };
 
       splitViewRef.current = new SplitView(
@@ -254,8 +254,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         options,
         onChange,
         onDragStart,
-        onDragEnd,
-        
+        onDragEnd
       );
 
       splitViewRef.current.on("sashDragStart", () => {
@@ -527,6 +526,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
               return React.cloneElement(child as React.ReactElement, {
                 key: key,
                 ref: (el: HTMLElement | null) => {
+                  const ref = (child as any).ref;
+
+                  if (ref) {
+                    ref.current = el;
+                  }
+
                   if (el) {
                     splitViewViewRef.current.set(key, el);
                   } else {

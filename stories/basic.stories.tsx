@@ -1,6 +1,7 @@
 import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
+import useResizeObserver from "use-resize-observer";
 
 import {
   Allotment,
@@ -475,3 +476,55 @@ export const NoSeparator: Story = ({ separator }) => (
 NoSeparator.args = {
   separator: false,
 };
+
+export const MeasureSize: Story = () => {
+  const [count, setCount] = useState(0);
+
+  const containerRef = useRef(null!);
+  const paneRef = useRef(null!);
+
+  const { width: containerWidth, height: containerHeight } =
+    useResizeObserver<HTMLDivElement>({ ref: containerRef });
+
+  const { width: paneWidth, height: paneHeight } =
+    useResizeObserver<HTMLDivElement>({ ref: paneRef });
+
+  return (
+    <div>
+      <div>
+        Container dimensions: {containerWidth} x {containerHeight}
+      </div>
+      <div>
+        Pane dimensions: {paneWidth} x {paneHeight}
+      </div>
+      <div
+        className={styles.container}
+        style={{ minHeight: 200, minWidth: 200 }}
+        ref={containerRef}
+      >
+        <Allotment
+          minSize={100}
+          onChange={() => setCount((count) => count + 1)}
+        >
+          <Allotment.Pane maxSize={400}>
+            <Allotment vertical>
+              <Allotment.Pane minSize={100} ref={paneRef}>
+                <Content />
+              </Allotment.Pane>
+              <Allotment.Pane snap>
+                <Content />
+              </Allotment.Pane>
+              <Allotment.Pane snap>
+                <Content />
+              </Allotment.Pane>
+            </Allotment>
+          </Allotment.Pane>
+          <Allotment.Pane>
+            <Content />
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </div>
+  );
+};
+Nested.args = {};
