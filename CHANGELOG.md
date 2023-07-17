@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.19.1](https://github.com/johnwalley/allotment/compare/v1.19.0...v1.19.1) (2023-07-17)
+
+
+### Bug Fixes
+
+* forward ref to underlying Pane dom element ([#632](https://github.com/johnwalley/allotment/issues/632)) ([574c1ef](https://github.com/johnwalley/allotment/commit/574c1efcf7c3cc26656a074450a29f16168ac790))
+
 ## [1.19.0](https://github.com/johnwalley/allotment/compare/v1.18.1...v1.19.0) (2023-04-25)
 
 ### Features
