@@ -107,11 +107,9 @@ PersistSizes.args = {
 };
 
 export const Nested: Story = () => {
-  const [count, setCount] = useState(0);
-
   return (
     <div className={styles.container} style={{ minHeight: 200, minWidth: 200 }}>
-      <Allotment minSize={100} onChange={() => setCount((count) => count + 1)}>
+      <Allotment minSize={100}>
         <Allotment.Pane maxSize={400}>
           <Allotment vertical>
             <Allotment.Pane minSize={100}>
