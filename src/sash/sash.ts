@@ -106,7 +106,7 @@ export class Sash extends EventEmitter implements Disposable {
     }
 
     this.el.classList.toggle(styles.disabled, state === SashState.Disabled);
-    this.el.classList.toggle("dash-disabled", state === SashState.Disabled);
+    this.el.classList.toggle("sash-disabled", state === SashState.Disabled);
     this.el.classList.toggle(styles.minimum, state === SashState.Minimum);
     this.el.classList.toggle("sash-minimum", state === SashState.Minimum);
     this.el.classList.toggle(styles.maximum, state === SashState.Maximum);
