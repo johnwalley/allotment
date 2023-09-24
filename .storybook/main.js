@@ -1,9 +1,5 @@
 const path = require("path");
-
 module.exports = {
-  core: {
-    builder: "webpack5",
-  },
   stories: [
     "../stories/**/*.stories.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)",
@@ -23,7 +19,6 @@ module.exports = {
   webpackFinal: async (baseConfig, options) => {
     // Modify or replace config. Mutating the original reference object can cause unexpected bugs.
     const { module = {} } = baseConfig;
-
     const newConfig = {
       ...baseConfig,
       module: {
@@ -60,7 +55,9 @@ module.exports = {
         },
       ],
     });
-
     return newConfig;
+  },
+  docs: {
+    autodocs: true,
   },
 };
