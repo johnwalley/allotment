@@ -15,9 +15,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "2.4.1",
-    "@docusaurus/preset-classic": "2.4.1",
-    "@docusaurus/remark-plugin-npm2yarn": "2.4.1",
+    "@docusaurus/core": "2.4.3",
+    "@docusaurus/preset-classic": "2.4.3",
+    "@docusaurus/remark-plugin-npm2yarn": "2.4.3",
     "@mdx-js/react": "1.6.22",
     "@svgr/webpack": "7.0.0",
     "@vscode/codicons": "^0.0.33",
