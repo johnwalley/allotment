@@ -59,6 +59,7 @@
 }
 
 .actionLabel {
+  cursor: pointer;
   font-size: 16px !important;
   padding: 2px;
   width: 16px;
