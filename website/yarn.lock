@@ -4464,13 +4464,13 @@ algoliasearch@^4.13.1:
     "@algolia/requester-node-http" "4.13.1"
     "@algolia/transporter" "4.13.1"
 
-allotment@^1.14.5:
-  version "1.14.5"
-  resolved "https://registry.yarnpkg.com/allotment/-/allotment-1.14.5.tgz#c952f5a7d43ac17649f27cb699e543d85cb6169a"
-  integrity sha512-o/OsKW8HQPDkUoGpzRIULzAy1R3UmbkUw8oBGyJo91YtB7QhiRtUOU5kEUsJX/M8lpnHtJFFo3DWTgH6HXB5TA==
+allotment@^1.19.3:
+  version "1.19.3"
+  resolved "https://registry.yarnpkg.com/allotment/-/allotment-1.19.3.tgz#c71575f53cef97a7e532af0eb5ef06e4615e8232"
+  integrity sha512-StPCZLGPNG9KhXeNCrqTkIK09s7D6+8n0w754SRY8PUvDXFLLovrFFo4ubd82fytRWS5bFntsWA5SX4sODxuiw==
   dependencies:
     classnames "^2.3.0"
-    eventemitter3 "^4.0.0"
+    eventemitter3 "^5.0.0"
     lodash.clamp "^4.0.0"
     lodash.debounce "^4.0.0"
     lodash.isequal "^4.5.0"
@@ -6043,6 +6043,11 @@ eventemitter3@^4.0.0:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
+
+eventemitter3@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
+  integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
 
 events@^3.2.0:
   version "3.3.0"
