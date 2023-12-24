@@ -54,7 +54,7 @@
     "@testing-library/dom": "9.3.3",
     "@types/jest": "29.5.11",
     "@types/lodash.clamp": "4.0.9",
-    "@types/lodash.debounce": "4.0.7",
+    "@types/lodash.debounce": "4.0.9",
     "@types/lodash.isequal": "4.5.6",
     "@types/react": "18.2.28",
     "@types/react-dom": "18.2.13",
