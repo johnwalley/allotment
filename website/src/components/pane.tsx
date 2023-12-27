@@ -16,8 +16,9 @@ export const Pane = ({ children, expanded, title }: PaneProps) => {
       <div className={styles.paneHeader}>
         <div
           className={classNames(
+            styles.twistyContainer,
             "codicon",
-            expanded ? "codicon-chevron-down" : "codicon-chevron-up"
+            expanded ? "codicon-chevron-down" : "codicon-chevron-up",
           )}
         ></div>
         <h3 className={styles.title}>{title}</h3>
