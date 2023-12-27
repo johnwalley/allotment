@@ -1,7 +1,13 @@
 {
-  "extends": ["plugin:react-hooks/recommended", "prettier"],
+  "extends": [
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:storybook/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["simple-import-sort"],
+  "plugins": [
+    "simple-import-sort"
+  ],
   "rules": {
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn"
