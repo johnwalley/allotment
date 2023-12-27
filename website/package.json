@@ -20,7 +20,7 @@
     "@docusaurus/remark-plugin-npm2yarn": "2.4.3",
     "@mdx-js/react": "1.6.22",
     "@svgr/webpack": "7.0.0",
-    "@vscode/codicons": "^0.0.33",
+    "@vscode/codicons": "^0.0.35",
     "allotment": "^1.19.3",
     "clsx": "^2.0.0",
     "file-loader": "6.2.0",
