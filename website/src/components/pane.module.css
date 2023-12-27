@@ -18,6 +18,10 @@
   box-sizing: border-box;
 }
 
+.twistyContainer {
+  margin: 0 2px;
+}
+
 h3.title {
   white-space: nowrap;
   text-overflow: ellipsis;
