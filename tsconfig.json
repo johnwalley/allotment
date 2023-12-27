@@ -19,5 +19,5 @@
     "declarationDir": "dist/types",
     "declarationMap": true
   },
-  "include": ["src", "stories"]
+  "include": ["src"]
 }

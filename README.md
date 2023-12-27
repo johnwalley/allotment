@@ -36,13 +36,13 @@ Allotment is available from npm.
 Allotment has `react` and `react-dom` as peer dependencies.
 
 ```sh
-yarn add react react-dom
+npm install react react-dom
 ```
 
 ### Installation
 
 ```sh
-yarn add allotment
+npm install allotment
 ```
 
 ## Usage
