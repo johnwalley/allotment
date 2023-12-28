@@ -78,7 +78,6 @@
     "react-dom": "18.2.0",
     "rollup": "3.29.4",
     "rollup-plugin-postcss": "4.0.2",
-    "standard-version": "9.5.0",
     "storybook": "7.6.6",
     "storybook-dark-mode": "3.0.3",
     "style-loader": "3.3.3",
@@ -98,49 +97,7 @@
     "build-storybook": "storybook build",
     "build-types": "tsc",
     "prepare": "husky install",
-    "release": "standard-version",
     "storybook": "storybook dev -p 6006",
     "test": "jest"
-  },
-  "standard-version": {
-    "types": [
-      {
-        "type": "feat",
-        "section": "Features"
-      },
-      {
-        "type": "fix",
-        "scope": "deps",
-        "hidden": true
-      },
-      {
-        "type": "fix",
-        "section": "Bug Fixes"
-      },
-      {
-        "type": "chore",
-        "hidden": true
-      },
-      {
-        "type": "docs",
-        "hidden": true
-      },
-      {
-        "type": "style",
-        "hidden": true
-      },
-      {
-        "type": "refactor",
-        "hidden": true
-      },
-      {
-        "type": "perf",
-        "hidden": true
-      },
-      {
-        "type": "test",
-        "hidden": true
-      }
-    ]
   }
 }
