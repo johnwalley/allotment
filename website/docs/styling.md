@@ -9,10 +9,11 @@ Some common style changes can be made by setting CSS variables.
 
 These include:
 
-| Name                 | Default                     | Description                    |
-| :------------------- | :-------------------------- | :----------------------------- |
-| `--focus-border`     | `#007fd4`                   | Color of the sash when hovered |
-| `--separator-border` | `rgba(128, 128, 128, 0.35)` | Color of the separator         |
+| Name                               | Default                     | Description                                                       |
+| :--------------------------------- | :-------------------------- | :---------------------------------------------------------------- |
+| `--focus-border`                   | `#007fd4`                   | Color of the sash when hovered                                    |
+| `--separator-border`               | `rgba(128, 128, 128, 0.35)` | Color of the separator                                            |
+| `--sash-hover-transition-duration` | `0.1s`                      | Length of time hover transition animation should take to complete |
 
 For more involved styling you can target the component's child elements.
 
