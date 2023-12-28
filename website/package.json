@@ -19,7 +19,7 @@
     "@docusaurus/preset-classic": "3.0.1",
     "@docusaurus/remark-plugin-npm2yarn": "3.0.1",
     "@mdx-js/react": "3.0.0",
-    "@svgr/webpack": "7.0.0",
+    "@svgr/webpack": "8.1.0",
     "@vscode/codicons": "^0.0.35",
     "allotment": "^1.19.3",
     "clsx": "^2.0.0",
