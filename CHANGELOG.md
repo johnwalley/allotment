@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.4](https://github.com/johnwalley/allotment/compare/v1.19.3...v1.19.4) (2023-12-28)
+
+
+### Bug Fixes
+
+* improve esm support ([0512d71](https://github.com/johnwalley/allotment/commit/0512d71ae804736f7f133f02a6e068556f8f73cb))
+
 ### [1.19.3](https://github.com/johnwalley/allotment/compare/v1.19.2...v1.19.3) (2023-08-23)
 
 
