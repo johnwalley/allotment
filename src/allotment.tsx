@@ -77,13 +77,13 @@ export const Pane = forwardRef<HTMLDivElement, PaneProps>(
         className={classNames(
           "split-view-view",
           styles.splitViewView,
-          className
+          className,
         )}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
 Pane.displayName = "Allotment.Pane";
@@ -97,6 +97,8 @@ export type AllotmentProps = {
   children: React.ReactNode;
   /** Initial size of each element */
   defaultSizes?: number[];
+  /** The id to set on the SplitView component. */
+  id?: string;
   /** Resize each view proportionally when resizing container */
   proportionalLayout?: boolean;
   /** Whether to render a separator between panes */
@@ -128,6 +130,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     {
       children,
       className,
+      id,
       maxSize = Infinity,
       minSize = 30,
       proportionalLayout = true,
@@ -142,7 +145,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       onDragStart,
       onDragEnd,
     },
-    ref
+    ref,
   ) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const previousKeys = useRef<string[]>([]);
@@ -156,13 +159,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
     if (process.env.NODE_ENV !== "production" && sizes) {
       console.warn(
-        `Prop sizes is deprecated. Please use defaultSizes instead.`
+        `Prop sizes is deprecated. Please use defaultSizes instead.`,
       );
     }
 
     const childrenArray = useMemo(
       () => React.Children.toArray(children).filter(React.isValidElement),
-      [children]
+      [children],
     );
 
     const resizeToPreferredSize = useCallback((index: number): boolean => {
@@ -204,13 +207,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         initializeSizes = false;
 
         console.warn(
-          `Expected ${defaultSizes.length} children based on defaultSizes but found ${splitViewViewRef.current.size}`
+          `Expected ${defaultSizes.length} children based on defaultSizes but found ${splitViewViewRef.current.size}`,
         );
       }
 
       if (initializeSizes && defaultSizes) {
         previousKeys.current = childrenArray.map(
-          (child) => child.key as string
+          (child) => child.key as string,
         );
       }
 
@@ -223,7 +226,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
               size: defaultSizes.reduce((a, b) => a + b, 0),
               views: defaultSizes.map((size, index) => {
                 const props = splitViewPropsRef.current.get(
-                  previousKeys.current[index]
+                  previousKeys.current[index],
                 );
 
                 const view = new PaneView(layoutService.current, {
@@ -254,7 +257,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         options,
         onChange,
         onDragStart,
-        onDragEnd
+        onDragEnd,
       );
 
       splitViewRef.current.on("sashDragStart", () => {
@@ -275,7 +278,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
               if (props.visible !== splitViewRef.current.isViewVisible(index)) {
                 onVisibleChange(
                   index,
-                  splitViewRef.current.isViewVisible(index)
+                  splitViewRef.current.isViewVisible(index),
                 );
               }
             }
@@ -345,19 +348,19 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             splitViewViewRef.current.get(enterKey)!,
             view,
             Sizing.Distribute,
-            keys.findIndex((key) => key === enterKey)
+            keys.findIndex((key) => key === enterKey),
           );
 
           panes.splice(
             keys.findIndex((key) => key === enterKey),
             0,
-            enterKey
+            enterKey,
           );
 
           views.current.splice(
             keys.findIndex((key) => key === enterKey),
             0,
-            view
+            view,
           );
         }
 
@@ -370,7 +373,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
               splitViewRef.current?.moveView(
                 splitViewViewRef.current.get(key) as HTMLElement,
                 index,
-                i
+                i,
               );
 
               const tempKey = panes[index];
@@ -503,13 +506,14 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           styles.splitView,
           vertical ? styles.vertical : styles.horizontal,
           { [styles.separatorBorder]: separator },
-          className
+          className,
         )}
+        id={id}
       >
         <div
           className={classNames(
             "split-view-container",
-            styles.splitViewContainer
+            styles.splitViewContainer,
           )}
         >
           {React.Children.toArray(children).map((child) => {
@@ -559,7 +563,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 Allotment.displayName = "Allotment";
@@ -576,7 +580,7 @@ export function setSashSize(sashSize: number) {
   document.documentElement.style.setProperty("--sash-size", size + "px");
   document.documentElement.style.setProperty(
     "--sash-hover-size",
-    hoverSize + "px"
+    hoverSize + "px",
   );
 
   setGlobalSashSize(size);
