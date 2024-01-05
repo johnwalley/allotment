@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.5](https://github.com/johnwalley/allotment/compare/v1.19.4...v1.19.5) (2024-01-05)
+
+
+### Bug Fixes
+
+* allow setting id on split-view component ([#752](https://github.com/johnwalley/allotment/issues/752)) ([d23cf34](https://github.com/johnwalley/allotment/commit/d23cf345ab36955e70e617ec8e4c7c413ee6f96f))
+
 ## [1.19.4](https://github.com/johnwalley/allotment/compare/v1.19.3...v1.19.4) (2023-12-28)
 
 
