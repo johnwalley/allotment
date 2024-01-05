@@ -130,6 +130,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     {
       children,
       className,
+      id,
       maxSize = Infinity,
       minSize = 30,
       proportionalLayout = true,
