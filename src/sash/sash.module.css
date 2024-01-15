@@ -109,7 +109,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  transition: background-color 0.1s ease-out;
+  transition: background-color var(--sash-hover-transition-duration) ease-out;
   background: transparent;
 }
 

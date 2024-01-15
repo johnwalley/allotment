@@ -1,5 +1,6 @@
 :root {
   --separator-border: rgba(128, 128, 128, 0.35);
+  --sash-hover-transition-duration: 0.1s;
 }
 
 .splitView {
