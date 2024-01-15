@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](https://github.com/johnwalley/allotment/compare/v1.19.5...v1.20.0) (2024-01-15)
+
+
+### Features
+
+* allow customising sash animation duration ([#740](https://github.com/johnwalley/allotment/issues/740)) ([e92b944](https://github.com/johnwalley/allotment/commit/e92b9446d72fc034fc960e0a80901d9137781421))
+
 ## [1.19.5](https://github.com/johnwalley/allotment/compare/v1.19.4...v1.19.5) (2024-01-05)
 
 
