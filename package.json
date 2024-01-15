@@ -60,7 +60,7 @@
     "@types/lodash.clamp": "4.0.9",
     "@types/lodash.debounce": "4.0.9",
     "@types/lodash.isequal": "4.5.8",
-    "@types/react": "18.2.46",
+    "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "@typescript-eslint/parser": "6.17.0",
     "@vscode/codicons": "0.0.35",
