@@ -8,7 +8,7 @@
       "import": "./dist/modern.mjs",
       "types": "./dist/types/src/index.d.ts"
     },
-    "./dist/": "./dist/"
+    "./dist/*": "./dist/*"
   },
   "main": "./dist/legacy.js",
   "module": "./dist/module.js",
