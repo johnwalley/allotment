@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.2](https://github.com/johnwalley/allotment/compare/v1.20.1...v1.20.2) (2024-05-22)
+
+
+### Bug Fixes
+
+* remove code to initialize dimensions before first paint ([#805](https://github.com/johnwalley/allotment/issues/805)) ([3657e2d](https://github.com/johnwalley/allotment/commit/3657e2df6273c9fae8020561f6fe84c2990ad029))
+
 ## [1.20.1](https://github.com/johnwalley/allotment/compare/v1.20.0...v1.20.1) (2024-05-09)
 
 
