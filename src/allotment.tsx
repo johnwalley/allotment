@@ -481,15 +481,6 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       },
     });
 
-    useIsomorphicLayoutEffect(() => {
-      if (!dimensionsInitialized) {
-        const { height, width } = containerRef.current.getBoundingClientRect();
-        splitViewRef.current?.layout(vertical ? height : width);
-        layoutService.current.setSize(vertical ? height : width);
-        setDimensionsInitialized(true);
-      }
-    }, [dimensionsInitialized, vertical]);
-
     useEffect(() => {
       if (isIOS) {
         setSashSize(20);
