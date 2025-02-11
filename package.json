@@ -63,7 +63,7 @@
     "@types/lodash.isequal": "4.5.8",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
-    "@typescript-eslint/parser": "6.21.0",
+    "@typescript-eslint/parser": "8.24.0",
     "@vscode/codicons": "0.0.36",
     "babel-jest": "29.7.0",
     "babel-loader": "9.2.1",
