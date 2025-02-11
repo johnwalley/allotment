@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.3](https://github.com/johnwalley/allotment/compare/v1.20.2...v1.20.3) (2025-02-11)
+
+
+### Bug Fixes
+
+* **deps:** add react 19 as a peer dependency ([da58743](https://github.com/johnwalley/allotment/commit/da587431e288f4d0bc8a49b1b41bc941bcd3d57c))
+
 ## [1.20.2](https://github.com/johnwalley/allotment/compare/v1.20.1...v1.20.2) (2024-05-22)
 
 
