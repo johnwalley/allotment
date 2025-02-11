@@ -56,7 +56,7 @@
     "@storybook/addon-links": "7.6.20",
     "@storybook/react": "7.6.20",
     "@storybook/react-webpack5": "7.6.20",
-    "@testing-library/dom": "9.3.4",
+    "@testing-library/dom": "10.4.0",
     "@types/jest": "29.5.14",
     "@types/lodash.clamp": "4.0.9",
     "@types/lodash.debounce": "4.0.9",
