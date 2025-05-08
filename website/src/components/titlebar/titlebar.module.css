@@ -28,13 +28,10 @@
 }
 
 .actionItem {
-  text-transform: uppercase;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   position: relative;
-  font-size: 11px;
-  padding: 2px 10px;
   display: flex;
 }
 
@@ -42,6 +39,7 @@
   font-size: 11px;
   padding: 3px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .actionLabel:hover {

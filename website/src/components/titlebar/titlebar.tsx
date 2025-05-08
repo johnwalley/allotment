@@ -24,14 +24,14 @@ export const Titlebar = ({
     <div className={styles.titlebar}>
       <div className={styles.layoutControls}>
         <ul className={styles.actionsContainer}>
-          <li>
+          <li className={styles.actionItem}>
             <a
               className={classNames(
                 "codicon",
                 showPrimarySideBar
                   ? "codicon-layout-sidebar-left"
                   : "codicon-layout-sidebar-left-off",
-                styles.actionLabel
+                styles.actionLabel,
               )}
               role="button"
               aria-label="Toggle Primary Side Bar (⌘B)"
@@ -40,12 +40,12 @@ export const Titlebar = ({
               onClick={() => onShowPrimarySideBarChanged(!showPrimarySideBar)}
             ></a>
           </li>
-          <li>
+          <li className={styles.actionItem}>
             <a
               className={classNames(
                 "codicon",
                 showPanel ? "codicon-layout-panel" : "codicon-layout-panel-off",
-                styles.actionLabel
+                styles.actionLabel,
               )}
               role="button"
               aria-label="Toggle Primary Side Bar (⌘B)"
@@ -54,14 +54,14 @@ export const Titlebar = ({
               onClick={() => onShowPanelChanged(!showPanel)}
             ></a>
           </li>
-          <li>
+          <li className={styles.actionItem}>
             <a
               className={classNames(
                 "codicon",
                 showSecondarySideBar
                   ? "codicon-layout-sidebar-right"
                   : "codicon-layout-sidebar-right-off",
-                styles.actionLabel
+                styles.actionLabel,
               )}
               role="button"
               aria-label="Toggle Primary Panel (⌘.)"
@@ -72,11 +72,11 @@ export const Titlebar = ({
               }
             ></a>
           </li>
-          <li>
+          <li className={styles.actionItem}>
             <a
               className={classNames(
                 "codicon codicon-layout",
-                styles.actionLabel
+                styles.actionLabel,
               )}
               role="button"
               aria-label="Toggle Secondary Side Bar"
