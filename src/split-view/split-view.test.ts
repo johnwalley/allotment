@@ -33,7 +33,10 @@ class TestView implements View {
     return this._orthogonalSize;
   }
 
-  constructor(private _minimumSize: number, private _maximumSize: number) {}
+  constructor(
+    private _minimumSize: number,
+    private _maximumSize: number,
+  ) {}
 
   layout(size: number, _offset: number): void {
     this._size = size;
@@ -54,7 +57,7 @@ describe("Splitview", () => {
     const splitview = new SplitView(viewContainer);
 
     expect(
-      container.firstElementChild!.firstElementChild!.childElementCount
+      container.firstElementChild!.firstElementChild!.childElementCount,
     ).toEqual(0);
 
     splitview.dispose();

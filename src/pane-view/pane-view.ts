@@ -73,7 +73,7 @@ export class PaneView implements View {
 
         this.layoutStrategy = new ProportionLayout(
           proportion,
-          this.layoutService
+          this.layoutService,
         );
       } else if (endsWith(trimmedPreferredSize, "px")) {
         const pixels = Number(trimmedPreferredSize.slice(0, -2)) / 100;
@@ -113,7 +113,7 @@ export class PaneView implements View {
 
         this.layoutStrategy = new ProportionLayout(
           proportion,
-          this.layoutService
+          this.layoutService,
         );
       } else if (endsWith(preferredSize, "px")) {
         const pixels = Number(preferredSize.slice(0, -2));
