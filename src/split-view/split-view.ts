@@ -1070,14 +1070,33 @@ export class SplitView extends EventEmitter implements Disposable {
     const contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
     let emptyDelta = this.size - contentSize;
 
-    const indexes = range(this.viewItems.length - 1, -1, -1);
+    const indexes = range(0, this.viewItems.length);
+    const sortedIndexes: number[] = [];
+
+    const lowPriorityIndexes = indexes.filter(
+      (i) => this.viewItems[i].priority === LayoutPriority.Low,
+    );
+
+    const normalPriorityIndexes = indexes.filter(
+      (i) => this.viewItems[i].priority === LayoutPriority.Normal,
+    );
+
+    const highPriorityIndexes = indexes.filter(
+      (i) => this.viewItems[i].priority === LayoutPriority.High,
+    );
+
+    sortedIndexes.push(
+      ...highPriorityIndexes,
+      ...normalPriorityIndexes,
+      ...lowPriorityIndexes,
+    );
 
     if (typeof lowPriorityIndex === "number") {
-      pushToEnd(indexes, lowPriorityIndex);
+      pushToEnd(sortedIndexes, lowPriorityIndex);
     }
 
-    for (let i = 0; emptyDelta !== 0 && i < indexes.length; i++) {
-      const item = this.viewItems[indexes[i]];
+    for (let i = 0; emptyDelta !== 0 && i < sortedIndexes.length; i++) {
+      const item = this.viewItems[sortedIndexes[i]];
       const size = clamp(
         item.size + emptyDelta,
         item.minimumSize,
