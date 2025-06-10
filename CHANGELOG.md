@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.4](https://github.com/johnwalley/allotment/compare/v1.20.3...v1.20.4) (2025-06-10)
+
+
+### Bug Fixes
+
+* stop low priority panels resizing first when visibility of panes is changed ([#857](https://github.com/johnwalley/allotment/issues/857)) ([704f6b5](https://github.com/johnwalley/allotment/commit/704f6b5a133a3a69212e7cd17c77ebc7b5e63bc7))
+
 ## [1.20.3](https://github.com/johnwalley/allotment/compare/v1.20.2...v1.20.3) (2025-02-11)
 
 
