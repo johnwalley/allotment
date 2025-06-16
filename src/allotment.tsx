@@ -14,7 +14,6 @@ import useResizeObserver from "use-resize-observer";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
-import useIsomorphicLayoutEffect from "./helpers/use-isomorphic-layout-effect";
 import { LayoutService } from "./layout-service";
 import { PaneView } from "./pane-view";
 import { Orientation, setGlobalSashSize } from "./sash";
@@ -197,7 +196,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       },
     }));
 
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
       let initializeSizes = true;
 
       if (
@@ -313,7 +312,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     /**
      * Add, remove or update views as children change
      */
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
       if (dimensionsInitialized) {
         const keys = childrenArray.map((child) => child.key as string);
         const panes = [...previousKeys.current];

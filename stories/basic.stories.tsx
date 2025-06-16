@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import useResizeObserver from "use-resize-observer";
 
 import {
@@ -71,7 +71,7 @@ export const PersistSizes: Story<{ numViews: number; vertical: boolean }> = ({
         console.log("write_sizes", sizes);
         localStorage.setItem("sizes", JSON.stringify(sizes));
       }, 100),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -528,3 +528,50 @@ export const MeasureSize: Story = () => {
   );
 };
 Nested.args = {};
+
+function useManualSuspense() {
+  const [suspend, setSuspend] = useState(false);
+
+  const triggerSuspense = (ms: number = 1000) => {
+    setSuspend(true);
+    setTimeout(() => setSuspend(false), ms);
+  };
+
+  if (suspend) {
+    throw new Promise(() => {});
+  }
+
+  return triggerSuspense;
+}
+
+const Wrapper = ({ children }: { children?: React.ReactNode }) => {
+  const triggerSuspense = useManualSuspense();
+
+  return (
+    <div>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => triggerSuspense()}
+      >
+        Trigger Suspense
+      </button>
+      {children}
+    </div>
+  );
+};
+
+export const WithSuspense: Story = () => {
+  return (
+    <Suspense fallback={"loading..."}>
+      <Wrapper>
+        <div className={styles.container}>
+          <Allotment vertical>
+            <Content />
+            <Content />
+          </Allotment>
+        </div>
+      </Wrapper>
+    </Suspense>
+  );
+};
