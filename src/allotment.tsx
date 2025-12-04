@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import useResizeObserver from "use-resize-observer";
+import { useResizeObserver } from "usehooks-ts";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";

@@ -35,7 +35,7 @@
     "lodash.clamp": "^4.0.0",
     "lodash.debounce": "^4.0.0",
     "lodash.isequal": "^4.5.0",
-    "use-resize-observer": "^9.0.0"
+    "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.27.4",
