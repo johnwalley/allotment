@@ -89,8 +89,8 @@
     "ts-node": "10.9.2",
     "typescript": "5.7.3",
     "webpack": "5.99.8",
-    "xterm": "5.1.0",
-    "xterm-addon-fit": "0.7.0"
+    "xterm": "5.3.0",
+    "xterm-addon-fit": "0.8.0"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
