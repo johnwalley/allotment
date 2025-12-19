@@ -1,7 +1,7 @@
 import { Meta, Story } from "@storybook/react";
 import { debounce } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
-import useResizeObserver from "use-resize-observer";
+import { useResizeObserver } from "usehooks-ts";
 
 import {
   Allotment,
@@ -71,7 +71,7 @@ export const PersistSizes: Story<{ numViews: number; vertical: boolean }> = ({
         console.log("write_sizes", sizes);
         localStorage.setItem("sizes", JSON.stringify(sizes));
       }, 100),
-    []
+    [],
   );
 
   useEffect(() => {

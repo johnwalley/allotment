@@ -1,6 +1,6 @@
 import classNames from "classnames";
+import equal from "fast-deep-equal/es6";
 import clamp from "lodash.clamp";
-import isEqual from "lodash.isequal";
 import React, {
   forwardRef,
   useCallback,
@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import useResizeObserver from "use-resize-observer";
+import { useResizeObserver } from "usehooks-ts";
 
 import styles from "./allotment.module.css";
 import { isIOS } from "./helpers/platform";
@@ -365,7 +365,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         }
 
         // Move panes if order has changed
-        while (!isEqual(keys, panes)) {
+        while (!equal(keys, panes)) {
           for (const [i, key] of keys.entries()) {
             const index = panes.findIndex((pane) => pane === key);
 
