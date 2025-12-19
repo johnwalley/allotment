@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.5](https://github.com/johnwalley/allotment/compare/v1.20.4...v1.20.5) (2025-12-19)
+
+
+### Bug Fixes
+
+* migrate from use-resize-observer to usehooks-ts for React 19 compatibility ([#865](https://github.com/johnwalley/allotment/issues/865)) ([c78f33a](https://github.com/johnwalley/allotment/commit/c78f33a44f26f1829f56762647bd58bb51123770))
+
 ## [1.20.4](https://github.com/johnwalley/allotment/compare/v1.20.3...v1.20.4) (2025-06-10)
 
 
