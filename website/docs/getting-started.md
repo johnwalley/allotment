@@ -10,10 +10,10 @@ Allotment is available as an [npm package](https://www.npmjs.com/package/allotme
 To install and save in your package.json dependencies, run:
 
 ```sh
-// with npm
+# with npm
 npm install allotment
 
-// with yarn
+# with yarn
 yarn add allotment
 ```
 
@@ -35,7 +35,7 @@ function App() {
   return (
     <Allotment>
       <div>Pane 1</div>
-      <div>Pane 1</div>
+      <div>Pane 2</div>
     </Allotment>
   );
 }
@@ -66,7 +66,7 @@ function App() {
         <div>Pane 1</div>
       </Allotment.Pane>
       <Allotment.Pane snap>
-        <div>Pane 1</div>
+        <div>Pane 2</div>
       </Allotment.Pane>
     </Allotment>
   );
