@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm outdated:*)",
+      "Bash(find:*)",
+      "Bash(wc -l /Users/johnwalley/code/personal/allotment/src/**/*.ts /Users/johnwalley/code/personal/allotment/src/**/*.tsx)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)"
+    ]
+  }
+}
