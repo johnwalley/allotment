@@ -409,7 +409,7 @@ export const OnReset: Story = (args) => {
 };
 OnReset.args = {};
 
-export const FixedSize: Story = (args) => {
+export const FixedSize: Story = (_args) => {
   return (
     <div className={styles.container}>
       <Allotment>
@@ -423,7 +423,7 @@ export const FixedSize: Story = (args) => {
 };
 FixedSize.args = {};
 
-export const PreferredSize: Story = (args) => {
+export const PreferredSize: Story = (_args) => {
   const ref = useRef<AllotmentHandle>(null!);
   const [preferredSize, setPreferredSize] = useState(100);
 
@@ -478,7 +478,7 @@ NoSeparator.args = {
 };
 
 export const MeasureSize: Story = () => {
-  const [count, setCount] = useState(0);
+  const [_count, setCount] = useState(0);
 
   const containerRef = useRef(null!);
   const paneRef = useRef(null!);

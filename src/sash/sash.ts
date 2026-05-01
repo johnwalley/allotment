@@ -58,6 +58,7 @@ export function setGlobalSashSize(size: number): void {
   onDidChangeGlobalSize.emit("onDidChangeGlobalSize", size);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SashLayoutProvider {}
 
 /** A vertical sash layout provider provides position and height for a sash. */

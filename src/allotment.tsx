@@ -26,6 +26,7 @@ import {
 } from "./split-view";
 
 function isPane(item: React.ReactNode | typeof Pane): item is typeof Pane {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
@@ -267,7 +268,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         containerRef.current?.classList.remove("split-view-sash-dragging");
       });
 
-      splitViewRef.current.on("sashchange", (_index: number) => {
+      splitViewRef.current.on("sashchange", () => {
         if (onVisibleChange && splitViewRef.current) {
           const keys = childrenArray.map((child) => child.key as string);
 
@@ -307,7 +308,6 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       return () => {
         that.dispose();
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     /**
@@ -521,6 +521,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
               return React.cloneElement(child as React.ReactElement, {
                 key: key,
                 ref: (el: HTMLElement | null) => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   const ref = (child as any).ref;
 
                   if (ref) {
