@@ -62,7 +62,7 @@
     "@types/lodash.debounce": "4.0.9",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
-    "@typescript-eslint/parser": "8.34.0",
+    "@typescript-eslint/parser": "8.59.2",
     "@vscode/codicons": "0.0.44",
     "babel-jest": "29.7.0",
     "babel-loader": "9.2.1",
