@@ -1,7 +1,10 @@
 [![CI status](https://github.com/johnwalley/allotment/actions/workflows/build.yml/badge.svg)](https://github.com/johnwalley/allotment/actions/workflows/build.yml)
-[![GitHub license](https://img.shields.io/npm/l/allotment?style=plastic)](https://github.com/johnwalley/allotment/blob/main/LICENSE)
-[![NPM](https://img.shields.io/npm/v/allotment?style=plastic&color=green)](https://npmjs.com/package/allotment/)
-[![Netlify Status](https://img.shields.io/netlify/17b280b3-d81d-4576-a58d-b7ccc2e66d7c?color=green&style=plastic)](https://allotment-storybook.netlify.app/)
+[![npm version](https://img.shields.io/npm/v/allotment)](https://www.npmjs.com/package/allotment)
+[![npm downloads](https://img.shields.io/npm/dm/allotment)](https://www.npmjs.com/package/allotment)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/allotment)](https://bundlephobia.com/package/allotment)
+[![Types](https://img.shields.io/npm/types/allotment)](https://www.npmjs.com/package/allotment)
+[![License](https://img.shields.io/github/license/johnwalley/allotment)](https://github.com/johnwalley/allotment/blob/main/LICENSE)
+[![Netlify status](https://img.shields.io/netlify/17b280b3-d81d-4576-a58d-b7ccc2e66d7c)](https://allotment-storybook.netlify.app/)
 
 <p align="center">
     <a href="https://github.com/johnwalley/allotment">
