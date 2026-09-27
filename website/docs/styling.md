@@ -17,7 +17,7 @@ These include:
 | `--sash-size`                      | `8px`                       | Size of the draggable area between panes                          |
 | `--sash-hover-size`                | `4px`                       | Size of the highlighted sash when hovered                         |
 
-To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On touch devices the draggable area is always set to 20 pixels.
+To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On iOS and iPadOS devices Allotment sets it to 20 pixels.
 
 ```tsx
 import { setSashSize } from "allotment";
@@ -40,7 +40,7 @@ For more involved styling you can target the component's child elements.
 | `.sash-disabled`               | Styles applied to the sash if disabled                               |
 | `.sash-horizontal`             | Styles applied to the sash if `vertical={false}`                     |
 | `.sash-hover`                  | Styles applied to the sash if being hovered over                     |
-| `.sash-mac`                    | Styles applied to the sash if running under macos                    |
+| `.sash-mac`                    | Styles applied to the sash if running under macOS                    |
 | `.sash-maximum`                | Styles applied to the sash if the pane is maximised                  |
 | `.sash-minimum`                | Styles applied to the sash if the pane is minimised                  |
 | `.sash-vertical`               | Styles applied to the sash if `vertical={true}`                      |

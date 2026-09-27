@@ -64,25 +64,25 @@ The tables below summarise the API. See the [documentation](https://allotment.mu
 
 ### `Allotment`
 
-All props are optional.
+All props except `children` are optional.
 
-| Prop                 | Type                                        | Default    | Description                                                                                                            |
-| -------------------- | ------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `className`          | `string`                                    |            | Class name for the outer element.                                                                                      |
-| `defaultSizes`       | `number[]`                                  |            | Initial pane sizes. Scaled proportionally if they don't add up to the container size.                                  |
-| `id`                 | `string`                                    |            | Id for the outer element.                                                                                              |
-| `maxSize`            | `number`                                    | `Infinity` | Maximum size of any pane.                                                                                              |
-| `minSize`            | `number`                                    | `30`       | Minimum size of any pane.                                                                                              |
-| `proportionalLayout` | `boolean`                                   | `true`     | Resize panes proportionally when the container is resized.                                                             |
-| `separator`          | `boolean`                                   | `true`     | Render a separator between panes.                                                                                      |
-| `snap`               | `boolean`                                   | `false`    | Allow all panes to snap to zero size.                                                                                  |
-| `vertical`           | `boolean`                                   | `false`    | Stack panes vertically instead of horizontally.                                                                        |
-| `onChange`           | `(sizes: number[]) => void`                 |            | Called when pane sizes change, usually while dragging. Consider debouncing it.                                         |
-| `onDragStart`        | `(sizes: number[]) => void`                 |            | Called when the user starts dragging a sash.                                                                           |
-| `onDragEnd`          | `(sizes: number[]) => void`                 |            | Called when the user stops dragging a sash.                                                                            |
-| `onReset`            | `() => void`                                |            | Called when the user double clicks a sash. If provided, it replaces the default reset behaviour.                       |
-| `onVisibleChange`    | `(index: number, visible: boolean) => void` |            | Called when the user snaps a pane open or closed. Only called if the new value differs from the pane's `visible` prop. |
-| `sizes`              | `number[]`                                  |            | **Deprecated.** Use `defaultSizes` instead.                                                                            |
+| Prop                 | Type                                        | Default    | Description                                                                                                                               |
+| -------------------- | ------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `className`          | `string`                                    |            | Class name for the outer element.                                                                                                         |
+| `defaultSizes`       | `number[]`                                  |            | Initial pane sizes. Scaled proportionally if they don't add up to the container size.                                                     |
+| `id`                 | `string`                                    |            | Id for the outer element.                                                                                                                 |
+| `maxSize`            | `number`                                    | `Infinity` | Maximum size of any pane.                                                                                                                 |
+| `minSize`            | `number`                                    | `30`       | Minimum size of any pane.                                                                                                                 |
+| `proportionalLayout` | `boolean`                                   | `true`     | Resize panes proportionally when the container is resized.                                                                                |
+| `separator`          | `boolean`                                   | `true`     | Render a separator between panes.                                                                                                         |
+| `snap`               | `boolean`                                   | `false`    | Allow all panes to snap to zero size.                                                                                                     |
+| `vertical`           | `boolean`                                   | `false`    | Stack panes vertically instead of horizontally.                                                                                           |
+| `onChange`           | `(sizes: number[]) => void`                 |            | Called when pane sizes change, usually while dragging. Consider debouncing it.                                                            |
+| `onDragStart`        | `(sizes: number[]) => void`                 |            | Called when the user starts dragging a sash.                                                                                              |
+| `onDragEnd`          | `(sizes: number[]) => void`                 |            | Called when the user stops dragging a sash.                                                                                               |
+| `onReset`            | `() => void`                                |            | Called when the user double clicks a sash. If provided, it replaces the default reset behaviour.                                          |
+| `onVisibleChange`    | `(index: number, visible: boolean) => void` |            | Called when the user snaps a pane open or closed. Only called for panes with a `visible` prop, and only if the new value differs from it. |
+| `sizes`              | `number[]`                                  |            | **Deprecated.** Use `defaultSizes` instead.                                                                                               |
 
 ### `Allotment.Pane`
 
@@ -121,32 +121,23 @@ Pass a ref to `Allotment` to control it from code.
 | `resize` | `(sizes: number[]) => void` | Set the pane sizes.                                                                                         |
 
 ```tsx
+import * as React from "react";
 import { Allotment, AllotmentHandle } from "allotment";
 
-const ref = React.useRef<AllotmentHandle>(null);
+function App() {
+  const ref = React.useRef<AllotmentHandle>(null);
 
-return (
-  <div>
-    <button
-      onClick={() => {
-        ref.current?.reset();
-      }}
-    >
-      Reset
-    </button>
-    <button
-      onClick={() => {
-        ref.current?.resize([100, 200]);
-      }}
-    >
-      Resize
-    </button>
-    <Allotment ref={ref}>
-      <div />
-      <div />
-    </Allotment>
-  </div>
-);
+  return (
+    <div>
+      <button onClick={() => ref.current?.reset()}>Reset</button>
+      <button onClick={() => ref.current?.resize([100, 200])}>Resize</button>
+      <Allotment ref={ref}>
+        <div />
+        <div />
+      </Allotment>
+    </div>
+  );
+}
 ```
 
 ## Styling
@@ -160,7 +151,7 @@ Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/
 }
 ```
 
-To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On touch devices the draggable area is always set to 20 pixels.
+To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On iOS and iPadOS devices Allotment sets it to 20 pixels.
 
 ## Frequently asked questions
 
@@ -228,7 +219,7 @@ For more involved styling you can target the component's child elements.
 | `.sash-disabled`               | Styles applied to the sash if disabled                          |
 | `.sash-horizontal`             | Styles applied to the sash if `vertical={false}`                |
 | `.sash-hover`                  | Styles applied to the sash if being hovered over                |
-| `.sash-mac`                    | Styles applied to the sash if running under macos               |
+| `.sash-mac`                    | Styles applied to the sash if running under macOS               |
 | `.sash-maximum`                | Styles applied to the sash if the pane is maximised             |
 | `.sash-minimum`                | Styles applied to the sash if the pane is minimised             |
 | `.sash-vertical`               | Styles applied to the sash if `vertical={true}`                 |
