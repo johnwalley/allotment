@@ -54,8 +54,8 @@ import "allotment/dist/style.css";
 
 export const App = () => (
   <Allotment>
-    <ComponentA>
-    <ComponentB>
+    <ComponentA />
+    <ComponentB />
   </Allotment>
 );
 ```
@@ -65,10 +65,10 @@ If you want more control over the behaviour of the individual panes you can use 
 ```jsx
 <Allotment>
   <Allotment.Pane minSize={200}>
-    <ComponentA>
+    <ComponentA />
   </Allotment.Pane>
   <Allotment.Pane snap>
-    <ComponentB>
+    <ComponentB />
   </Allotment.Pane>
 </Allotment>
 ```
@@ -76,6 +76,10 @@ If you want more control over the behaviour of the individual panes you can use 
 ## Allotment props
 
 All properties are optional.
+
+### className
+
+Sets a class name on the outer element.
 
 ### defaultSizes
 
@@ -87,6 +91,10 @@ An array of initial sizes of the panes. If the sum of the sizes differs from the
   <div />
 </Allotment>
 ```
+
+### id
+
+The id to set on the outer element.
 
 ### maxSize (default: `Infinity`)
 
@@ -104,6 +112,10 @@ Resize each view proportionally when resizing container.
 
 Whether to render a separator between panes.
 
+### sizes
+
+**Deprecated.** Use `defaultSizes` instead.
+
 ### snap (default: `false`)
 
 Enable snap to zero for all panes.
@@ -118,11 +130,11 @@ Callback that is fired when the pane sizes change (usually on drag). Recommended
 
 ### onDragStart
 
-Callback that is fired when the user clicks on the sash
+Callback that is fired when the user starts dragging a sash. Passed an array of the current pane sizes.
 
 ### onDragEnd
 
-Callback that is fired when the user stops clicking the sash
+Callback that is fired when the user stops dragging a sash. Passed an array of the current pane sizes.
 
 ### onReset
 
@@ -130,9 +142,13 @@ Callback that is fired whenever the user double clicks a sash.
 
 ### onVisibleChange
 
-Callback that is fired whenever the user changes the visibility of a pane by snapping. Note that this will only be called if the new value is different from the current `visible` prop on the Pane.
+Callback that is fired whenever the user changes the visibility of a pane by snapping. Passed the index of the pane and its new visibility. Note that this will only be called if the new value is different from the current `visible` prop on the Pane.
 
 ## Allotment.Pane props
+
+### className
+
+Sets a class name on the pane element.
 
 ### maxSize
 
@@ -144,9 +160,22 @@ Minimum size of this pane. Overrides `minSize` set on parent component.
 
 ### priority
 
-The priority of the pane when the layout algorithm runs. Panes with higher priority will be resized first.
+The priority of the pane when the layout algorithm runs. Panes with higher priority will be resized first. One of `LayoutPriority.Low`, `LayoutPriority.Normal` (default) or `LayoutPriority.High`.
 
 Only used when `proportionalLayout` is false.
+
+```jsx
+import { Allotment, LayoutPriority } from "allotment";
+
+<Allotment proportionalLayout={false}>
+  <Allotment.Pane priority={LayoutPriority.High}>
+    <ComponentA />
+  </Allotment.Pane>
+  <Allotment.Pane>
+    <ComponentB />
+  </Allotment.Pane>
+</Allotment>;
+```
 
 ### preferredSize
 
@@ -164,37 +193,38 @@ Whether the pane should be visible.
 
 ## Styling
 
-Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling.
-You can customize the following default variables.
+Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling. See [How do I style the component?](#how-do-i-style-the-component) for the full list of variables and class names.
 
 ```css
 :root {
   --focus-border: #007fd4;
-  --separator-border: #838383;
+  --separator-border: rgba(128, 128, 128, 0.35);
 }
 ```
 
-To control the feedback area size of the dragging area between panes you can call the exported `setSashSize` function with desired size in pixels. Set it to a larger value if you feel it's hard to resize the panes using the mouse. On touch devices the feedback area is always set to 20 pixels
+To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On touch devices the draggable area is always set to 20 pixels.
 
 ### Programmatic control
 
-You can use a ref to get access to the Allotment component instance and call its reset and resize methods manually:
+You can use a ref to get access to the Allotment component instance and call its `reset` and `resize` methods manually:
 
-```jsx
-const ref = React.useRef(ref);
+```tsx
+import { Allotment, AllotmentHandle } from "allotment";
+
+const ref = React.useRef<AllotmentHandle>(null);
 
 return (
   <div>
     <button
       onClick={() => {
-        ref.current.reset();
+        ref.current?.reset();
       }}
     >
       Reset
     </button>
     <button
       onClick={() => {
-        ref.current.resize([100, 200]);
+        ref.current?.resize([100, 200]);
       }}
     >
       Resize
@@ -225,7 +255,20 @@ The simplest approach is to place your content inside a new div with width and h
 
 ### Next.js
 
-If you get an error when importing allotment in a Next.js project consider [not including the module server-side](https://nextjs.org/docs/advanced-features/dynamic-import#with-no-ssr). Allotment currently only works in a browser. It might be possible to produce sensible results server-side in the future so create an issue requesting this if interested.
+Allotment currently only works in a browser. When using the App Router, render it from a Client Component (a file starting with `"use client"`). If you still get an error during server rendering, [skip SSR for the component](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading#skipping-ssr) with `next/dynamic`:
+
+```jsx
+"use client";
+
+import dynamic from "next/dynamic";
+
+const Allotment = dynamic(
+  () => import("allotment").then((mod) => mod.Allotment),
+  { ssr: false },
+);
+```
+
+Note that `Allotment.Pane` is not available on a dynamically imported component, so move any code using it into a separate client-only component. It might be possible to produce sensible results server-side in the future so create an issue requesting this if interested.
 
 ### How do I prevent a pane from being resized?
 
@@ -237,10 +280,13 @@ Some common style changes can be made by setting CSS variables.
 
 These include:
 
-| Name                 | Default                     | Description                    |
-| :------------------- | :-------------------------- | :----------------------------- |
-| `--focus-border`     | `#007fd4`                   | Color of the sash when hovered |
-| `--separator-border` | `rgba(128, 128, 128, 0.35)` | Color of the separator         |
+| Name                               | Default                     | Description                                     |
+| :--------------------------------- | :-------------------------- | :---------------------------------------------- |
+| `--focus-border`                   | `#007fd4`                   | Color of the sash when hovered                  |
+| `--separator-border`               | `rgba(128, 128, 128, 0.35)` | Color of the separator                          |
+| `--sash-size`                      | `8px`                       | Size of the draggable area between panes        |
+| `--sash-hover-size`                | `4px`                       | Size of the highlighted sash when hovered       |
+| `--sash-hover-transition-duration` | `0.1s`                      | Duration of the sash hover highlight transition |
 
 For more involved styling you can target the component's child elements.
 
