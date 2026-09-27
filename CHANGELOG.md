@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.6](https://github.com/johnwalley/allotment/compare/v1.20.5...v1.20.6) (2026-09-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vscode/codicons to v0.0.45 ([#890](https://github.com/johnwalley/allotment/issues/890)) ([0072082](https://github.com/johnwalley/allotment/commit/007208223df2ed95c5095ab6f15fe32e943331d2))
+
 ## [1.20.5](https://github.com/johnwalley/allotment/compare/v1.20.4...v1.20.5) (2025-12-19)
 
 
