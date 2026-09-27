@@ -13,6 +13,14 @@
   <p align="center">
     React split-pane component.
   </p>
+
+  <p align="center">
+    <a href="https://allotment.mulberryhousesoftware.com/">Docs</a>
+    ·
+    <a href="https://allotment-storybook.netlify.app/">Examples</a>
+    ·
+    <a href="./CHANGELOG.md">Changelog</a>
+  </p>
   
   <p align="center">
     <img align="center" src="https://user-images.githubusercontent.com/981531/161631194-1e24ea10-f46a-42db-bfdb-89bcfa3fc50b.gif" />
@@ -23,42 +31,31 @@
 - **Industry standard look and feel:** Like VS Code's split view implementation? You're in luck! This component is derived from the same codebase.
 - **Dynamic:** Want to declaratively add and remove panes? We've got you covered.
 
-## Examples
-
-You can find examples of using the library [here](https://allotment-storybook.netlify.app/).
-
-## Getting Started
-
-Allotment is available from npm.
-
-### Prerequisites
-
-Allotment has `react` and `react-dom` as peer dependencies.
-
-```sh
-npm install react react-dom
-```
-
-### Installation
+## Quick start
 
 ```sh
 npm install allotment
 ```
 
-## Usage
+Allotment requires React 17, 18 or 19 (`react` and `react-dom` are peer dependencies).
 
 ```jsx
-import React from "react";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
 export const App = () => (
-  <Allotment>
-    <ComponentA />
-    <ComponentB />
-  </Allotment>
+  <div style={{ height: 400 }}>
+    <Allotment>
+      <div>Pane A</div>
+      <div>Pane B</div>
+    </Allotment>
+  </div>
 );
 ```
+
+Allotment fills its parent element, so make sure the parent has a height. See the [FAQ](#its-not-workingi-dont-see-anything) if nothing is showing.
+
+## Usage
 
 If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
 
