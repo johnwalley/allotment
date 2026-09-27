@@ -82,11 +82,11 @@ describe("Splitview", () => {
     splitview.addView(splitViewView2, view2, 20);
     splitview.addView(splitViewView3, view3, 20);
 
-    let viewQuery = getAllByTestId(container, "split-view-view");
+    const viewQuery = getAllByTestId(container, "split-view-view");
 
     expect(viewQuery.length).toEqual(3);
 
-    let sashQuery = getAllByTestId(container, "sash");
+    const sashQuery = getAllByTestId(container, "sash");
 
     expect(sashQuery.length).toEqual(2);
 

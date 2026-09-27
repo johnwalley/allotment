@@ -1,6 +1,6 @@
 import styles from "./auxiliary-bar.module.css";
 
-export type AuxiliaryBarProps = {};
+export type AuxiliaryBarProps = Record<string, never>;
 
 export const AuxiliaryBar = ({}: AuxiliaryBarProps) => {
   return (

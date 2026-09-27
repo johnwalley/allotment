@@ -40,6 +40,7 @@ export type InvisibleSizing = { type: "invisible"; cachedVisibleSize: number };
  */
 export type Sizing = DistributeSizing | SplitSizing | InvisibleSizing;
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Sizing {
   /**
    * When adding or removing views, distribute the delta space among
