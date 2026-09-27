@@ -122,4 +122,49 @@ describe("Splitview", () => {
 
     splitview.dispose();
   });
+  describe("dispose", () => {
+    beforeAll(() => {
+      HTMLElement.prototype.setPointerCapture = jest.fn();
+      HTMLElement.prototype.releasePointerCapture = jest.fn();
+      HTMLElement.prototype.hasPointerCapture = jest.fn(() => true);
+    });
+
+    test("tears down an in-progress sash drag", () => {
+      const onDidChange = jest.fn();
+      const onDidDragEnd = jest.fn();
+      const splitview = new SplitView(
+        viewContainer,
+        {},
+        onDidChange,
+        undefined,
+        onDidDragEnd,
+      );
+
+      const splitViewView1 = document.createElement("div");
+      viewContainer.append(splitViewView1);
+      const splitViewView2 = document.createElement("div");
+      viewContainer.append(splitViewView2);
+
+      splitview.addView(splitViewView1, new TestView(20, 200), 100);
+      splitview.addView(splitViewView2, new TestView(20, 200), 100);
+      splitview.layout(200);
+
+      const [sash] = getAllByTestId(container, "sash");
+
+      sash.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
+
+      splitview.dispose();
+      onDidChange.mockClear();
+
+      expect(() => {
+        window.dispatchEvent(
+          new MouseEvent("pointermove", { clientX: 50, clientY: 50 }),
+        );
+        window.dispatchEvent(new MouseEvent("pointerup"));
+      }).not.toThrow();
+
+      expect(onDidChange).not.toHaveBeenCalled();
+      expect(onDidDragEnd).not.toHaveBeenCalled();
+    });
+  });
 });
