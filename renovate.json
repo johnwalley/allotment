@@ -1,3 +1,10 @@
 {
-  "extends": ["config:js-lib"]
+  "extends": ["config:js-lib"],
+  "packageRules": [
+    {
+      "description": "The docs site isn't part of the published package, so its updates shouldn't trigger a release",
+      "matchFileNames": ["website/**"],
+      "semanticCommitType": "chore"
+    }
+  ]
 }
