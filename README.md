@@ -55,155 +55,67 @@ export const App = () => (
 
 Allotment fills its parent element, so make sure the parent has a height. See the [FAQ](#its-not-workingi-dont-see-anything) if nothing is showing.
 
-## Usage
+## API
 
-If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
+The tables below summarise the API. See the [documentation](https://allotment.mulberryhousesoftware.com/) for more detail and live examples.
 
-```jsx
-<Allotment>
-  <Allotment.Pane minSize={200}>
-    <ComponentA />
-  </Allotment.Pane>
-  <Allotment.Pane snap>
-    <ComponentB />
-  </Allotment.Pane>
-</Allotment>
-```
+### `Allotment`
 
-## Allotment props
+All props are optional.
 
-All properties are optional.
+| Prop                 | Type                                        | Default    | Description                                                                                                            |
+| -------------------- | ------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `className`          | `string`                                    |            | Class name for the outer element.                                                                                      |
+| `defaultSizes`       | `number[]`                                  |            | Initial pane sizes. Scaled proportionally if they don't add up to the container size.                                  |
+| `id`                 | `string`                                    |            | Id for the outer element.                                                                                              |
+| `maxSize`            | `number`                                    | `Infinity` | Maximum size of any pane.                                                                                              |
+| `minSize`            | `number`                                    | `30`       | Minimum size of any pane.                                                                                              |
+| `proportionalLayout` | `boolean`                                   | `true`     | Resize panes proportionally when the container is resized.                                                             |
+| `separator`          | `boolean`                                   | `true`     | Render a separator between panes.                                                                                      |
+| `snap`               | `boolean`                                   | `false`    | Allow all panes to snap to zero size.                                                                                  |
+| `vertical`           | `boolean`                                   | `false`    | Stack panes vertically instead of horizontally.                                                                        |
+| `onChange`           | `(sizes: number[]) => void`                 |            | Called when pane sizes change, usually while dragging. Consider debouncing it.                                         |
+| `onDragStart`        | `(sizes: number[]) => void`                 |            | Called when the user starts dragging a sash.                                                                           |
+| `onDragEnd`          | `(sizes: number[]) => void`                 |            | Called when the user stops dragging a sash.                                                                            |
+| `onReset`            | `() => void`                                |            | Called when the user double clicks a sash. If provided, it replaces the default reset behaviour.                       |
+| `onVisibleChange`    | `(index: number, visible: boolean) => void` |            | Called when the user snaps a pane open or closed. Only called if the new value differs from the pane's `visible` prop. |
+| `sizes`              | `number[]`                                  |            | **Deprecated.** Use `defaultSizes` instead.                                                                            |
 
-### className
+### `Allotment.Pane`
 
-Sets a class name on the outer element.
+Wrap a child in `Allotment.Pane` to configure it individually. `maxSize`, `minSize` and `snap` override the values set on the parent `Allotment`.
 
-### defaultSizes
-
-An array of initial sizes of the panes. If the sum of the sizes differs from the size of the container then the panes' sizes will be scaled proportionally.
-
-```jsx
-<Allotment defaultSizes={[100, 200]}>
-  <div />
-  <div />
-</Allotment>
-```
-
-### id
-
-The id to set on the outer element.
-
-### maxSize (default: `Infinity`)
-
-Maximum size of any pane.
-
-### minSize (default: `30`)
-
-Minimum size of any pane.
-
-### proportionalLayout (default: `true`)
-
-Resize each view proportionally when resizing container.
-
-### separator (default: `true`)
-
-Whether to render a separator between panes.
-
-### sizes
-
-**Deprecated.** Use `defaultSizes` instead.
-
-### snap (default: `false`)
-
-Enable snap to zero for all panes.
-
-### vertical (default: `false`)
-
-Direction to split. If true then the panes will be stacked vertically, otherwise they will be stacked horizontally.
-
-### onChange
-
-Callback that is fired when the pane sizes change (usually on drag). Recommended to add a debounce function to rate limit the callback. Passed an array of numbers.
-
-### onDragStart
-
-Callback that is fired when the user starts dragging a sash. Passed an array of the current pane sizes.
-
-### onDragEnd
-
-Callback that is fired when the user stops dragging a sash. Passed an array of the current pane sizes.
-
-### onReset
-
-Callback that is fired whenever the user double clicks a sash.
-
-### onVisibleChange
-
-Callback that is fired whenever the user changes the visibility of a pane by snapping. Passed the index of the pane and its new visibility. Note that this will only be called if the new value is different from the current `visible` prop on the Pane.
-
-## Allotment.Pane props
-
-### className
-
-Sets a class name on the pane element.
-
-### maxSize
-
-Maximum size of this pane. Overrides `maxSize` set on parent component.
-
-### minSize
-
-Minimum size of this pane. Overrides `minSize` set on parent component.
-
-### priority
-
-The priority of the pane when the layout algorithm runs. Panes with higher priority will be resized first. One of `LayoutPriority.Low`, `LayoutPriority.Normal` (default) or `LayoutPriority.High`.
-
-Only used when `proportionalLayout` is false.
+| Prop            | Type               | Default                 | Description                                                                                                                                                                      |
+| --------------- | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `className`     | `string`           |                         | Class name for the pane element.                                                                                                                                                 |
+| `maxSize`       | `number`           | Inherited               | Maximum size of this pane.                                                                                                                                                       |
+| `minSize`       | `number`           | Inherited               | Minimum size of this pane.                                                                                                                                                       |
+| `preferredSize` | `number \| string` |                         | Size to use when the pane is added, when a sash is double clicked, and when `reset()` is called. A number or `"120px"` is in pixels; `"50%"` is a percentage of the `Allotment`. |
+| `priority`      | `LayoutPriority`   | `LayoutPriority.Normal` | Panes with higher priority are resized first. Only used when `proportionalLayout` is `false`.                                                                                    |
+| `snap`          | `boolean`          | Inherited               | Allow this pane to snap to zero size.                                                                                                                                            |
+| `visible`       | `boolean`          | `true`                  | Whether the pane is visible.                                                                                                                                                     |
 
 ```jsx
 import { Allotment, LayoutPriority } from "allotment";
 
 <Allotment proportionalLayout={false}>
-  <Allotment.Pane priority={LayoutPriority.High}>
+  <Allotment.Pane minSize={200} priority={LayoutPriority.High}>
     <ComponentA />
   </Allotment.Pane>
-  <Allotment.Pane>
+  <Allotment.Pane preferredSize="30%" snap>
     <ComponentB />
   </Allotment.Pane>
 </Allotment>;
 ```
 
-### preferredSize
+### Ref methods
 
-Preferred size of this pane. Allotment will attempt to use this size when adding this pane (including on initial mount) as well as when a user double clicks a sash, or the `reset` method is called on the Allotment instance.
+Pass a ref to `Allotment` to control it from code.
 
-The size can either be a number or a string. If it is a number it will be interpreted as a number of pixels. If it is a string it should end in either "px" or "%". If it ends in "px" it will be interpreted as a number of pixels, e.g. "120px". If it ends in "%" it will be interpreted as a percentage of the size of the Allotment component, e.g. "50%".
-
-### snap
-
-Enable snap to zero for this pane. Overrides `snap` set on parent component.
-
-### visible
-
-Whether the pane should be visible.
-
-## Styling
-
-Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling. See [How do I style the component?](#how-do-i-style-the-component) for the full list of variables and class names.
-
-```css
-:root {
-  --focus-border: #007fd4;
-  --separator-border: rgba(128, 128, 128, 0.35);
-}
-```
-
-To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On touch devices the draggable area is always set to 20 pixels.
-
-### Programmatic control
-
-You can use a ref to get access to the Allotment component instance and call its `reset` and `resize` methods manually:
+| Method   | Type                        | Description                                                                                                 |
+| -------- | --------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `reset`  | `() => void`                | Distribute the panes equally, then apply each pane's `preferredSize`. Calls `onReset` instead, if provided. |
+| `resize` | `(sizes: number[]) => void` | Set the pane sizes.                                                                                         |
 
 ```tsx
 import { Allotment, AllotmentHandle } from "allotment";
@@ -233,6 +145,19 @@ return (
   </div>
 );
 ```
+
+## Styling
+
+Allotment uses [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for styling. See [How do I style the component?](#how-do-i-style-the-component) for the full list of variables and class names.
+
+```css
+:root {
+  --focus-border: #007fd4;
+  --separator-border: rgba(128, 128, 128, 0.35);
+}
+```
+
+To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On touch devices the draggable area is always set to 20 pixels.
 
 ## Frequently asked questions
 
