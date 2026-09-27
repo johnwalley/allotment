@@ -88,9 +88,15 @@ export const Pane = forwardRef<HTMLDivElement, PaneProps>(
 
 Pane.displayName = "Allotment.Pane";
 
+interface LayoutSize {
+  width: number | undefined;
+  height: number | undefined;
+}
+
 export type AllotmentHandle = {
   reset: () => void;
   resize: (sizes: number[]) => void;
+  setLayoutSize: (size: LayoutSize) => void;
 };
 
 export type AllotmentProps = {
@@ -180,6 +186,17 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       return true;
     }, []);
 
+    const setLayoutSize = useCallback(
+      ({ width, height }: LayoutSize) => {
+        if (width && height) {
+          splitViewRef.current?.layout(vertical ? height : width);
+          layoutService.current.setSize(vertical ? height : width);
+          setDimensionsInitialized(true);
+        }
+      },
+      [vertical],
+    );
+
     useImperativeHandle(ref, () => ({
       reset: () => {
         if (onReset) {
@@ -195,6 +212,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       resize: (sizes) => {
         splitViewRef.current?.resizeViews(sizes);
       },
+      setLayoutSize,
     }));
 
     useIsomorphicLayoutEffect(() => {
@@ -472,13 +490,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
     useResizeObserver({
       ref: containerRef,
-      onResize: ({ width, height }) => {
-        if (width && height) {
-          splitViewRef.current?.layout(vertical ? height : width);
-          layoutService.current.setSize(vertical ? height : width);
-          setDimensionsInitialized(true);
-        }
-      },
+      onResize: setLayoutSize,
     });
 
     useEffect(() => {
