@@ -226,3 +226,17 @@ For more involved styling you can target the component's child elements.
 | `.split-view-container`        | Styles applied to the split view container                      |
 | `.split-view-view`             | Styles applied to the split view view                           |
 | `.split-view-view-visible`     | Styles applied to the split view view if `visible={true}`       |
+
+## Alternatives
+
+Allotment aims to reproduce the behaviour of VS Code's split view. If you need something different, [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) is a popular alternative.
+
+## Contributing
+
+Contributions are welcome! See the [contributing guide](./CONTRIBUTING.md) to get started, and please follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+Notable changes are recorded in the [changelog](./CHANGELOG.md).
+
+## License
+
+Allotment is released under the [MIT License](./LICENSE).
