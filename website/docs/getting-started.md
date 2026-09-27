@@ -15,9 +15,12 @@ npm install allotment
 
 # with yarn
 yarn add allotment
+
+# with pnpm
+pnpm add allotment
 ```
 
-Please note that react >= 17.0.0 and react-dom >= 17.0.0 are peer dependencies.
+Please note that `react` and `react-dom` are peer dependencies. Allotment supports React 17, 18 and 19.
 
 ## Usage
 
@@ -27,25 +30,29 @@ Here's a quick example to get you started:
 
 ```tsx
 import * as React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
 function App() {
   return (
-    <Allotment>
-      <div>Pane 1</div>
-      <div>Pane 2</div>
-    </Allotment>
+    <div style={{ height: 400 }}>
+      <Allotment>
+        <div>Pane 1</div>
+        <div>Pane 2</div>
+      </Allotment>
+    </div>
   );
 }
 
-ReactDOM.render(<App />, document.querySelector("#app"));
+createRoot(document.querySelector("#app")!).render(<App />);
 ```
 
 :::caution
 
 Remember to import the required css: `import "allotment/dist/style.css"`
+
+Allotment takes its size from its parent element, so make sure the parent has a height. See the [FAQ](faq.md#its-not-workingi-dont-see-anything) if nothing is showing.
 
 :::
 
@@ -55,7 +62,7 @@ If you want more control over the behaviour of the individual panes you can use 
 
 ```tsx
 import * as React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
@@ -72,5 +79,5 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.querySelector("#app"));
+createRoot(document.querySelector("#app")!).render(<App />);
 ```

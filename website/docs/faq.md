@@ -17,11 +17,24 @@ import "allotment/dist/style.css";
 
 ### My content is larger than the containing pane. How can I let the user scroll?
 
-The simplest approach is place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
+The simplest approach is to place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
 
 ### Next.js
 
-If you get an error when importing allotment in a Next.js project consider [not including the module server-side](https://nextjs.org/docs/advanced-features/dynamic-import#with-no-ssr). Allotment currently only works in a browser. It might be possible to produce sensible results server-side in the future so create an issue requesting this if interested.
+Allotment currently only works in a browser. When using the App Router, render it from a Client Component (a file starting with `"use client"`). If you still get an error during server rendering, [skip SSR for the component](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading#skipping-ssr) with `next/dynamic`:
+
+```jsx
+"use client";
+
+import dynamic from "next/dynamic";
+
+const Allotment = dynamic(
+  () => import("allotment").then((mod) => mod.Allotment),
+  { ssr: false },
+);
+```
+
+Note that `Allotment.Pane` is not available on a dynamically imported component, so move any code using it into a separate client-only component. It might be possible to produce sensible results server-side in the future so create an issue requesting this if interested.
 
 ### How do I prevent a pane from being resized?
 
