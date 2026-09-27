@@ -196,8 +196,8 @@ export class Sash extends EventEmitter implements Disposable {
   }
 
   private onPointerStart = (event: PointerEvent) => {
-    const startX = event.pageX;
-    const startY = event.pageY;
+    const startX = event.clientX;
+    const startY = event.clientY;
 
     const startEvent: SashEvent = {
       startX,
@@ -217,9 +217,9 @@ export class Sash extends EventEmitter implements Disposable {
 
       const moveEvent: SashEvent = {
         startX,
-        currentX: event.pageX,
+        currentX: event.clientX,
         startY,
-        currentY: event.pageY,
+        currentY: event.clientY,
       };
 
       this.emit("change", moveEvent);
