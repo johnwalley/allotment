@@ -1,5 +1,6 @@
 import EventEmitter from "eventemitter3";
 import debounce from "lodash.debounce";
+import { EventType, Gesture, GestureEvent } from "../browser/touch";
 
 import { Disposable } from "../helpers/disposable";
 import { isIOS, isMacintosh } from "../helpers/platform";
@@ -57,6 +58,61 @@ export function setGlobalSashSize(size: number): void {
   globalSize = size;
   onDidChangeGlobalSize.emit("onDidChangeGlobalSize", size);
 }
+
+export interface EventLike {
+  preventDefault(): void;
+  stopPropagation(): void;
+}
+
+interface PointerEvent extends EventLike {
+  readonly pageX: number;
+  readonly pageY: number;
+  readonly altKey: boolean;
+  readonly target: EventTarget | null;
+}
+/* 
+interface PointerEventFactory {
+  readonly onPointerMove: Event<PointerEvent>;
+  readonly onPointerUp: Event<PointerEvent>;
+  dispose(): void;
+}
+
+this.el.addEventListener(EventType.Start, onPointerMove);
+
+window.addEventListener("pointermove", onPointerMove);
+
+class MouseEventFactory implements PointerEventFactory {
+  get onPointerMove(): Event<PointerEvent> {
+    return this.disposables.add(new DomEmitter(window, "mousemove")).event;
+  }
+
+  get onPointerUp(): Event<PointerEvent> {
+    return this.disposables.add(new DomEmitter(window, "mouseup")).event;
+  }
+
+  dispose(): void {
+    window.removeEventListener("pointermove", onPointerMove);
+  }
+}
+
+class GestureEventFactory implements PointerEventFactory {
+  private disposables = new DisposableStore();
+
+  get onPointerMove(): Event<PointerEvent> {
+    return this.disposables.add(new DomEmitter(this.el, EventType.Change))
+      .event;
+  }
+
+  get onPointerUp(): Event<PointerEvent> {
+    return this.disposables.add(new DomEmitter(this.el, EventType.End)).event;
+  }
+
+  constructor(private el: HTMLElement) {}
+
+  dispose(): void {
+    this.el.removeEventListener(EventType.Change);
+  }
+} */
 
 export interface SashLayoutProvider {}
 
@@ -158,10 +214,37 @@ export class Sash extends EventEmitter implements Disposable {
       this.el.classList.add("sash-mac", styles.mac);
     }
 
-    this.el.addEventListener("pointerdown", this.onPointerStart);
+    this.el.addEventListener("mousedown", (e) => this.onPointerStart(e));
     this.el.addEventListener("dblclick", this.onPointerDoublePress);
     this.el.addEventListener("mouseenter", this.onMouseEnter);
     this.el.addEventListener("mouseleave", this.onMouseLeave);
+
+    this.el.addEventListener("touchstart", (e) => this.onPointerStart(e));
+
+    Gesture.addTarget(this.el);
+
+    /*     this.el.addEventListener(EventType.Start, ((e: GestureEvent) =>
+      this.onPointerStart({
+        ...e,
+        target: e.initialTarget ?? null,
+      })) as EventListener); */
+
+    /*     const onMouseLeave = this._register(
+      new DomEmitter(this.el, "mouseleave")
+    ).event;
+    this._register(onMouseLeave(() => Sash.onMouseLeave(this)));
+
+    const onTouchStart = Event.map(
+      this._register(new DomEmitter(this.el, EventType.Start)).event,
+      (e) => ({ ...e, target: e.initialTarget ?? null })
+    );
+
+    this._register(
+      onTouchStart(
+        (e) => this.onPointerStart(e, new GestureEventFactory(this.el)),
+        this
+      )
+    ); */
 
     if (typeof options.size === "number") {
       this.size = options.size;
@@ -195,9 +278,14 @@ export class Sash extends EventEmitter implements Disposable {
     this.layout();
   }
 
-  private onPointerStart = (event: PointerEvent) => {
+  private onPointerStart = (
+    event: PointerEvent
+    //pointerEventFactory: PointerEventFactory
+  ) => {
     const startX = event.pageX;
     const startY = event.pageY;
+
+    console.log(event);
 
     const startEvent: SashEvent = {
       startX,
@@ -210,7 +298,7 @@ export class Sash extends EventEmitter implements Disposable {
 
     this.emit("start", startEvent);
 
-    this.el.setPointerCapture(event.pointerId);
+    //this.el.setPointerCapture(event.pointerId);
 
     const onPointerMove = (event: PointerEvent) => {
       event.preventDefault();
@@ -232,11 +320,15 @@ export class Sash extends EventEmitter implements Disposable {
       this.hoverDelayer.cancel();
       this.emit("end");
 
-      this.el.releasePointerCapture(event.pointerId);
+      //this.el.releasePointerCapture(event.pointerId);
+
+      //this.el.removeEventListener(EventType.Change, onPointerMove);
 
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
     };
+
+    //this.el.addEventListener(EventType.Start, onPointerMove);
 
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
@@ -300,7 +392,7 @@ export class Sash extends EventEmitter implements Disposable {
   }
 
   public dispose(): void {
-    this.el.removeEventListener("pointerdown", this.onPointerStart);
+    this.el.removeEventListener("mousedown", this.onPointerStart);
     this.el.removeEventListener("dblclick", this.onPointerDoublePress);
     this.el.removeEventListener("mouseenter", this.onMouseEnter);
     this.el.removeEventListener("mouseleave", () => this.onMouseLeave);
