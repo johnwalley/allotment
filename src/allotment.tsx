@@ -104,6 +104,17 @@ export type AllotmentProps = {
   /** Whether to render a separator between panes */
   separator?: boolean;
   /**
+   * How to resize existing panes when a pane is added or removed.
+   *
+   * - `auto`: if the panes are evenly distributed they stay evenly distributed,
+   *   otherwise the new pane takes half of its neighbour's space and a removed
+   *   pane's space is given to its neighbour.
+   * - `distribute`: redistribute space evenly between all panes.
+   *
+   * @defaultValue "auto"
+   */
+  sizing?: "auto" | "distribute";
+  /**
    * Initial size of each element
    * @deprecated Use {@link AllotmentProps.defaultSizes defaultSizes} instead
    */
@@ -135,6 +146,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       minSize = 30,
       proportionalLayout = true,
       separator = true,
+      sizing = "auto",
       sizes,
       defaultSizes = sizes,
       snap = false,
@@ -324,7 +336,12 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
 
         for (let index = exit.length - 1; index >= 0; index--) {
           if (exit[index]) {
-            splitViewRef.current?.removeView(index);
+            splitViewRef.current?.removeView(
+              index,
+              sizing === "auto"
+                ? Sizing.Auto(index > 0 ? index - 1 : index + 1)
+                : undefined,
+            );
             panes.splice(index, 1);
             views.current.splice(index, 1);
           }
@@ -344,24 +361,20 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             snap: props?.snap ?? snap,
           });
 
+          const index = keys.findIndex((key) => key === enterKey);
+
           splitViewRef.current?.addView(
             splitViewViewRef.current.get(enterKey)!,
             view,
-            Sizing.Distribute,
-            keys.findIndex((key) => key === enterKey),
+            sizing === "auto"
+              ? Sizing.Auto(Math.max(index - 1, 0))
+              : Sizing.Distribute,
+            index,
           );
 
-          panes.splice(
-            keys.findIndex((key) => key === enterKey),
-            0,
-            enterKey,
-          );
+          panes.splice(index, 0, enterKey);
 
-          views.current.splice(
-            keys.findIndex((key) => key === enterKey),
-            0,
-            view,
-          );
+          views.current.splice(index, 0, view);
         }
 
         // Move panes if order has changed
@@ -450,7 +463,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
           previousKeys.current = keys;
         }
       }
-    }, [childrenArray, dimensionsInitialized, maxSize, minSize, snap]);
+    }, [childrenArray, dimensionsInitialized, maxSize, minSize, sizing, snap]);
 
     useEffect(() => {
       if (splitViewRef.current) {

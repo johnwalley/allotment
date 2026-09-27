@@ -30,6 +30,12 @@ export type DistributeSizing = { type: "distribute" };
 export type SplitSizing = { type: "split"; index: number };
 
 /**
+ * When adding or removing views, use {@link DistributeSizing} when all
+ * pre-existing views are distributed evenly, otherwise use {@link SplitSizing}.
+ */
+export type AutoSizing = { type: "auto"; index: number };
+
+/**
  * When adding or removing views, assume the view is invisible.
  */
 export type InvisibleSizing = { type: "invisible"; cachedVisibleSize: number };
@@ -38,7 +44,11 @@ export type InvisibleSizing = { type: "invisible"; cachedVisibleSize: number };
  * When adding or removing views, the sizing provides fine grained
  * control over how other views get resized.
  */
-export type Sizing = DistributeSizing | SplitSizing | InvisibleSizing;
+export type Sizing =
+  | DistributeSizing
+  | SplitSizing
+  | AutoSizing
+  | InvisibleSizing;
 
 export namespace Sizing {
   /**
@@ -53,6 +63,15 @@ export namespace Sizing {
    */
   export function Split(index: number): SplitSizing {
     return { type: "split", index };
+  }
+
+  /**
+   * When adding or removing views, use {@link DistributeSizing} when all
+   * pre-existing views are distributed evenly, otherwise use {@link SplitSizing}
+   * with the view indexed by the provided `index`.
+   */
+  export function Auto(index: number): AutoSizing {
+    return { type: "auto", index };
   }
 
   /**
@@ -431,6 +450,12 @@ export class SplitView extends EventEmitter implements Disposable {
   ) {
     let viewSize: ViewItemSize;
 
+    if (typeof size !== "number" && size.type === "auto") {
+      size = this.areViewsDistributed()
+        ? Sizing.Distribute
+        : Sizing.Split(size.index);
+    }
+
     if (typeof size === "number") {
       viewSize = size;
     } else if (size.type === "split") {
@@ -528,8 +553,15 @@ export class SplitView extends EventEmitter implements Disposable {
       this.sashItems.splice(index - 1, 0, sashItem);
     }
 
+    let highPriorityIndexes: number[] | undefined;
+
+    if (typeof size !== "number" && size.type === "split") {
+      // `size.index` refers to the view's position before insertion
+      highPriorityIndexes = [size.index >= index ? size.index + 1 : size.index];
+    }
+
     if (!skipLayout) {
-      this.relayout();
+      this.relayout([index], highPriorityIndexes);
     }
 
     if (!skipLayout && typeof size !== "number" && size.type === "distribute") {
@@ -548,9 +580,24 @@ export class SplitView extends EventEmitter implements Disposable {
       throw new Error("Index out of bounds");
     }
 
+    if (sizing?.type === "auto") {
+      sizing = this.areViewsDistributed()
+        ? Sizing.Distribute
+        : Sizing.Split(sizing.index);
+    }
+
+    // Save reference view, in case of `split` sizing
+    const referenceViewItem =
+      sizing?.type === "split" ? this.viewItems[sizing.index] : undefined;
+
     // Remove view
     const viewItem = this.viewItems.splice(index, 1)[0];
     const view = viewItem.view;
+
+    // Resize reference view, in case of `split` sizing
+    if (referenceViewItem) {
+      referenceViewItem.size += viewItem.size;
+    }
 
     // Remove sash
     if (this.viewItems.length >= 1) {
@@ -738,6 +785,25 @@ export class SplitView extends EventEmitter implements Disposable {
     this.distributeEmptySpace(index);
     this.layoutViews();
     this.saveProportions();
+  }
+
+  /**
+   * Whether all {@link View views} are (approximately) the same size.
+   */
+  private areViewsDistributed(): boolean {
+    let min: number | undefined;
+    let max: number | undefined;
+
+    for (const view of this.viewItems) {
+      min = min === undefined ? view.size : Math.min(min, view.size);
+      max = max === undefined ? view.size : Math.max(max, view.size);
+
+      if (max - min > 2) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
