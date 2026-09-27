@@ -90,6 +90,7 @@ export class Sash extends EventEmitter implements Disposable {
     (el) => el.classList.add("sash-hover", styles.hover),
     this.hoverDelay,
   );
+  private disposeDrag: (() => void) | undefined;
 
   private _state: SashState = SashState.Enabled;
   get state(): SashState {
@@ -174,10 +175,10 @@ export class Sash extends EventEmitter implements Disposable {
     } else {
       this.size = globalSize;
 
-      onDidChangeGlobalSize.on("onDidChangeGlobalSize", (size) => {
-        this.size = size;
-        this.layout();
-      });
+      onDidChangeGlobalSize.on(
+        "onDidChangeGlobalSize",
+        this.onDidChangeGlobalSize,
+      );
     }
 
     this.layoutProvider = layoutProvider;
@@ -195,7 +196,14 @@ export class Sash extends EventEmitter implements Disposable {
     this.layout();
   }
 
+  private onDidChangeGlobalSize = (size: number): void => {
+    this.size = size;
+    this.layout();
+  };
+
   private onPointerStart = (event: PointerEvent) => {
+    this.disposeDrag?.();
+
     const startX = event.pageX;
     const startY = event.pageY;
 
@@ -210,7 +218,8 @@ export class Sash extends EventEmitter implements Disposable {
 
     this.emit("start", startEvent);
 
-    this.el.setPointerCapture(event.pointerId);
+    const pointerId = event.pointerId;
+    this.el.setPointerCapture(pointerId);
 
     const onPointerMove = (event: PointerEvent) => {
       event.preventDefault();
@@ -232,11 +241,26 @@ export class Sash extends EventEmitter implements Disposable {
       this.hoverDelayer.cancel();
       this.emit("end");
 
-      this.el.releasePointerCapture(event.pointerId);
+      teardown();
+    };
 
+    // Detaches the active drag. Called on pointer up, and on dispose so that
+    // unmounting mid-drag doesn't leave listeners attached to the window.
+    const teardown = (): void => {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
+
+      if (this.el.hasPointerCapture?.(pointerId)) {
+        this.el.releasePointerCapture(pointerId);
+      }
+
+      this.el.classList.remove("sash-active", styles.active);
+      this.hoverDelayer.cancel();
+
+      this.disposeDrag = undefined;
     };
+
+    this.disposeDrag = teardown;
 
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
@@ -300,10 +324,20 @@ export class Sash extends EventEmitter implements Disposable {
   }
 
   public dispose(): void {
+    this.disposeDrag?.();
+
     this.el.removeEventListener("pointerdown", this.onPointerStart);
     this.el.removeEventListener("dblclick", this.onPointerDoublePress);
     this.el.removeEventListener("mouseenter", this.onMouseEnter);
-    this.el.removeEventListener("mouseleave", () => this.onMouseLeave);
+    this.el.removeEventListener("mouseleave", this.onMouseLeave);
+
+    onDidChangeGlobalSize.off(
+      "onDidChangeGlobalSize",
+      this.onDidChangeGlobalSize,
+    );
+
+    this.hoverDelayer.cancel();
+    this.removeAllListeners();
 
     this.el.remove();
   }

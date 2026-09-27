@@ -774,6 +774,7 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   public dispose(): void {
+    this.sashDragState = undefined;
     this.sashItems.forEach((sashItem) => sashItem.sash.dispose());
     this.sashItems = [];
 
