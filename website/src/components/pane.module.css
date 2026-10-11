@@ -7,27 +7,50 @@
 }
 
 .paneHeader {
-  height: 22px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  overflow: hidden;
-  display: flex;
-  cursor: pointer;
   align-items: center;
   box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 22px;
+  font-size: 11px;
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 8px;
+  text-transform: uppercase;
 }
 
-.twistyContainer {
-  margin: 0 2px;
+.pane:not(.first) .paneHeader {
+  border-top: 1px solid var(--vscode-border);
+}
+
+.twistie {
+  flex: 0 0 20px;
+  font-size: 16px !important;
+  text-align: center;
 }
 
 h3.title {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  flex: 1;
   font-size: 11px;
   min-width: 3ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  visibility: hidden;
+}
+
+.pane:hover .actions {
+  visibility: visible;
+}
+
+.actions :global(.action-label) {
+  font-size: 16px;
+  height: 20px;
+  width: 20px;
 }
 
 .paneBody {

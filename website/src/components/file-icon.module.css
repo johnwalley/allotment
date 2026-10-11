@@ -1,0 +1,64 @@
+@font-face {
+  src: url("../../../stories/seti.woff") format("woff");
+  font-family: "seti";
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+/* Matches VS Code's default Seti file icon theme */
+.fileIcon {
+  display: inline-block;
+  flex: 0 0 16px;
+  font-family: "seti";
+  font-size: 150%;
+  line-height: 1;
+  margin-right: 6px;
+  text-align: center;
+  width: 16px;
+}
+
+.react::before {
+  content: "\E07D";
+  color: #519aba;
+}
+
+.typescript::before {
+  content: "\E099";
+  color: #519aba;
+}
+
+.css::before {
+  content: "\E01D";
+  color: #519aba;
+}
+
+.json::before {
+  content: "\E055";
+  color: #cbcb41;
+}
+
+.npm::before {
+  content: "\E067";
+  color: #cc3e44;
+}
+
+.tsconfig::before {
+  content: "\E097";
+  color: #519aba;
+}
+
+.markdown::before {
+  content: "\E060";
+  color: #519aba;
+}
+
+.license::before {
+  content: "\E05A";
+  color: #cbcb41;
+}
+
+.git::before {
+  content: "\E034";
+  color: #41535b;
+}

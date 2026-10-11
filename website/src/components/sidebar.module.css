@@ -1,90 +1,121 @@
 .sidebar {
-  background-color: rgb(37, 37, 38);
+  background-color: var(--vscode-sideBar-background);
   height: 100%;
-  outline-color: rgba(83, 89, 93, 0.5);
   display: flex;
   flex-direction: column;
 }
 
 .content {
   flex: 1;
-  font-size: 13px;
+  min-height: 0;
 }
 
 .title {
-  display: flex;
-  height: 35px;
-  display: flex;
+  align-items: center;
   box-sizing: border-box;
+  display: flex;
+  flex: 0 0 35px;
   overflow: hidden;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0 8px 0 20px;
 }
 
-.titleLabel {
-  line-height: 35px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-left: 12px;
-}
-
-.titleLabel h2 {
-  color: rgb(187, 187, 187);
-  font-size: 11px;
+h2.titleLabel {
+  color: var(--vscode-foreground);
   cursor: default;
+  flex: 1;
+  font-size: 11px;
   font-weight: 400;
-  line-height: 35px;
-  margin: 0;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.titleActions {
-  flex: 1;
-  padding-left: 5px;
-}
-
-.actionsContainer {
-  justify-content: flex-end;
-  display: flex;
-  margin: 0 auto;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  align-items: center;
+.list {
+  padding-bottom: 4px;
 }
 
 .listRow {
+  align-items: center;
   cursor: pointer;
-  height: 22px;
-  line-height: 22px;
-  padding-left: 22px;
   display: flex;
+  height: 22px;
+  padding-right: 12px;
+  white-space: nowrap;
 }
 
 .listRow:hover {
-  background-color: #2a2d2e;
+  background-color: var(--vscode-list-hoverBackground);
 }
 
-.actionLabel {
-  align-items: center;
-  padding: 2px;
+.listRow.selected {
+  background-color: var(--vscode-list-inactiveSelectionBackground);
 }
 
-.iconLabelContainer {
+.twistie {
+  flex: 0 0 16px;
+  margin: 0 4px 0 -18px;
+  font-size: 16px;
+}
+
+.symbolIcon {
+  flex: 0 0 16px;
+  margin-right: 6px;
+}
+
+.label {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1;
 }
 
-.labelDescription {
-  font-style: italic;
-  opacity: 0.8;
-  margin-left: 0.5em;
-  font-size: 0.9em;
-  white-space: pre;
+.message {
+  color: var(--vscode-foreground);
+  margin: 0;
+  padding: 4px 20px;
+  white-space: normal;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 20px 0 20px;
+  white-space: normal;
+}
+
+.viewMessage {
+  margin: 0;
+}
+
+.input {
+  align-items: center;
+  background-color: var(--vscode-sideBar-background);
+  border: 1px solid var(--vscode-input-border);
+  border-radius: 4px;
+  color: var(--vscode-descriptionForeground);
+  display: flex;
+  gap: 4px;
+  height: 26px;
+  padding: 0 6px;
+}
+
+.placeholder {
+  color: #555555;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.button {
+  align-items: center;
+  background-color: var(--vscode-button-background);
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  height: 26px;
+  justify-content: center;
 }

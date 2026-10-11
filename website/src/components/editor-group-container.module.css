@@ -1,68 +1,99 @@
-@font-face {
-  src: url("../../../stories/seti.woff") format("woff");
-  font-family: "seti";
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-.allotment {
-  overflow-x: scroll;
-}
-
 .editorGroupContainer {
+  background-color: var(--vscode-editor-background);
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
-.tabList {
-  display: flex;
-}
-
-.tabActions {
-  display: flex;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 28px;
-}
-
 .title {
-  background-color: rgb(37, 37, 38);
+  background-color: var(--vscode-sideBar-background);
+  box-shadow: inset 0 -1px 0 var(--vscode-border);
+  display: flex;
+  flex: 0 0 35px;
+  min-width: 0;
+}
+
+/* Tabs keep their width and are clipped, so the editor actions stay visible */
+.tabsContainer {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.tab {
+  align-items: center;
+  flex: 0 0 auto;
+  background-color: var(--vscode-editor-background);
+  border-right: 1px solid var(--vscode-border);
+  box-sizing: border-box;
+  color: var(--vscode-descriptionForeground);
+  cursor: pointer;
+  display: flex;
+  min-width: 0;
+  padding: 0 4px 0 10px;
+  position: relative;
+}
+
+/* The tab in the focused group is highlighted, with an accent along the top */
+.tab.active {
+  color: var(--vscode-foreground);
+}
+
+.tab.active::after {
+  background-color: var(--vscode-tab-activeBorderTop);
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tabLabel {
+  margin-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab :global(.action-label) {
+  flex: 0 0 22px;
+  font-size: 16px;
+}
+
+.editorActions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 0 8px 0 4px;
+}
+
+.breadcrumbs {
+  align-items: center;
+  color: var(--vscode-descriptionForeground);
+  display: flex;
+  flex: 0 0 22px;
+  gap: 2px;
+  overflow: hidden;
+  padding-left: 14px;
+  white-space: nowrap;
+}
+
+.breadcrumbs > span:not(:global(.codicon)) {
+  cursor: pointer;
+}
+
+.breadcrumbs :global(.codicon) {
+  font-size: 16px;
+}
+
+.breadcrumbs .symbol {
+  margin-right: 4px;
 }
 
 .editorContainer {
-  background-color: rgb(30, 30, 30);
-}
-
-.iconLabel {
-  display: flex;
-  line-height: 35px;
-  padding-left: 10px;
-}
-
-.iconLabel::before {
-  color: #519aba;
-  background-image: unset;
-  font-family: "seti";
-  font-size: 150%;
-}
-
-.typescriptReactFileIcon::before {
-  content: "\E099";
-}
-
-.cssLangFileIcon::before {
-  content: "\E01D";
-}
-
-.labelName {
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.actionLabel {
-  cursor: pointer;
-  font-size: 16px !important;
-  padding: 2px;
-  width: 16px;
-  height: 16px;
+  flex: 1;
+  min-height: 0;
 }
