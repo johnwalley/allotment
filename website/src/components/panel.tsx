@@ -1,11 +1,11 @@
 import React from "react";
 
-import "xterm/css/xterm.css";
+import "@xterm/xterm/css/xterm.css";
 
 import classNames from "classnames";
 import { useEffect, useRef } from "react";
-import { Terminal } from "xterm";
-import { FitAddon } from "xterm-addon-fit";
+import { Terminal } from "@xterm/xterm";
+import { FitAddon } from "@xterm/addon-fit";
 
 import styles from "./panel.module.css";
 
@@ -44,7 +44,7 @@ export const Panel = ({
 
     term.writeln("Welcome to allotment");
     term.writeln(
-      "This is a local terminal emulation, without a real terminal in the back-end."
+      "This is a local terminal emulation, without a real terminal in the back-end.",
     );
     term.writeln("Type some keys and commands to play around.");
     term.writeln("");
@@ -65,6 +65,17 @@ export const Panel = ({
         term.write(e.key);
       }
     });
+
+    // The pane's size isn't final until Allotment has laid it out, so refit
+    // whenever it changes.
+    const resizeObserver = new ResizeObserver(() => fitAddon.fit());
+
+    resizeObserver.observe(ref.current);
+
+    return () => {
+      resizeObserver.disconnect();
+      term.dispose();
+    };
   }, []);
 
   return (
@@ -87,7 +98,7 @@ export const Panel = ({
                 <a
                   className={classNames(
                     "codicon codicon-chevron-down",
-                    styles.actionLabel
+                    styles.actionLabel,
                   )}
                   role="button"
                   title="Minimize Panel Size"
@@ -97,7 +108,7 @@ export const Panel = ({
                 <a
                   className={classNames(
                     "codicon codicon-chevron-up",
-                    styles.actionLabel
+                    styles.actionLabel,
                   )}
                   role="button"
                   title="Maximize Panel Size"
@@ -109,7 +120,7 @@ export const Panel = ({
               <a
                 className={classNames(
                   "codicon codicon-close",
-                  styles.actionLabel
+                  styles.actionLabel,
                 )}
                 role="button"
                 title="Close Panel"

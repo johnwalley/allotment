@@ -6,11 +6,15 @@ const { themes } = require('prism-react-renderer');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Allotment",
-  tagline: "React split-pane component",
+  tagline: "Resizable split panes for React, derived from VS Code",
   url: "https://allotment.mulberryhousesoftware.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
+  },
   favicon: "img/favicon.ico",
   organizationName: "johnwalley", // Usually your GitHub org/user name.
   projectName: "allotment", // Usually your repo name.
@@ -24,6 +28,7 @@ const config = {
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
           ],
           sidebarPath: require.resolve("./sidebars.json"),
+          editUrl: "https://github.com/johnwalley/allotment/tree/main/website/",
         },
         gtag: {
           trackingID: "G-DNDF9GXNX9",
@@ -39,9 +44,26 @@ const config = {
     ],
   ],
 
+  themes: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        hashed: true,
+        indexBlog: false,
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: "img/social-card.png",
+      metadata: [
+        {
+          name: "keywords",
+          content: "react, split pane, split view, resizable, panels, vscode",
+        },
+      ],
       navbar: {
         title: "Allotment",
         logo: {
@@ -63,6 +85,11 @@ const config = {
           {
             href: "https://allotment-storybook.netlify.app",
             label: "Storybook",
+            position: "right",
+          },
+          {
+            href: "https://github.com/johnwalley/allotment/blob/main/CHANGELOG.md",
+            label: "Changelog",
             position: "right",
           },
         ],
@@ -89,6 +116,14 @@ const config = {
               {
                 label: "Storybook",
                 href: "https://allotment-storybook.netlify.app",
+              },
+              {
+                label: "Changelog",
+                href: "https://github.com/johnwalley/allotment/blob/main/CHANGELOG.md",
+              },
+              {
+                label: "npm",
+                href: "https://www.npmjs.com/package/allotment",
               },
             ],
           },
