@@ -1,49 +1,53 @@
 .statusbar {
   align-items: center;
-  background-color: rgb(0, 122, 204);
-  border-radius: 0 0 8px 8px;
-  color: rgb(255, 255, 255);
+  background-color: var(--vscode-sideBar-background);
+  color: var(--vscode-descriptionForeground);
   display: flex;
-  flex-direction: row;
-  height: 22px;
-}
-
-.layoutControls {
-  margin-left: auto;
-  margin-right: 8px;
-}
-
-.actionBar {
-  line-height: 27px;
-}
-
-.actionsContainer {
-  list-style-type: none;
-  display: flex;
-  margin: 0 auto;
-  padding: 0;
+  font-size: 12px;
   height: 100%;
-  width: 100%;
-  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.actionItem {
-  text-transform: uppercase;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  font-size: 11px;
-  padding: 2px 10px;
+.items {
+  align-items: stretch;
   display: flex;
+  height: 100%;
 }
 
-.actionLabel {
-  font-size: 11px;
-  padding: 3px;
-  border-radius: 5px;
+.item,
+.optional {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 3px;
+  padding: 0 5px;
 }
 
-.actionLabel:hover {
-  background-color: rgba(90, 93, 94, 0.31);
+.item:hover,
+.optional:hover {
+  background-color: #323233;
+  color: var(--vscode-foreground);
+}
+
+.items :global(.codicon) {
+  font-size: 14px;
+}
+
+.remote {
+  align-items: center;
+  background-color: var(--vscode-statusBarItem-remoteBackground);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-right: 3px;
+  width: 34px;
+}
+
+@media screen and (max-width: 600px) {
+  .optional {
+    display: none;
+  }
 }

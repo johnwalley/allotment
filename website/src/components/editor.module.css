@@ -1,32 +1,55 @@
 .content {
-  background-color: rgb(30, 30, 30);
+  background-color: var(--vscode-editor-background);
   height: 100%;
   overflow: hidden;
   width: 100%;
 }
 
 .watermark {
-  display: block;
-  position: absolute;
-  width: 100%;
-  top: calc(50% + 55px);
-  text-align: center;
-  white-space: nowrap;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
   overflow: hidden;
 }
 
-.watermark dl {
-  display: table-row;
-  opacity: 0.8;
-  cursor: default;
-}
-
-.watermark dt {
-  display: table-cell;
-}
-
 .watermarkBox {
-  display: inline-table;
+  color: var(--vscode-descriptionForeground);
+  cursor: default;
+  display: table;
   border-collapse: separate;
-  border-spacing: 13px 17px;
+  border-spacing: 13px 11px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.entry {
+  display: table-row;
+}
+
+.entry dt,
+.entry dd {
+  display: table-cell;
+  font-weight: normal;
+  margin: 0;
+}
+
+.entry dt {
+  text-align: right;
+}
+
+.key {
+  background-color: rgba(128, 128, 128, 0.17);
+  border: 1px solid rgba(51, 51, 51, 0.6);
+  border-bottom-color: rgba(68, 68, 68, 0.6);
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.36);
+  color: var(--vscode-foreground);
+  display: inline-block;
+  font-family: var(--vscode-font-family);
+  font-size: 11px;
+  line-height: 10px;
+  margin: 0 2px;
+  padding: 3px 5px;
+  vertical-align: middle;
 }

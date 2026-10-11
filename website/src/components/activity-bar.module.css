@@ -1,13 +1,10 @@
 .activitybar {
-  background-color: rgb(51, 51, 51);
-  height: 100%;
-  overflow: hidden;
-}
-
-.content {
+  background-color: var(--vscode-sideBar-background);
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .actionsContainer {
@@ -17,21 +14,22 @@
 }
 
 .actionItem {
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   position: relative;
 }
 
-.actionItem.checked:before {
+.actionItem.checked {
+  background-color: var(--vscode-activityBar-activeBackground);
+}
+
+.actionItem.checked::before {
   content: "";
   position: absolute;
   z-index: 1;
   top: 0;
   left: 0;
   height: 100%;
-  width: 0;
-  border-left: 2px solid;
+  border-left: 2px solid var(--vscode-foreground);
 }
 
 .actionLabel {
@@ -40,6 +38,12 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  color: rgb(255, 255, 255);
+  color: var(--vscode-descriptionForeground);
   font-size: 24px !important;
+}
+
+.actionItem:hover .actionLabel,
+.actionItem.checked .actionLabel {
+  color: var(--vscode-foreground);
+  text-decoration: none;
 }
