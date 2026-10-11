@@ -5,6 +5,9 @@
 
 .app {
   color: rgb(255, 255, 255);
+  /* The mock editor is always dark, so native scrollbars (e.g. the terminal's)
+     should be too, whatever the site theme */
+  color-scheme: dark;
 }
 
 .app a {
