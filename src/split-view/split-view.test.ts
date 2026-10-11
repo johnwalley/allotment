@@ -122,6 +122,26 @@ describe("Splitview", () => {
 
     splitview.dispose();
   });
+
+  test("resizeViews ignores sizes beyond the number of views", () => {
+    const splitview = new SplitView(viewContainer);
+
+    for (let i = 0; i < 2; i++) {
+      const view = document.createElement("div");
+      viewContainer.append(view);
+      splitview.addView(view, new TestView(20, Infinity), 150);
+    }
+
+    splitview.layout(300);
+
+    expect(() => splitview.resizeViews([100, 200, 50])).not.toThrow();
+    expect([splitview.getViewSize(0), splitview.getViewSize(1)]).toEqual([
+      100, 200,
+    ]);
+
+    splitview.dispose();
+  });
+
   describe("sash drags", () => {
     const { setPointerCapture, releasePointerCapture, hasPointerCapture } =
       HTMLElement.prototype;
