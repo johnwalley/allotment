@@ -5,11 +5,51 @@ title: Closable
 
 # Closable
 
-- [Open in CodeSandbox](https://codesandbox.io/s/closable-dhqlue)
+Panes can be added and removed by changing the children. Give each pane a stable `key` so Allotment can tell which one changed. The remaining panes are resized to fill the space.
 
-<iframe src="https://codesandbox.io/embed/closable-dhqlue?fontsize=14&hidenavigation=1&theme=dark"
-     style={{width:"100%", height:"500px", border:0, borderRadius: "4px", overflow:"hidden"}}
-     title="Closable"
-     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   ></iframe>
+```tsx live
+function Panes() {
+  const [panes, setPanes] = React.useState([1, 2, 3]);
+  const nextId = React.useRef(4);
+
+  const addPane = () => {
+    const id = nextId.current++;
+    setPanes((panes) => [...panes, id]);
+  };
+
+  const closePane = (id: number) => {
+    setPanes((panes) => panes.filter((pane) => pane !== id));
+  };
+
+  return (
+    <>
+      <button
+        className="button button--secondary button--sm margin-bottom--sm"
+        onClick={addPane}
+      >
+        Add pane
+      </button>
+      <div style={{ height: 300 }}>
+        <Allotment>
+          {panes.map((pane) => (
+            <Allotment.Pane key={pane}>
+              <div className="demo-pane">
+                Pane {pane}
+                <button
+                  className="button button--link button--sm"
+                  disabled={panes.length === 1}
+                  onClick={() => closePane(pane)}
+                >
+                  Close
+                </button>
+              </div>
+            </Allotment.Pane>
+          ))}
+        </Allotment>
+      </div>
+    </>
+  );
+}
+```
+
+[Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--closable)

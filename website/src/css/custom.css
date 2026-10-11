@@ -26,3 +26,28 @@
 html[data-theme="dark"] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+/* Placeholder content for panes in the live examples */
+.demo-pane {
+  align-items: center;
+  background-color: var(--ifm-background-surface-color);
+  color: var(--ifm-color-emphasis-700);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  gap: 0.25rem;
+  height: 100%;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Animate panes being shown and hidden, except while dragging a sash */
+.animated-pane {
+  transition: all 0.15s ease-in-out;
+  will-change: width;
+}
+
+.split-view-sash-dragging .animated-pane {
+  transition: none;
+}

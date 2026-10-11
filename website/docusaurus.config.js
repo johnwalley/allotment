@@ -45,6 +45,7 @@ const config = {
   ],
 
   themes: [
+    "@docusaurus/theme-live-codeblock",
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
@@ -129,6 +130,9 @@ const config = {
           },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} John Walley. Built with Docusaurus.`,
+      },
+      liveCodeBlock: {
+        playgroundPosition: "top",
       },
       prism: {
         theme: themes.github,
