@@ -45,10 +45,7 @@ export type InvisibleSizing = { type: "invisible"; cachedVisibleSize: number };
  * control over how other views get resized.
  */
 export type Sizing =
-  | DistributeSizing
-  | SplitSizing
-  | AutoSizing
-  | InvisibleSizing;
+  DistributeSizing | SplitSizing | AutoSizing | InvisibleSizing;
 
 export namespace Sizing {
   /**
@@ -448,6 +445,8 @@ export class SplitView extends EventEmitter implements Disposable {
     index = this.viewItems.length,
     skipLayout?: boolean,
   ) {
+    this.endSashDrag();
+
     let viewSize: ViewItemSize;
 
     if (typeof size !== "number" && size.type === "auto") {
@@ -579,6 +578,8 @@ export class SplitView extends EventEmitter implements Disposable {
     if (index < 0 || index >= this.viewItems.length) {
       throw new Error("Index out of bounds");
     }
+
+    this.endSashDrag();
 
     if (sizing?.type === "auto") {
       sizing = this.areViewsDistributed()
@@ -954,10 +955,14 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   private onSashChange({ current }: SashEvent): void {
-    const { index, start, sizes, minDelta, maxDelta, snapBefore, snapAfter } =
-      this.sashDragState!;
+    if (!this.sashDragState) {
+      return;
+    }
 
-    this.sashDragState!.current = current;
+    const { index, start, sizes, minDelta, maxDelta, snapBefore, snapAfter } =
+      this.sashDragState;
+
+    this.sashDragState.current = current;
 
     const delta = current - start;
 
@@ -979,6 +984,7 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   private onSashEnd = (index: number): void => {
+    this.sashDragState = undefined;
     this.emit("sashchange", index);
     this.saveProportions();
 
@@ -986,6 +992,16 @@ export class SplitView extends EventEmitter implements Disposable {
       item.enabled = true;
     }
   };
+
+  /**
+   * Ends any sash drag in progress. The drag state holds view indexes and
+   * sizes, so it must not outlive a change to the views.
+   */
+  private endSashDrag(): void {
+    for (const item of this.sashItems) {
+      item.sash.endDrag();
+    }
+  }
 
   private getSashPosition(sash: Sash): number {
     let position = 0;

@@ -166,6 +166,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     const splitViewViewRef = useRef(new Map<React.Key, HTMLElement>());
     const layoutService = useRef<LayoutService>(new LayoutService());
     const views = useRef<PaneView[]>([]);
+    const onResetRef = useRef(onReset);
 
     const [dimensionsInitialized, setDimensionsInitialized] = useState(false);
 
@@ -299,8 +300,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       });
 
       splitViewRef.current.on("sashreset", (index: number) => {
-        if (onReset) {
-          onReset();
+        if (onResetRef.current) {
+          onResetRef.current();
         } else {
           if (resizeToPreferredSize(index)) {
             return;
@@ -482,6 +483,10 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
         splitViewRef.current.onDidDragEnd = onDragEnd;
       }
     }, [onDragEnd]);
+
+    useEffect(() => {
+      onResetRef.current = onReset;
+    }, [onReset]);
 
     useResizeObserver({
       ref: containerRef,
