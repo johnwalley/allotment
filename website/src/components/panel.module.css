@@ -76,13 +76,17 @@
   border-top-style: solid;
 }
 
+/* Fill the pane exactly so the fit addon sizes the terminal to the visible area */
 .terminalWrapper {
-  height: 100%;
+  position: absolute;
+  inset: 0;
   padding-left: 20px;
   padding-right: 20px;
+  text-align: left;
 }
 
 .content {
   flex: 1 1 0;
   position: relative;
+  overflow: hidden;
 }
