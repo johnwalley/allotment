@@ -680,7 +680,9 @@ export class SplitView extends EventEmitter implements Disposable {
   }
 
   public resizeViews(sizes: number[]): void {
-    for (let index = 0; index < sizes.length; index++) {
+    const count = Math.min(sizes.length, this.viewItems.length);
+
+    for (let index = 0; index < count; index++) {
       const item = this.viewItems[index];
       let size = sizes[index];
 
