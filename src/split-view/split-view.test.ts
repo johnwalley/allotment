@@ -122,14 +122,23 @@ describe("Splitview", () => {
 
     splitview.dispose();
   });
-  describe("dispose", () => {
+  describe("sash drags", () => {
+    const { setPointerCapture, releasePointerCapture, hasPointerCapture } =
+      HTMLElement.prototype;
+
     beforeAll(() => {
       HTMLElement.prototype.setPointerCapture = jest.fn();
       HTMLElement.prototype.releasePointerCapture = jest.fn();
       HTMLElement.prototype.hasPointerCapture = jest.fn(() => true);
     });
 
-    test("tears down an in-progress sash drag", () => {
+    afterAll(() => {
+      HTMLElement.prototype.setPointerCapture = setPointerCapture;
+      HTMLElement.prototype.releasePointerCapture = releasePointerCapture;
+      HTMLElement.prototype.hasPointerCapture = hasPointerCapture;
+    });
+
+    function createSplitView(viewCount: number) {
       const onDidChange = jest.fn();
       const onDidDragEnd = jest.fn();
       const splitview = new SplitView(
@@ -139,21 +148,33 @@ describe("Splitview", () => {
         undefined,
         onDidDragEnd,
       );
+      const onSashDragEnd = jest.fn();
+      splitview.on("sashDragEnd", onSashDragEnd);
 
-      const splitViewView1 = document.createElement("div");
-      viewContainer.append(splitViewView1);
-      const splitViewView2 = document.createElement("div");
-      viewContainer.append(splitViewView2);
+      for (let i = 0; i < viewCount; i++) {
+        const view = document.createElement("div");
+        viewContainer.append(view);
+        splitview.addView(view, new TestView(20, 200), 100);
+      }
 
-      splitview.addView(splitViewView1, new TestView(20, 200), 100);
-      splitview.addView(splitViewView2, new TestView(20, 200), 100);
-      splitview.layout(200);
+      splitview.layout(viewCount * 100);
+
+      return { splitview, onDidChange, onDidDragEnd, onSashDragEnd };
+    }
+
+    test("dispose ends an in-progress sash drag", () => {
+      const { splitview, onDidChange, onDidDragEnd, onSashDragEnd } =
+        createSplitView(2);
 
       const [sash] = getAllByTestId(container, "sash");
 
       sash.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
 
       splitview.dispose();
+
+      expect(onSashDragEnd).toHaveBeenCalledTimes(1);
+      expect(onDidDragEnd).toHaveBeenCalledTimes(1);
+
       onDidChange.mockClear();
 
       expect(() => {
@@ -164,7 +185,36 @@ describe("Splitview", () => {
       }).not.toThrow();
 
       expect(onDidChange).not.toHaveBeenCalled();
-      expect(onDidDragEnd).not.toHaveBeenCalled();
+      expect(onDidDragEnd).toHaveBeenCalledTimes(1);
+    });
+
+    test.each([
+      ["the dragged sash", 1],
+      ["a different sash", 2],
+    ])("removing a view mid-drag ends the drag on %s", (_, removedIndex) => {
+      const { splitview, onDidChange, onDidDragEnd, onSashDragEnd } =
+        createSplitView(3);
+
+      const [sash] = getAllByTestId(container, "sash");
+
+      sash.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
+
+      splitview.removeView(removedIndex);
+
+      expect(onSashDragEnd).toHaveBeenCalledTimes(1);
+      expect(onDidDragEnd).toHaveBeenCalledTimes(1);
+
+      onDidChange.mockClear();
+
+      window.dispatchEvent(
+        new MouseEvent("pointermove", { clientX: 50, clientY: 50 }),
+      );
+      window.dispatchEvent(new MouseEvent("pointerup"));
+
+      expect(onDidChange).not.toHaveBeenCalled();
+      expect(onDidDragEnd).toHaveBeenCalledTimes(1);
+
+      splitview.dispose();
     });
   });
 });

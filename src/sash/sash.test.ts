@@ -11,10 +11,19 @@ jest.mock("./sash.module.css", () => ({
 describe("Sash", () => {
   let container: HTMLElement;
 
+  const { setPointerCapture, releasePointerCapture, hasPointerCapture } =
+    HTMLElement.prototype;
+
   beforeAll(() => {
     HTMLElement.prototype.setPointerCapture = jest.fn();
     HTMLElement.prototype.releasePointerCapture = jest.fn();
     HTMLElement.prototype.hasPointerCapture = jest.fn(() => true);
+  });
+
+  afterAll(() => {
+    HTMLElement.prototype.setPointerCapture = setPointerCapture;
+    HTMLElement.prototype.releasePointerCapture = releasePointerCapture;
+    HTMLElement.prototype.hasPointerCapture = hasPointerCapture;
   });
 
   beforeEach(() => {
@@ -38,7 +47,7 @@ describe("Sash", () => {
     return { sash, el, layoutProvider };
   }
 
-  test("dispose tears down an in-progress drag", () => {
+  test("dispose ends an in-progress drag", () => {
     const { sash, el } = createSash();
     const onChange = jest.fn();
     const onEnd = jest.fn();
@@ -50,29 +59,97 @@ describe("Sash", () => {
 
     sash.dispose();
 
+    expect(onEnd).toHaveBeenCalledTimes(1);
+    expect(el.classList.contains("sash-active")).toBe(false);
+
     window.dispatchEvent(new MouseEvent("pointermove"));
     window.dispatchEvent(new MouseEvent("pointerup"));
 
     expect(onChange).not.toHaveBeenCalled();
-    expect(onEnd).not.toHaveBeenCalled();
+    expect(onEnd).toHaveBeenCalledTimes(1);
+  });
+
+  test("pointercancel ends the drag", () => {
+    const { sash, el } = createSash();
+    const onChange = jest.fn();
+    const onEnd = jest.fn();
+    sash.on("change", onChange);
+    sash.on("end", onEnd);
+
+    el.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
+    window.dispatchEvent(new MouseEvent("pointercancel"));
+
+    expect(onEnd).toHaveBeenCalledTimes(1);
     expect(el.classList.contains("sash-active")).toBe(false);
+
+    window.dispatchEvent(new MouseEvent("pointermove"));
+    window.dispatchEvent(new MouseEvent("pointerup"));
+
+    expect(onChange).not.toHaveBeenCalled();
+    expect(onEnd).toHaveBeenCalledTimes(1);
+
+    sash.dispose();
+  });
+
+  test("starting a second drag ends the first", () => {
+    const { sash, el } = createSash();
+    const onStart = jest.fn();
+    const onEnd = jest.fn();
+    sash.on("start", onStart);
+    sash.on("end", onEnd);
+
+    el.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
+    el.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
+    window.dispatchEvent(new MouseEvent("pointerup"));
+
+    expect(onStart).toHaveBeenCalledTimes(2);
+    expect(onEnd).toHaveBeenCalledTimes(2);
+
+    sash.dispose();
+  });
+
+  test("a throwing end listener doesn't leave the drag attached", () => {
+    const { sash, el } = createSash();
+    const onChange = jest.fn();
+    sash.on("change", onChange);
+    sash.on("end", () => {
+      throw new Error("end listener failed");
+    });
+
+    el.dispatchEvent(new MouseEvent("pointerdown", { bubbles: true }));
+
+    expect(() => sash.endDrag()).toThrow("end listener failed");
+
+    window.dispatchEvent(new MouseEvent("pointermove"));
+
+    expect(onChange).not.toHaveBeenCalled();
+    expect(el.classList.contains("sash-active")).toBe(false);
+
+    sash.removeAllListeners();
+    sash.dispose();
   });
 
   test("dispose unsubscribes from global sash size changes", () => {
     const sashes = Array.from({ length: 5 }, () => createSash());
+
+    // The sash is centred on getVerticalSashLeft, which returns 0, so its
+    // left offset is minus half the current global size.
+    const originalSize = -2 * parseFloat(sashes[0].el.style.left);
 
     sashes.forEach(({ sash }) => sash.dispose());
     sashes.forEach(({ layoutProvider }) =>
       layoutProvider.getVerticalSashLeft.mockClear(),
     );
 
-    setGlobalSashSize(10);
+    try {
+      setGlobalSashSize(originalSize + 2);
 
-    sashes.forEach(({ layoutProvider }) =>
-      expect(layoutProvider.getVerticalSashLeft).not.toHaveBeenCalled(),
-    );
-
-    setGlobalSashSize(8);
+      sashes.forEach(({ layoutProvider }) =>
+        expect(layoutProvider.getVerticalSashLeft).not.toHaveBeenCalled(),
+      );
+    } finally {
+      setGlobalSashSize(originalSize);
+    }
   });
 
   test("dispose cancels the pending hover delay", () => {
