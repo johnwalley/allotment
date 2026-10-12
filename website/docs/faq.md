@@ -40,4 +40,4 @@ These are open issues. Follow the links for workarounds and progress.
 - **Preact.** Allotment is built for React and doesn't work correctly with `preact/compat` ([#689](https://github.com/johnwalley/allotment/issues/689)).
 - **Other windows.** Resizing doesn't work properly when Allotment is rendered into a window opened with `window.open` ([#863](https://github.com/johnwalley/allotment/issues/863)).
 - **Firefox clicks after a drag.** In Firefox, releasing the mouse over a button at the end of a drag also clicks that button ([#804](https://github.com/johnwalley/allotment/issues/804)). You can track drags with `onDragStart` and `onDragEnd` and ignore clicks in between.
-- **Accessibility.** Sashes can't be focused or moved with the keyboard, and have no ARIA roles.
+- **Accessibility.** Sashes can't be focused or moved with the keyboard, and have no ARIA roles ([#639](https://github.com/johnwalley/allotment/issues/639)).
