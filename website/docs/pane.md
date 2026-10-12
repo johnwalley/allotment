@@ -21,7 +21,7 @@ title: Pane
 
 The priority of the pane when the layout algorithm runs. Panes with higher priority are resized first. One of `LayoutPriority.Low`, `LayoutPriority.Normal` or `LayoutPriority.High`, imported from `allotment`.
 
-Only used when `proportionalLayout` is `false`.
+Only used when `proportionalLayout` is `false`. See [When the container resizes](sizing.md#when-the-container-resizes) for an example.
 
 ### `preferredSize`
 

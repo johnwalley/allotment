@@ -76,4 +76,57 @@ Resize the panes, then double-click a sash to put them back.
 </div>
 ```
 
+## When the container resizes
+
+By default, when the `Allotment` itself changes size, every pane grows or shrinks in proportion. That's usually wrong for a sidebar, which should keep its width while the main area takes up the difference.
+
+Set `proportionalLayout={false}` to stop scaling the panes, and give the pane that should absorb the change `priority={LayoutPriority.High}`. Move the slider to resize both containers and compare.
+
+```tsx live
+function ContainerResize() {
+  const [width, setWidth] = React.useState(100);
+
+  return (
+    <>
+      <label className="margin-bottom--sm" style={{ display: "block" }}>
+        Container width: {width}%{" "}
+        <input
+          type="range"
+          min={40}
+          max={100}
+          value={width}
+          onChange={(event) => setWidth(Number(event.target.value))}
+        />
+      </label>
+      <p className="margin-bottom--xs">Proportional (default)</p>
+      <div style={{ height: 150, width: `${width}%` }}>
+        <Allotment>
+          <Allotment.Pane preferredSize={150}>
+            <div className="demo-pane">Sidebar</div>
+          </Allotment.Pane>
+          <Allotment.Pane>
+            <div className="demo-pane">Main</div>
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+      <p className="margin-top--md margin-bottom--xs">
+        <code>proportionalLayout={"{false}"}</code>
+      </p>
+      <div style={{ height: 150, width: `${width}%` }}>
+        <Allotment proportionalLayout={false}>
+          <Allotment.Pane preferredSize={150}>
+            <div className="demo-pane">Sidebar</div>
+          </Allotment.Pane>
+          <Allotment.Pane priority={LayoutPriority.High}>
+            <div className="demo-pane">Main</div>
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </>
+  );
+}
+```
+
+Without any priorities, the last pane takes up the change, so here `Main` would anyway. Setting its priority makes that explicit, and keeps it working if you add a pane after it. Panes with `LayoutPriority.Low` are resized only once the others reach their minimum or maximum size.
+
 [Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--preferred-size)

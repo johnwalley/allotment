@@ -5,25 +5,96 @@ title: Styling
 
 # Styling
 
-Some common style changes can be made by setting CSS variables.
+## CSS variables
 
-These include:
+Some common style changes can be made by setting CSS variables:
 
 | Name                               | Default                     | Description                                                       |
 | :--------------------------------- | :-------------------------- | :---------------------------------------------------------------- |
 | `--focus-border`                   | `#007fd4`                   | Color of the sash when hovered                                    |
 | `--separator-border`               | `rgba(128, 128, 128, 0.35)` | Color of the separator                                            |
 | `--sash-hover-transition-duration` | `0.1s`                      | Length of time hover transition animation should take to complete |
-| `--sash-size`                      | `8px`                       | Size of the draggable area between panes                          |
+| `--sash-size`                      | `8px`                       | Size of the draggable area between panes. See [below](#sash-size) |
 | `--sash-hover-size`                | `4px`                       | Size of the highlighted sash when hovered                         |
 
-To control the size of the draggable area between panes you can call the exported `setSashSize` function with the desired size in pixels (clamped between 4 and 20). Set it to a larger value if you find it hard to resize the panes using the mouse. On iOS and iPadOS devices Allotment sets it to 20 pixels.
+The variables are inherited, so you can set them on any element that contains an `Allotment` to style just that one. Hover over the sash here to see the new colour.
+
+```tsx live
+<div
+  style={
+    {
+      height: 300,
+      "--focus-border": "#e5534b",
+      "--separator-border": "#e5534b",
+      "--sash-hover-size": "6px",
+      "--sash-hover-transition-duration": "0.3s",
+    } as React.CSSProperties
+  }
+>
+  <Allotment>
+    <div className="demo-pane">One</div>
+    <div className="demo-pane">Two</div>
+  </Allotment>
+</div>
+```
+
+## Sash size
+
+To control the size of the draggable area between panes, call the exported `setSashSize` function with the size in pixels. It's clamped between 4 and 20. Use a larger value if the panes are hard to resize with a mouse. On iOS and iPadOS Allotment sets it to 20 pixels.
 
 ```tsx
 import { setSashSize } from "allotment";
 
 setSashSize(12);
 ```
+
+Allotment also uses the size when laying out the sashes, so set it with `setSashSize` rather than the `--sash-size` variable. It applies to every `Allotment` on the page. Move the slider, then hover over the sash. The highlight grows up to 8 pixels wide, and the area you can drag from keeps growing up to 20.
+
+```tsx live
+function SashSize() {
+  const [size, setSize] = React.useState(() =>
+    parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--sash-size",
+      ),
+    ),
+  );
+
+  React.useEffect(() => {
+    const initial = size;
+
+    // Put the size back when leaving the page, so other examples aren't affected
+    return () => setSashSize(initial);
+  }, []);
+
+  return (
+    <>
+      <label className="margin-bottom--sm" style={{ display: "block" }}>
+        Sash size: {size}px{" "}
+        <input
+          type="range"
+          min={4}
+          max={20}
+          value={size}
+          onChange={(event) => {
+            const size = Number(event.target.value);
+            setSize(size);
+            setSashSize(size);
+          }}
+        />
+      </label>
+      <div style={{ height: 300 }}>
+        <Allotment>
+          <div className="demo-pane">One</div>
+          <div className="demo-pane">Two</div>
+        </Allotment>
+      </div>
+    </>
+  );
+}
+```
+
+## Class names
 
 For more involved styling you can target the component's child elements.
 
@@ -47,3 +118,5 @@ For more involved styling you can target the component's child elements.
 | `.split-view-container`        | Styles applied to the split view container                           |
 | `.split-view-view`             | Styles applied to the split view view                                |
 | `.split-view-view-visible`     | Styles applied to the split view view if `visible={true}`            |
+
+[Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--configure-sash)
