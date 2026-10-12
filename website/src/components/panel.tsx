@@ -2,7 +2,7 @@ import React from "react";
 
 import "@xterm/xterm/css/xterm.css";
 
-import classNames from "classnames";
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
@@ -114,7 +114,7 @@ export const Panel = ({
           {TABS.map((tab, index) => (
             <li
               key={tab}
-              className={classNames(styles.tab, {
+              className={clsx(styles.tab, {
                 [styles.checked]: index === activeTab,
               })}
               role="tab"
