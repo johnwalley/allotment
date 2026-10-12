@@ -54,7 +54,7 @@ const BADGES = [
   },
 ];
 
-// Open source projects that list allotment as a dependency in a package.json
+// Open source projects that render Allotment in their UI, checked October 2026
 const USED_BY = [
   { name: "JSON Crack", href: "https://github.com/AykutSarac/jsoncrack.com" },
   { name: "CesiumJS", href: "https://github.com/CesiumGS/cesium" },
@@ -63,8 +63,11 @@ const USED_BY = [
     href: "https://github.com/microsoft/data-formulator",
   },
   { name: "FiftyOne", href: "https://github.com/voxel51/fiftyone" },
-  { name: "Teable", href: "https://github.com/teableio/teable" },
-  { name: "BAML", href: "https://github.com/BoundaryML/baml" },
+  {
+    name: "Azure Cosmos DB Explorer",
+    href: "https://github.com/Azure/cosmos-explorer",
+  },
+  { name: "Convex Chef", href: "https://github.com/get-convex/chef" },
 ];
 
 // Same shape and colours as the demo, so the page doesn't jump when it loads
