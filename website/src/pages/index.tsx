@@ -9,6 +9,7 @@ import clsx from "clsx";
 import React, { useState } from "react";
 
 import HomepageFeatures from "../components/HomepageFeatures";
+import HomepageProps from "../components/HomepageProps";
 import styles from "./index.module.css";
 
 const INSTALL_COMMAND = "npm install allotment";
@@ -24,6 +25,47 @@ export const App = () => (
     </Allotment>
   </div>
 );`;
+
+const BADGES = [
+  {
+    alt: "npm version",
+    src: "https://img.shields.io/npm/v/allotment",
+    href: "https://www.npmjs.com/package/allotment",
+  },
+  {
+    alt: "npm downloads per week",
+    src: "https://img.shields.io/npm/dw/allotment",
+    href: "https://www.npmjs.com/package/allotment",
+  },
+  {
+    alt: "Bundle size",
+    src: "https://img.shields.io/bundlephobia/minzip/allotment",
+    href: "https://bundlephobia.com/package/allotment",
+  },
+  {
+    alt: "Types included",
+    src: "https://img.shields.io/npm/types/allotment",
+    href: "https://www.npmjs.com/package/allotment",
+  },
+  {
+    alt: "License",
+    src: "https://img.shields.io/github/license/johnwalley/allotment",
+    href: "https://github.com/johnwalley/allotment/blob/main/LICENSE",
+  },
+];
+
+// Open source projects that list allotment as a dependency in a package.json
+const USED_BY = [
+  { name: "JSON Crack", href: "https://github.com/AykutSarac/jsoncrack.com" },
+  { name: "CesiumJS", href: "https://github.com/CesiumGS/cesium" },
+  {
+    name: "Data Formulator",
+    href: "https://github.com/microsoft/data-formulator",
+  },
+  { name: "FiftyOne", href: "https://github.com/voxel51/fiftyone" },
+  { name: "Teable", href: "https://github.com/teableio/teable" },
+  { name: "BAML", href: "https://github.com/BoundaryML/baml" },
+];
 
 // Same shape and colours as the demo, so the page doesn't jump when it loads
 function DemoPlaceholder() {
@@ -106,8 +148,38 @@ function HomepageHeader() {
           </Link>
         </div>
         <InstallCommand />
+        <div className={styles.badges}>
+          {BADGES.map((badge) => (
+            <a key={badge.alt} href={badge.href}>
+              <img src={badge.src} alt={badge.alt} height={20} />
+            </a>
+          ))}
+        </div>
       </div>
     </header>
+  );
+}
+
+function UsedBy() {
+  return (
+    <section className={styles.usedBy}>
+      <div className="container">
+        <p>
+          Used in{" "}
+          <a href="https://github.com/johnwalley/allotment/network/dependents">
+            over 1,700 repositories on GitHub
+          </a>
+          , including
+        </p>
+        <ul className={styles.usedByList}>
+          {USED_BY.map((project) => (
+            <li key={project.name}>
+              <a href={project.href}>{project.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
@@ -151,7 +223,9 @@ export default function Home(): JSX.Element {
     <Layout title={siteConfig.title} description={siteConfig.tagline}>
       <HomepageHeader />
       <main>
+        <UsedBy />
         <QuickStart />
+        <HomepageProps />
         <HomepageFeatures />
       </main>
     </Layout>

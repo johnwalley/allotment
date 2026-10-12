@@ -137,3 +137,42 @@
 .steps li {
   margin-bottom: 0.5rem;
 }
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.badges img {
+  display: block;
+}
+
+.usedBy {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.usedBy p {
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 0.75rem;
+}
+
+.usedByList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.usedByList a {
+  color: var(--ifm-font-color-base);
+  font-size: 1.25rem;
+  font-weight: var(--ifm-font-weight-semibold);
+}

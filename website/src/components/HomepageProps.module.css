@@ -1,0 +1,47 @@
+.props {
+  padding: 2rem 0;
+}
+
+.props h2 {
+  margin-bottom: 1.5rem;
+}
+
+.group {
+  margin-bottom: 1.5rem;
+}
+
+.group h3 {
+  margin-bottom: 0.75rem;
+}
+
+.tableWrapper {
+  margin-bottom: 0.75rem;
+  overflow-x: auto;
+}
+
+.table {
+  display: table;
+  font-size: 0.875rem;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.table th {
+  text-align: left;
+}
+
+.table td {
+  vertical-align: top;
+}
+
+.type {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.toggle {
+  display: block;
+  margin: 0 auto;
+}
