@@ -1,6 +1,6 @@
 ---
 id: getting-started
-title: Getting Started
+title: Getting started
 ---
 
 Allotment is available as an [npm package](https://www.npmjs.com/package/allotment).

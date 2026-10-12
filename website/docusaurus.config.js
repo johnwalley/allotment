@@ -92,7 +92,7 @@ const config = {
             position: "right",
           },
           {
-            href: "https://github.com/johnwalley/allotment/blob/main/CHANGELOG.md",
+            href: "https://github.com/johnwalley/allotment/releases",
             label: "Changelog",
             position: "right",
           },
@@ -123,7 +123,7 @@ const config = {
               },
               {
                 label: "Changelog",
-                href: "https://github.com/johnwalley/allotment/blob/main/CHANGELOG.md",
+                href: "https://github.com/johnwalley/allotment/releases",
               },
               {
                 label: "npm",

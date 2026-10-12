@@ -51,4 +51,23 @@ Set `separator={false}` to hide the line between panes. You can still drag the b
 </div>
 ```
 
+## Scrolling content
+
+Panes don't scroll by themselves. If the content can be larger than the pane, wrap it in an element that fills the pane and has `overflow: auto`.
+
+```tsx live
+<div style={{ height: 300 }}>
+  <Allotment>
+    <div style={{ height: "100%", overflow: "auto" }}>
+      {Array.from({ length: 50 }, (_, i) => (
+        <p key={i} style={{ margin: "0.25rem 0.75rem" }}>
+          Line {i + 1}
+        </p>
+      ))}
+    </div>
+    <div className="demo-pane">Two</div>
+  </Allotment>
+</div>
+```
+
 [Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--horizontal)
