@@ -1,7 +1,7 @@
 import "allotment/dist/style.css";
 
 import { Allotment, LayoutPriority } from "allotment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ActivityBar } from "../activity-bar";
 import { AuxiliaryBar } from "../auxiliary-bar";
@@ -21,18 +21,59 @@ export const ACTIVITIES = [
   { icon: "extensions", title: "Extensions" },
 ];
 
+// Below this width the demo starts without the sidebar and shrinks its
+// minimum sizes so that it fits on a phone
+const NARROW_QUERY = "(max-width: 600px)";
+
+const useNarrow = () => {
+  const [narrow, setNarrow] = useState(
+    () => window.matchMedia(NARROW_QUERY).matches,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(NARROW_QUERY);
+    const onChange = () => setNarrow(mediaQuery.matches);
+
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
+
+  return narrow;
+};
+
 export const App = () => {
+  const narrow = useNarrow();
   const [editorVisible, setEditorVisible] = useState(true);
   const [panelVisible, setPanelVisible] = useState(true);
   const [activity, setActivity] = useState(0);
   const [activityBar, setActivityBar] = useState(true);
   const [openEditors, setOpenEditors] = useState(DOCUMENTS.slice(0, 2));
   const [activeEditor, setActiveEditor] = useState(0);
-  const [primarySideBar, setPrimarySideBar] = useState(true);
+  const [primarySideBar, setPrimarySideBar] = useState(!narrow);
   const [primarySideBarPosition, setPrimarySideBarPosition] = useState<
     "left" | "right"
   >("left");
   const [secondarySideBar, setSecondarySideBar] = useState(false);
+
+  const sideBarMinSize = narrow ? 120 : 170;
+
+  // There's only room for one side bar on a narrow screen
+  const showPrimarySideBar = (visible: boolean) => {
+    setPrimarySideBar(visible);
+
+    if (visible && narrow) {
+      setSecondarySideBar(false);
+    }
+  };
+
+  const showSecondarySideBar = (visible: boolean) => {
+    setSecondarySideBar(visible);
+
+    if (visible && narrow) {
+      setPrimarySideBar(false);
+    }
+  };
 
   const activeIndex = Math.min(activeEditor, openEditors.length - 1);
   const activeDocument = openEditors[activeIndex];
@@ -58,7 +99,7 @@ export const App = () => {
   const auxiliarySidebar = (
     <Allotment.Pane
       key="auxiliarySidebar"
-      minSize={170}
+      minSize={sideBarMinSize}
       priority={LayoutPriority.Low}
       preferredSize={300}
       visible={secondarySideBar}
@@ -71,7 +112,7 @@ export const App = () => {
   const sidebar = (
     <Allotment.Pane
       key="sidebar"
-      minSize={170}
+      minSize={sideBarMinSize}
       priority={LayoutPriority.Low}
       preferredSize={300}
       visible={primarySideBar}
@@ -96,8 +137,8 @@ export const App = () => {
           showPrimarySideBar={primarySideBar}
           showSecondarySideBar={secondarySideBar}
           onShowPanelChanged={setPanelVisible}
-          onShowPrimarySideBarChanged={setPrimarySideBar}
-          onShowSecondarySidebarChanged={setSecondarySideBar}
+          onShowPrimarySideBarChanged={showPrimarySideBar}
+          onShowSecondarySidebarChanged={showSecondarySideBar}
         />
       </Allotment.Pane>
       <Allotment.Pane>
@@ -119,7 +160,7 @@ export const App = () => {
           {primarySideBarPosition === "left" ? sidebar : auxiliarySidebar}
           <Allotment.Pane
             key="content"
-            minSize={300}
+            minSize={narrow ? 120 : 300}
             priority={LayoutPriority.High}
           >
             <Allotment
@@ -135,6 +176,7 @@ export const App = () => {
             >
               <Allotment.Pane key="editor" minSize={70} visible={editorVisible}>
                 <Editor
+                  minSize={narrow ? 60 : 110}
                   activeIndex={activeIndex}
                   documents={openEditors}
                   onActiveIndexChange={setActiveEditor}

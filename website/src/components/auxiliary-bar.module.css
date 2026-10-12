@@ -57,6 +57,7 @@ p.heading {
   flex-direction: column;
   gap: 6px;
   margin: 0 8px 8px;
+  overflow: hidden;
   padding: 6px 8px;
 }
 
@@ -69,6 +70,7 @@ p.heading {
 
 .toolbar {
   align-items: center;
+  white-space: nowrap;
   color: var(--vscode-descriptionForeground);
   display: flex;
   font-size: 12px;

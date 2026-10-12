@@ -16,6 +16,8 @@ const WATERMARK = [
 
 export type EditorProps = {
   activeIndex: number;
+  /** Minimum width of each editor group */
+  minSize: number;
   documents: Document[];
   onActiveIndexChange: (index: number) => void;
   onDocumentsChange: (documents: Document[]) => void;
@@ -23,6 +25,7 @@ export type EditorProps = {
 
 export const Editor = ({
   activeIndex,
+  minSize,
   documents,
   onActiveIndexChange,
   onDocumentsChange,
@@ -30,26 +33,27 @@ export const Editor = ({
   return (
     <div className={styles.content}>
       {documents.length > 0 ? (
-        <Allotment minSize={110}>
+        <Allotment>
           {documents.map((document, index) => (
-            <EditorGroupContainer
-              key={index}
-              active={index === activeIndex}
-              document={document}
-              onActivate={() => onActiveIndexChange(index)}
-              onClose={() => {
-                const newDocuments = [...documents];
-                newDocuments.splice(index, 1);
+            <Allotment.Pane key={index} minSize={minSize}>
+              <EditorGroupContainer
+                active={index === activeIndex}
+                document={document}
+                onActivate={() => onActiveIndexChange(index)}
+                onClose={() => {
+                  const newDocuments = [...documents];
+                  newDocuments.splice(index, 1);
 
-                onDocumentsChange(newDocuments);
-              }}
-              onSplitEditor={() => {
-                const newDocuments = [...documents];
-                newDocuments.splice(index, 0, document);
+                  onDocumentsChange(newDocuments);
+                }}
+                onSplitEditor={() => {
+                  const newDocuments = [...documents];
+                  newDocuments.splice(index, 0, document);
 
-                onDocumentsChange(newDocuments);
-              }}
-            />
+                  onDocumentsChange(newDocuments);
+                }}
+              />
+            </Allotment.Pane>
           ))}
         </Allotment>
       ) : (
