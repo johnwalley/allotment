@@ -25,7 +25,7 @@
     "@vscode/codicons": "^0.0.45",
     "@xterm/addon-fit": "0.10.0",
     "@xterm/xterm": "5.5.0",
-    "allotment": "^1.20.5",
+    "allotment": "^1.20.6",
     "clsx": "^2.1.1",
     "prism-react-renderer": "2.4.1",
     "react": "^19.2.3",
