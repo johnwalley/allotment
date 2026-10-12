@@ -109,7 +109,7 @@ const PACKAGE_JSON = `{
     "build": "vite build"
   },
   "dependencies": {
-    "allotment": "^1.20.5",
+    "allotment": "^1.20.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   }
