@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import classNames from "classnames";
+import clsx from "clsx";
 
 import { Allotment, LayoutPriority } from "allotment";
 import { Document, SYMBOL_COLORS } from "./documents";
@@ -106,7 +106,7 @@ const Explorer = ({ documents, activeDocument, onOpen }: ExplorerProps) => {
           <div className={styles.list}>
             <TreeRow depth={0} onClick={() => setSrcExpanded(!srcExpanded)}>
               <span
-                className={classNames(
+                className={clsx(
                   "codicon",
                   srcExpanded
                     ? "codicon-chevron-down"
@@ -136,7 +136,7 @@ const Explorer = ({ documents, activeDocument, onOpen }: ExplorerProps) => {
               {activeDocument.outline.map((symbol) => (
                 <TreeRow key={symbol.name} depth={symbol.depth ?? 0}>
                   <span
-                    className={classNames(
+                    className={clsx(
                       "codicon",
                       `codicon-symbol-${symbol.kind}`,
                       styles.symbolIcon,
@@ -185,7 +185,7 @@ type TreeRowProps = {
 
 const TreeRow = ({ children, depth, selected, onClick }: TreeRowProps) => (
   <div
-    className={classNames(styles.listRow, { [styles.selected]: selected })}
+    className={clsx(styles.listRow, { [styles.selected]: selected })}
     // Every level is indented by 8px, after room for the twistie
     style={{ paddingLeft: 20 + depth * 8 }}
     onClick={onClick}

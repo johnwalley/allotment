@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import styles from "./titlebar.module.css";
@@ -55,7 +55,7 @@ export const Titlebar = ({
       </div>
       <div className={styles.layoutControls}>
         <a
-          className={classNames(
+          className={clsx(
             "codicon action-label",
             showPrimarySideBar
               ? "codicon-layout-sidebar-left"
@@ -66,7 +66,7 @@ export const Titlebar = ({
           onClick={() => onShowPrimarySideBarChanged(!showPrimarySideBar)}
         />
         <a
-          className={classNames(
+          className={clsx(
             "codicon action-label",
             showPanel ? "codicon-layout-panel" : "codicon-layout-panel-off",
           )}
@@ -75,7 +75,7 @@ export const Titlebar = ({
           onClick={() => onShowPanelChanged(!showPanel)}
         />
         <a
-          className={classNames(
+          className={clsx(
             "codicon action-label",
             showSecondarySideBar
               ? "codicon-layout-sidebar-right"

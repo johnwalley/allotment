@@ -2,7 +2,7 @@ import React from "react";
 
 import "@vscode/codicons/dist/codicon.css";
 
-import classNames from "classnames";
+import clsx from "clsx";
 
 import styles from "./activity-bar.module.css";
 
@@ -29,12 +29,12 @@ export const ActivityBar = ({ checked, items, onClick }: ActivityBarProps) => {
         {items.map((item, index) => (
           <li
             key={item.icon}
-            className={classNames(styles.actionItem, {
+            className={clsx(styles.actionItem, {
               [styles.checked]: index === checked,
             })}
           >
             <a
-              className={classNames(
+              className={clsx(
                 `codicon codicon-${item.icon}`,
                 styles.actionLabel,
               )}
@@ -51,7 +51,7 @@ export const ActivityBar = ({ checked, items, onClick }: ActivityBarProps) => {
         {GLOBAL_ITEMS.map((item) => (
           <li key={item.icon} className={styles.actionItem}>
             <a
-              className={classNames(
+              className={clsx(
                 `codicon codicon-${item.icon}`,
                 styles.actionLabel,
               )}

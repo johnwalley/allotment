@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import React from "react";
 
 import { CodeView } from "./code-view";
@@ -27,7 +27,7 @@ export const EditorGroupContainer = ({
     <div className={styles.editorGroupContainer} onMouseDown={onActivate}>
       <div className={styles.title}>
         <div className={styles.tabsContainer}>
-          <div className={classNames(styles.tab, { [styles.active]: active })}>
+          <div className={clsx(styles.tab, { [styles.active]: active })}>
             <FileIcon icon={document.icon} />
             <span className={styles.tabLabel}>{document.title}</span>
             <a

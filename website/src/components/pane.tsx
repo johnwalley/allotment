@@ -1,6 +1,6 @@
 import React from "react";
 
-import classNames from "classnames";
+import clsx from "clsx";
 
 import styles from "./pane.module.css";
 
@@ -22,7 +22,7 @@ export const Pane = ({
   onToggle,
 }: PaneProps) => {
   return (
-    <div className={classNames(styles.pane, { [styles.first]: first })}>
+    <div className={clsx(styles.pane, { [styles.first]: first })}>
       <div
         className={styles.paneHeader}
         role="button"
@@ -30,7 +30,7 @@ export const Pane = ({
         onClick={onToggle}
       >
         <div
-          className={classNames(
+          className={clsx(
             styles.twistie,
             "codicon",
             expanded ? "codicon-chevron-down" : "codicon-chevron-right",
