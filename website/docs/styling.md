@@ -109,14 +109,95 @@ For more involved styling you can target the component's child elements.
 | `.sash`                        | Styles applied to the sash                                           |
 | `.sash-active`                 | Styles applied to the sash if being dragged                          |
 | `.sash-disabled`               | Styles applied to the sash if disabled                               |
-| `.sash-horizontal`             | Styles applied to the sash if `vertical={false}`                     |
+| `.sash-horizontal`             | Styles applied to the sash if `vertical={true}`                      |
 | `.sash-hover`                  | Styles applied to the sash if being hovered over                     |
 | `.sash-mac`                    | Styles applied to the sash if running under macOS                    |
 | `.sash-maximum`                | Styles applied to the sash if the pane is maximised                  |
 | `.sash-minimum`                | Styles applied to the sash if the pane is minimised                  |
-| `.sash-vertical`               | Styles applied to the sash if `vertical={true}`                      |
+| `.sash-vertical`               | Styles applied to the sash if `vertical={false}`                     |
 | `.split-view-container`        | Styles applied to the split view container                           |
 | `.split-view-view`             | Styles applied to the split view view                                |
 | `.split-view-view-visible`     | Styles applied to the split view view if `visible={true}`            |
+
+A sash takes the orientation of the line it draws, so panes side by side are separated by a vertical sash.
+
+`.sash-minimum` and `.sash-maximum` are also added when a pane next to the sash has [snapped](snap.md#styling-a-snapped-pane) closed.
+
+## Sash handles
+
+The sash is invisible until it's hovered, which can make it hard to find. To show a handle all the time, style the sash's `::after` pseudo-element. Allotment uses `::before` for the hover highlight, so leave that alone.
+
+```tsx live
+<>
+  <style>{`
+    .with-handles .sash::after {
+      background-color: var(--ifm-color-emphasis-500);
+      border-radius: 2px;
+      content: "";
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .with-handles .sash-vertical::after {
+      height: 32px;
+      width: 4px;
+    }
+
+    .with-handles .sash-horizontal::after {
+      height: 4px;
+      width: 32px;
+    }
+  `}</style>
+  <div style={{ height: 300 }}>
+    <Allotment className="with-handles">
+      <div className="demo-pane">One</div>
+      <Allotment vertical>
+        <div className="demo-pane">Two</div>
+        <div className="demo-pane">Three</div>
+      </Allotment>
+    </Allotment>
+  </div>
+</>
+```
+
+The sash is created by Allotment rather than React, so you can't render your own component inside it or give it event handlers. Anything you can do with CSS, such as a background image, works. Custom sash components are tracked in [#280](https://github.com/johnwalley/allotment/issues/280).
+
+## Gaps between panes
+
+To leave a gap between panes, like `gap` in CSS grid, turn off the separator and pad the panes on either side of each sash. The gap shows the background of the `Allotment`, so set that to the colour you want. Here each gap is 8 pixels wide.
+
+```tsx live
+<>
+  <style>{`
+    .with-gaps {
+      background-color: var(--ifm-color-emphasis-300);
+    }
+
+    .with-gaps > .split-view-container > .split-view-view-visible {
+      box-sizing: border-box;
+      padding: 0 4px;
+    }
+
+    .with-gaps > .split-view-container > .split-view-view-visible:first-child {
+      padding-left: 0;
+    }
+
+    .with-gaps > .split-view-container > .split-view-view-visible:last-child {
+      padding-right: 0;
+    }
+  `}</style>
+  <div style={{ height: 300 }}>
+    <Allotment className="with-gaps" separator={false}>
+      <div className="demo-pane">One</div>
+      <div className="demo-pane">Two</div>
+      <div className="demo-pane">Three</div>
+    </Allotment>
+  </div>
+</>
+```
+
+The selectors only match panes that are visible, so a hidden pane doesn't leave a gap of its own. If the first or last pane is hidden, the pane next to it keeps its padding at the edge. They they use `>` so that nested `Allotment` components aren't affected. For `vertical` panes, pad the top and bottom instead.
 
 [Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--configure-sash)
