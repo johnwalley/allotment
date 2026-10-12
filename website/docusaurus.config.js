@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const { themes } = require('prism-react-renderer');
+const { themes } = require("prism-react-renderer");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -25,7 +25,10 @@ const config = {
       ({
         docs: {
           remarkPlugins: [
-            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+            [
+              require("@docusaurus/remark-plugin-npm2yarn"),
+              { sync: true, converters: ["yarn", "pnpm"] },
+            ],
           ],
           sidebarPath: require.resolve("./sidebars.json"),
           editUrl: "https://github.com/johnwalley/allotment/tree/main/website/",

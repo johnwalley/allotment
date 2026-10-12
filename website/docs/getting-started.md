@@ -9,15 +9,8 @@ Allotment is available as an [npm package](https://www.npmjs.com/package/allotme
 
 To install and save in your package.json dependencies, run:
 
-```sh
-# with npm
+```bash npm2yarn
 npm install allotment
-
-# with yarn
-yarn add allotment
-
-# with pnpm
-pnpm add allotment
 ```
 
 Please note that `react` and `react-dom` are peer dependencies. Allotment supports React 17, 18 and 19.
