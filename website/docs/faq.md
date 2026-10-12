@@ -27,3 +27,17 @@ Render it on the client only. See [Server rendering and Next.js](server-renderin
 ### How do I prevent a pane from being resized?
 
 Set `minSize` and `maxSize` to the same value. See [Fixed size](sizing.md#fixed-size).
+
+### How do I keep a hidden pane hidden after a reload?
+
+Save the pane's visibility in your own state and pass it back through the `visible` prop. See [What is remembered](visible.md#what-is-remembered).
+
+## Known limitations
+
+These are open issues. Follow the links for workarounds and progress.
+
+- **Suspense.** Resizing can stop working after a component above Allotment suspends and resumes ([#849](https://github.com/johnwalley/allotment/issues/849)).
+- **Preact.** Allotment is built for React and doesn't work correctly with `preact/compat` ([#689](https://github.com/johnwalley/allotment/issues/689)).
+- **Other windows.** Resizing doesn't work properly when Allotment is rendered into a window opened with `window.open` ([#863](https://github.com/johnwalley/allotment/issues/863)).
+- **Firefox clicks after a drag.** In Firefox, releasing the mouse over a button at the end of a drag also clicks that button ([#804](https://github.com/johnwalley/allotment/issues/804)). You can track drags with `onDragStart` and `onDragEnd` and ignore clicks in between.
+- **Accessibility.** Sashes can't be focused or moved with the keyboard, and have no ARIA roles ([#639](https://github.com/johnwalley/allotment/issues/639)).

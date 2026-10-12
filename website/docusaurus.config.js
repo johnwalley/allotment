@@ -108,6 +108,18 @@ const config = {
                 label: "Getting started",
                 to: "/docs/getting-started",
               },
+              {
+                label: "Examples",
+                to: "/docs/basic",
+              },
+              {
+                label: "API reference",
+                to: "/docs/overview",
+              },
+              {
+                label: "FAQ",
+                to: "/docs/faq",
+              },
             ],
           },
           {
