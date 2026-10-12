@@ -43,6 +43,20 @@ function ToggleSidebar() {
 }
 ```
 
+## What is remembered
+
+While a pane is hidden, Allotment remembers the size it had and restores it, clamped to `minSize` and `maxSize`, when the pane is shown again. A hidden pane reports a size of `0` in `onChange`, `onDragEnd` and the other size callbacks.
+
+That memory only lasts while the `Allotment` is mounted. Visibility itself is not stored anywhere: it comes from your `visible` prop, so to keep a pane hidden across reloads or remounts, save your own state and pass it back in. This includes panes the user snapped closed, which you hear about through `onVisibleChange`.
+
+`onVisibleChange` only fires for panes that have a `visible` prop. If you use `snap` without setting `visible`, the pane can still snap closed, but you won't be told.
+
+:::caution
+
+When two or more panes are shown in the same render, the restored sizes can be wrong ([#692](https://github.com/johnwalley/allotment/issues/692)).
+
+:::
+
 ## Animating
 
 Panes change size instantly by default. Add a CSS transition to the panes to animate showing and hiding them, and turn it off while the user is dragging so resizing still tracks the pointer:
