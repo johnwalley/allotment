@@ -7,9 +7,10 @@ Below are some of the most frequently asked questions on how to use Allotment.
 
 ### It's not working/I don't see anything
 
-The Allotment component takes its width and height from the element which contains it. It does not come with an explicit width or height out of the box. It's easy to end up with a div of height zero by accident. For example, adding allotment to a brand new Create React App project without setting a height on a containing div won't work because the default root div itself has no height.
+Check two things:
 
-You should also check that the css has been imported/included, for example at the root of your application:
+- **The parent has a height.** Allotment fills the element that contains it and has no width or height of its own, so a parent with zero height shows nothing. This often happens with a root `div` that hasn't been given a height. See [Basic](basic.md).
+- **The stylesheet is imported**, usually at the root of your app:
 
 ```jsx
 import "allotment/dist/style.css";
@@ -17,25 +18,12 @@ import "allotment/dist/style.css";
 
 ### My content is larger than the containing pane. How can I let the user scroll?
 
-The simplest approach is to place your content inside a new div with width and height `100%` and overflow `auto`. This div will have the same dimensions as the pane it's inside and if its content overflows the browser will provide scrolling behaviour.
+Wrap the content in a `div` that fills the pane and has `overflow: auto`. See [Scrolling content](basic.md#scrolling-content) for an example.
 
-### Next.js
+### How do I use Allotment with Next.js?
 
-Allotment currently only works in a browser. When using the App Router, render it from a Client Component (a file starting with `"use client"`). If you still get an error during server rendering, [skip SSR for the component](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading#skipping-ssr) with `next/dynamic`:
-
-```jsx
-"use client";
-
-import dynamic from "next/dynamic";
-
-const Allotment = dynamic(
-  () => import("allotment").then((mod) => mod.Allotment),
-  { ssr: false },
-);
-```
-
-Note that `Allotment.Pane` is not available on a dynamically imported component, so move any code using it into a separate client-only component. It might be possible to produce sensible results server-side in the future so create an issue requesting this if interested.
+Render it on the client only. See [Server rendering and Next.js](server-rendering.md).
 
 ### How do I prevent a pane from being resized?
 
-Set `minSize` and `maxSize` props to the same value.
+Set `minSize` and `maxSize` to the same value. See [Fixed size](sizing.md#fixed-size).

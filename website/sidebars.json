@@ -1,18 +1,10 @@
 {
   "docs": [
     {
-      "Getting Started": ["getting-started"],
-      "How To Guides": ["styling"],
+      "Getting started": ["getting-started"],
+      "How-to guides": ["styling", "persist-sizes", "server-rendering"],
       "API reference": ["overview", "allotment", "pane"],
-      "Examples": [
-        "basic",
-        "sizing",
-        "nested",
-        "closable",
-        "visible",
-        "reset",
-        "persist-sizes"
-      ]
+      "Examples": ["basic", "sizing", "nested", "closable", "visible", "reset"]
     },
     { "type": "doc", "id": "faq" }
   ]

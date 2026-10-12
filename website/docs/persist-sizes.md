@@ -35,6 +35,6 @@ function PersistedLayout() {
 
 `onDragEnd` only fires when a drag finishes. To also save sizes after a double-click reset or a `resize()` call, use `onChange` instead, and debounce it because it fires continuously while dragging.
 
-If your app renders on the server, `localStorage` isn't available there. Read it in an effect, or only render `Allotment` on the client.
+If your app renders on the server, `localStorage` isn't available there. Read it in an effect, or only render `Allotment` on the client. See [Server rendering and Next.js](server-rendering.md).
 
 [Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--persist-sizes)
