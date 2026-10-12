@@ -29,12 +29,10 @@ Please note that `react` and `react-dom` are peer dependencies. Allotment suppor
 Here's a quick example to get you started:
 
 ```tsx
-import * as React from "react";
-import { createRoot } from "react-dom/client";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
-function App() {
+export function App() {
   return (
     <div style={{ height: 400 }}>
       <Allotment>
@@ -44,8 +42,6 @@ function App() {
     </div>
   );
 }
-
-createRoot(document.querySelector("#app")!).render(<App />);
 ```
 
 :::caution
@@ -61,23 +57,21 @@ Allotment takes its size from its parent element, so make sure the parent has a 
 If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
 
 ```tsx
-import * as React from "react";
-import { createRoot } from "react-dom/client";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
-function App() {
+export function App() {
   return (
-    <Allotment>
-      <Allotment.Pane minSize={200}>
-        <div>Pane 1</div>
-      </Allotment.Pane>
-      <Allotment.Pane snap>
-        <div>Pane 2</div>
-      </Allotment.Pane>
-    </Allotment>
+    <div style={{ height: 400 }}>
+      <Allotment>
+        <Allotment.Pane minSize={200}>
+          <div>Pane 1</div>
+        </Allotment.Pane>
+        <Allotment.Pane snap>
+          <div>Pane 2</div>
+        </Allotment.Pane>
+      </Allotment>
+    </div>
   );
 }
-
-createRoot(document.querySelector("#app")!).render(<App />);
 ```
