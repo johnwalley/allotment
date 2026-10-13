@@ -82,6 +82,11 @@ const config = {
             label: "Docs",
           },
           {
+            to: "/playground",
+            label: "Playground",
+            position: "left",
+          },
+          {
             href: "https://github.com/johnwalley/allotment",
             label: "GitHub",
             position: "right",
@@ -115,6 +120,10 @@ const config = {
               {
                 label: "API reference",
                 to: "/docs/overview",
+              },
+              {
+                label: "Playground",
+                to: "/playground",
               },
               {
                 label: "FAQ",
