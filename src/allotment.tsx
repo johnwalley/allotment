@@ -155,6 +155,7 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
     const layoutService = useRef<LayoutService>(new LayoutService());
     const views = useRef<PaneView[]>([]);
     const onResetRef = useRef(onReset);
+    const onVisibleChangeRef = useRef(onVisibleChange);
 
     const [dimensionsInitialized, setDimensionsInitialized] = useState(false);
 
@@ -168,6 +169,13 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       () => React.Children.toArray(children).filter(React.isValidElement),
       [children],
     );
+
+    const childrenArrayRef = useRef(childrenArray);
+
+    useIsomorphicLayoutEffect(() => {
+      onVisibleChangeRef.current = onVisibleChange;
+      childrenArrayRef.current = childrenArray;
+    }, [childrenArray, onVisibleChange]);
 
     const resizeToPreferredSize = useCallback((index: number): boolean => {
       const view = views.current?.[index];
@@ -269,15 +277,17 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
       });
 
       splitViewRef.current.on("sashchange", (_index: number) => {
-        if (onVisibleChange && splitViewRef.current) {
-          const keys = childrenArray.map((child) => child.key as string);
+        if (onVisibleChangeRef.current && splitViewRef.current) {
+          const keys = childrenArrayRef.current.map(
+            (child) => child.key as string,
+          );
 
           for (let index = 0; index < keys.length; index++) {
             const props = splitViewPropsRef.current.get(keys[index]);
 
             if (props?.visible !== undefined) {
               if (props.visible !== splitViewRef.current.isViewVisible(index)) {
-                onVisibleChange(
+                onVisibleChangeRef.current(
                   index,
                   splitViewRef.current.isViewVisible(index),
                 );
