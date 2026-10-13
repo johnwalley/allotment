@@ -109,7 +109,7 @@ const config = {
                 to: "/docs/getting-started",
               },
               {
-                label: "Examples",
+                label: "Features",
                 to: "/docs/basic",
               },
               {

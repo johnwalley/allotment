@@ -9,7 +9,7 @@ Below are some of the most frequently asked questions on how to use Allotment.
 
 Check two things:
 
-- **The parent has a height.** Allotment fills the element that contains it and has no width or height of its own, so a parent with zero height shows nothing. This often happens with a root `div` that hasn't been given a height. See [Basic](basic.md).
+- **The parent has a height.** Allotment fills the element that contains it and has no width or height of its own, so a parent with zero height shows nothing. This often happens with a root `div` that hasn't been given a height. See [Layout](basic.md).
 - **The stylesheet is imported**, usually at the root of your app:
 
 ```jsx
