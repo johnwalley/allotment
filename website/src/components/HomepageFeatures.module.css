@@ -8,13 +8,9 @@
 }
 
 .icon {
-  color: var(--ifm-color-primary-darkest);
+  color: var(--ifm-color-primary);
   font-size: 32px !important;
   margin-bottom: 0.75rem;
-}
-
-[data-theme="dark"] .icon {
-  color: var(--ifm-color-primary);
 }
 
 .feature p {

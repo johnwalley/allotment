@@ -61,6 +61,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       image: "img/social-card.png",
       metadata: [
         {
@@ -82,19 +85,16 @@ const config = {
             label: "Docs",
           },
           {
+            type: "docSidebar",
+            sidebarId: "api",
+            position: "left",
+            label: "API",
+          },
+          {
             href: "https://github.com/johnwalley/allotment",
-            label: "GitHub",
             position: "right",
-          },
-          {
-            href: "https://allotment-storybook.netlify.app",
-            label: "Storybook",
-            position: "right",
-          },
-          {
-            href: "https://github.com/johnwalley/allotment/releases",
-            label: "Changelog",
-            position: "right",
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
           },
         ],
       },
@@ -109,7 +109,7 @@ const config = {
                 to: "/docs/getting-started",
               },
               {
-                label: "Examples",
+                label: "Features",
                 to: "/docs/basic",
               },
               {

@@ -9,7 +9,7 @@ Below are some of the most frequently asked questions on how to use Allotment.
 
 Check two things:
 
-- **The parent has a height.** Allotment fills the element that contains it and has no width or height of its own, so a parent with zero height shows nothing. This often happens with a root `div` that hasn't been given a height. See [Basic](basic.md).
+- **The parent has a height.** Allotment fills the element that contains it and has no width or height of its own, so a parent with zero height shows nothing. This often happens with a root `div` that hasn't been given a height. See [Layout](basic.md).
 - **The stylesheet is imported**, usually at the root of your app:
 
 ```jsx
@@ -34,7 +34,7 @@ Save the pane's visibility in your own state and pass it back through the `visib
 
 ### How do I let the user drag a pane closed?
 
-Set `snap` on the pane, and give it a `minSize`. It snaps closed when it's dragged below half that size. See [Snap](snap.md).
+Set `snap` on the pane, and give it a `minSize`. It snaps closed when it's dragged below half that size. See [Snapping](snapping.md).
 
 ### Why does a pane stay at its minimum size instead of following `defaultSizes`?
 

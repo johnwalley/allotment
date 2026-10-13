@@ -1,9 +1,9 @@
 ---
-id: snap
-title: Snap
+id: snapping
+title: Snapping
 ---
 
-# Snap
+# Snapping
 
 With `snap` enabled, a pane can be dragged closed. Drag the sash past half of the pane's minimum size and the pane snaps to zero and is hidden. Drag the sash back out to show it again.
 

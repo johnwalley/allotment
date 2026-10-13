@@ -1,9 +1,9 @@
 ---
 id: basic
-title: Basic
+title: Layout
 ---
 
-# Basic
+# Layout
 
 Each child of `Allotment` becomes a pane. Drag the line between two panes to resize them, and double-click it to reset them to equal sizes.
 

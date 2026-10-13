@@ -147,7 +147,7 @@ function HomepageHeader() {
             )}
             to="/docs/basic"
           >
-            Examples
+            Features
           </Link>
         </div>
         <InstallCommand />

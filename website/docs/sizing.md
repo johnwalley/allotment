@@ -164,7 +164,7 @@ function TooSmall() {
 }
 ```
 
-To avoid this, keep the minimum sizes small enough for the smallest container you support, let a pane [snap](snap.md) closed, or hide a pane with [`visible`](visible.md) on small screens.
+To avoid this, keep the minimum sizes small enough for the smallest container you support, let a pane [snap](snapping.md) closed, or hide a pane with [`visible`](visible.md) on small screens.
 
 ### Scrolling instead
 

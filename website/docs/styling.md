@@ -121,7 +121,7 @@ For more involved styling you can target the component's child elements.
 
 A sash takes the orientation of the line it draws, so panes side by side are separated by a vertical sash.
 
-`.sash-minimum` and `.sash-maximum` are also added when a pane next to the sash has [snapped](snap.md#styling-a-snapped-pane) closed.
+`.sash-minimum` and `.sash-maximum` are also added when a pane next to the sash has [snapped](snapping.md#styling-a-snapped-pane) closed.
 
 ## Sash handles
 
