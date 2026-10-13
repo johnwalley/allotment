@@ -3,12 +3,12 @@
     {
       "Getting started": ["getting-started"],
       "Examples": ["basic", "sizing", "nested", "closable", "visible", "reset"],
-      "How-to guides": ["styling", "persist-sizes", "server-rendering"],
-      "API reference": ["overview", "allotment", "pane"]
+      "How-to guides": ["styling", "persist-sizes", "server-rendering"]
     },
     {
       "type": "doc",
       "id": "faq"
     }
-  ]
+  ],
+  "api": ["overview", "allotment", "pane"]
 }

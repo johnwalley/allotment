@@ -85,6 +85,12 @@ const config = {
             label: "Docs",
           },
           {
+            type: "docSidebar",
+            sidebarId: "api",
+            position: "left",
+            label: "API",
+          },
+          {
             href: "https://github.com/johnwalley/allotment",
             position: "right",
             className: "header-github-link",
