@@ -56,7 +56,7 @@ export class PaneView implements View {
   readonly snap: boolean;
 
   private layoutService: LayoutService;
-  private layoutStrategy: Layout;
+  private layoutStrategy: Layout = new NullLayout();
 
   get preferredSize(): number | undefined {
     return this.layoutStrategy.getPreferredSize();
@@ -71,15 +71,16 @@ export class PaneView implements View {
       if (endsWith(trimmedPreferredSize, "%")) {
         const proportion = Number(trimmedPreferredSize.slice(0, -1)) / 100;
 
-        this.layoutStrategy = new ProportionLayout(
-          proportion,
-          this.layoutService,
-        );
+        this.layoutStrategy = Number.isFinite(proportion)
+          ? new ProportionLayout(proportion, this.layoutService)
+          : new NullLayout();
       } else if (endsWith(trimmedPreferredSize, "px")) {
-        const pixels = Number(trimmedPreferredSize.slice(0, -2)) / 100;
+        const pixels = Number(trimmedPreferredSize.slice(0, -2));
 
-        this.layoutStrategy = new PixelLayout(pixels);
-      } else if (typeof Number.parseFloat(trimmedPreferredSize) === "number") {
+        this.layoutStrategy = Number.isFinite(pixels)
+          ? new PixelLayout(pixels)
+          : new NullLayout();
+      } else if (Number.isFinite(Number.parseFloat(trimmedPreferredSize))) {
         const number = Number.parseFloat(trimmedPreferredSize);
 
         this.layoutStrategy = new PixelLayout(number);
@@ -103,32 +104,7 @@ export class PaneView implements View {
         ? options.maximumSize
         : Number.POSITIVE_INFINITY;
 
-    if (typeof options.preferredSize === "number") {
-      this.layoutStrategy = new PixelLayout(options.preferredSize);
-    } else if (typeof options.preferredSize === "string") {
-      const preferredSize = options.preferredSize.trim();
-
-      if (endsWith(preferredSize, "%")) {
-        const proportion = Number(preferredSize.slice(0, -1)) / 100;
-
-        this.layoutStrategy = new ProportionLayout(
-          proportion,
-          this.layoutService,
-        );
-      } else if (endsWith(preferredSize, "px")) {
-        const pixels = Number(preferredSize.slice(0, -2));
-
-        this.layoutStrategy = new PixelLayout(pixels);
-      } else if (typeof Number.parseFloat(preferredSize) === "number") {
-        const number = Number.parseFloat(preferredSize);
-
-        this.layoutStrategy = new PixelLayout(number);
-      } else {
-        this.layoutStrategy = new NullLayout();
-      }
-    } else {
-      this.layoutStrategy = new NullLayout();
-    }
+    this.preferredSize = options.preferredSize;
 
     this.priority = options.priority ?? LayoutPriority.Normal;
 
