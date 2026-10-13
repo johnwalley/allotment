@@ -7,7 +7,7 @@ title: Visible
 
 Use the `visible` prop to show and hide a pane without removing it, so it keeps its size for when it comes back.
 
-With `snap` enabled the user can also hide the pane by dragging it below half its minimum size. `onVisibleChange` tells you when that happens, so you can keep your state in sync.
+With `snap` enabled the user can also hide the pane by dragging it below half its minimum size. `onVisibleChange` tells you when that happens, so you can keep your state in sync. See [Snapping](snapping.md) for more on how snapping works.
 
 ```tsx live
 function ToggleSidebar() {
