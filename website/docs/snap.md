@@ -81,31 +81,32 @@ function HighlightSnappedSash() {
   const [visible, setVisible] = React.useState(true);
 
   return (
-    <div
-      style={
-        visible
-          ? { height: 300 }
-          : ({
-              height: 300,
-              "--separator-border": "var(--ifm-color-primary)",
-            } as React.CSSProperties)
-      }
-    >
-      <Allotment
-        onVisibleChange={(index, visible) => {
-          if (index === 0) {
-            setVisible(visible);
-          }
-        }}
-      >
-        <Allotment.Pane snap minSize={150} visible={visible}>
-          <div className="demo-pane">Sidebar</div>
-        </Allotment.Pane>
-        <Allotment.Pane>
-          <div className="demo-pane">Main</div>
-        </Allotment.Pane>
-      </Allotment>
-    </div>
+    <>
+      <style>{`
+        .snapped-sidebar .sash::before {
+          background: var(--focus-border);
+          left: 50%;
+          width: 4px;
+        }
+      `}</style>
+      <div style={{ height: 300 }}>
+        <Allotment
+          className={visible ? undefined : "snapped-sidebar"}
+          onVisibleChange={(index, visible) => {
+            if (index === 0) {
+              setVisible(visible);
+            }
+          }}
+        >
+          <Allotment.Pane snap minSize={150} visible={visible}>
+            <div className="demo-pane">Sidebar</div>
+          </Allotment.Pane>
+          <Allotment.Pane>
+            <div className="demo-pane">Main</div>
+          </Allotment.Pane>
+        </Allotment>
+      </div>
+    </>
   );
 }
 ```
