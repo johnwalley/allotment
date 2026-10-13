@@ -85,11 +85,6 @@ const config = {
             label: "Docs",
           },
           {
-            href: "https://github.com/johnwalley/allotment",
-            label: "GitHub",
-            position: "right",
-          },
-          {
             href: "https://allotment-storybook.netlify.app",
             label: "Storybook",
             position: "right",
@@ -98,6 +93,12 @@ const config = {
             href: "https://github.com/johnwalley/allotment/releases",
             label: "Changelog",
             position: "right",
+          },
+          {
+            href: "https://github.com/johnwalley/allotment",
+            position: "right",
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
           },
         ],
       },
