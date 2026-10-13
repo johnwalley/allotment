@@ -1,5 +1,17 @@
 /* Infima theme variables */
 :root {
+  /* Darker than the brand teal so that links and active items meet WCAG AA (5.6:1 on white) */
+  --ifm-color-primary: #24727b;
+  --ifm-color-primary-dark: #20676f;
+  --ifm-color-primary-darker: #1f6169;
+  --ifm-color-primary-darkest: #195056;
+  --ifm-color-primary-light: #287d87;
+  --ifm-color-primary-lighter: #29838d;
+  --ifm-color-primary-lightest: #2f94a0;
+  --ifm-code-font-size: 95%;
+}
+
+[data-theme="dark"] {
   --ifm-color-primary: #7fc1c8;
   --ifm-color-primary-dark: #68b6be;
   --ifm-color-primary-darker: #5db0b9;
@@ -7,7 +19,11 @@
   --ifm-color-primary-light: #96ccd2;
   --ifm-color-primary-lighter: #a1d2d7;
   --ifm-color-primary-lightest: #c4e2e5;
-  --ifm-code-font-size: 95%;
+}
+
+/* Keep the light brand teal behind the homepage hero's dark text */
+.hero--primary {
+  --ifm-hero-background-color: #7fc1c8;
 }
 
 /* Placeholder content for panes in the live examples */
