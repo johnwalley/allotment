@@ -37,6 +37,17 @@ export function App() {
 }
 ```
 
+Here it is running. Drag the line between the panes to resize them, or edit the code:
+
+```tsx live
+<div style={{ height: 200 }}>
+  <Allotment>
+    <div className="demo-pane">Pane 1</div>
+    <div className="demo-pane">Pane 2</div>
+  </Allotment>
+</div>
+```
+
 :::caution
 
 Remember to import the required css: `import "allotment/dist/style.css"`
@@ -45,26 +56,8 @@ Allotment takes its size from its parent element, so make sure the parent has a 
 
 :::
 
-## Control over individual panes
+## Next steps
 
-If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
-
-```tsx
-import { Allotment } from "allotment";
-import "allotment/dist/style.css";
-
-export function App() {
-  return (
-    <div style={{ height: 400 }}>
-      <Allotment>
-        <Allotment.Pane minSize={200}>
-          <div>Pane 1</div>
-        </Allotment.Pane>
-        <Allotment.Pane snap>
-          <div>Pane 2</div>
-        </Allotment.Pane>
-      </Allotment>
-    </div>
-  );
-}
-```
+- [Features](basic.md) shows what Allotment can do, with live examples: layout, sizing, snapping, nesting, adding and removing panes, visibility and resetting.
+- [How-to guides](styling.md) cover styling, persisting sizes and server-side rendering.
+- [API](overview.md) lists every prop and export.
