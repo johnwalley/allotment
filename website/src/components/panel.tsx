@@ -1,13 +1,24 @@
 import React from "react";
 
-import "xterm/css/xterm.css";
+import "@xterm/xterm/css/xterm.css";
 
-import classNames from "classnames";
-import { useEffect, useRef } from "react";
-import { Terminal } from "xterm";
-import { FitAddon } from "xterm-addon-fit";
+import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
+import { Terminal } from "@xterm/xterm";
+import { FitAddon } from "@xterm/addon-fit";
 
 import styles from "./panel.module.css";
+
+const TABS = ["Problems", "Output", "Debug Console", "Terminal", "Ports"];
+const TERMINAL = TABS.indexOf("Terminal");
+
+const MESSAGES: Record<string, string> = {
+  Problems: "No problems have been detected in the workspace.",
+  Output: "",
+  "Debug Console": "",
+  Ports:
+    "No forwarded ports. Forward a port to access your running services locally.",
+};
 
 export type PanelProps = {
   maximized: boolean;
@@ -23,11 +34,18 @@ export const Panel = ({
   onMinimize,
 }: PanelProps) => {
   const ref = useRef(null!);
+  const [activeTab, setActiveTab] = useState(TERMINAL);
 
   useEffect(() => {
     const term = new Terminal({
-      fontSize: 11,
-      theme: { background: "rgb(30,30,30)" },
+      fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+      fontSize: 12,
+      theme: {
+        background: "#191a1b",
+        foreground: "#bfbfbf",
+        cursor: "#bfbfbf",
+        selectionBackground: "#3994bc33",
+      },
     });
 
     const fitAddon = new FitAddon();
@@ -36,19 +54,30 @@ export const Panel = ({
 
     term.open(ref.current);
 
-    fitAddon.fit();
-
     const prompt = () => {
-      term.write("\r\n$ ");
+      term.write("\r\n\x1b[1mmy-app\x1b[0m % ");
     };
 
-    term.writeln("Welcome to allotment");
-    term.writeln(
-      "This is a local terminal emulation, without a real terminal in the back-end."
-    );
-    term.writeln("Type some keys and commands to play around.");
-    term.writeln("");
-    prompt();
+    let started = false;
+
+    // Wait until Allotment has given the terminal its real width, or the
+    // prompt wraps
+    const start = () => {
+      fitAddon.fit();
+
+      if (!started && term.cols > 20) {
+        started = true;
+
+        term.writeln("Welcome to allotment");
+        term.writeln(
+          "This is a local terminal emulation, without a real terminal in the back-end.",
+        );
+        term.writeln("Type some keys and commands to play around.");
+        prompt();
+      }
+    };
+
+    start();
 
     term.onKey((e: { key: string; domEvent: KeyboardEvent }) => {
       const ev = e.domEvent;
@@ -65,62 +94,96 @@ export const Panel = ({
         term.write(e.key);
       }
     });
+
+    // The pane's size isn't final until Allotment has laid it out, so refit
+    // whenever it changes.
+    const resizeObserver = new ResizeObserver(start);
+
+    resizeObserver.observe(ref.current);
+
+    return () => {
+      resizeObserver.disconnect();
+      term.dispose();
+    };
   }, []);
 
   return (
     <div className={styles.panel}>
       <div className={styles.title}>
-        <div className={styles.actionBar}>
-          <ul className={styles.actionsContainer}>
-            <li className={classNames(styles.actionItem, "checked")}>
-              <a className={styles.actionLabel} style={{ background: "none" }}>
-                Terminal
-              </a>
-              <div className={styles.activeItemIndicator} />
+        <ul className={styles.tabs} role="tablist">
+          {TABS.map((tab, index) => (
+            <li
+              key={tab}
+              className={clsx(styles.tab, {
+                [styles.checked]: index === activeTab,
+              })}
+              role="tab"
+              aria-selected={index === activeTab}
+              onClick={() => setActiveTab(index)}
+            >
+              {tab}
             </li>
-          </ul>
-        </div>
-        <div>
-          <ul className={styles.actionsContainer}>
-            <li>
-              {maximized ? (
-                <a
-                  className={classNames(
-                    "codicon codicon-chevron-down",
-                    styles.actionLabel
-                  )}
-                  role="button"
-                  title="Minimize Panel Size"
-                  onClick={onMinimize}
-                />
-              ) : (
-                <a
-                  className={classNames(
-                    "codicon codicon-chevron-up",
-                    styles.actionLabel
-                  )}
-                  role="button"
-                  title="Maximize Panel Size"
-                  onClick={onMaximize}
-                />
-              )}
-            </li>
-            <li>
+          ))}
+        </ul>
+        <div className={styles.actions}>
+          {activeTab === TERMINAL && (
+            <>
               <a
-                className={classNames(
-                  "codicon codicon-close",
-                  styles.actionLabel
-                )}
+                className="codicon codicon-add action-label"
                 role="button"
-                title="Close Panel"
-                onClick={onClose}
-              ></a>
-            </li>
-          </ul>
+                title="New Terminal (⌃⇧`)"
+              />
+              <a
+                className="codicon codicon-split-horizontal action-label"
+                role="button"
+                title="Split Terminal (⌘\)"
+              />
+              <a
+                className="codicon codicon-trash action-label"
+                role="button"
+                title="Kill Terminal"
+              />
+            </>
+          )}
+          <a
+            className="codicon codicon-ellipsis action-label"
+            role="button"
+            title="Views and More Actions..."
+          />
+          <div className={styles.separator} />
+          {maximized ? (
+            <a
+              className="codicon codicon-chevron-down action-label"
+              role="button"
+              title="Restore Panel Size"
+              onClick={onMinimize}
+            />
+          ) : (
+            <a
+              className="codicon codicon-chevron-up action-label"
+              role="button"
+              title="Maximize Panel Size"
+              onClick={onMaximize}
+            />
+          )}
+          <a
+            className="codicon codicon-close action-label"
+            role="button"
+            title="Hide Panel (⌘J)"
+            onClick={onClose}
+          />
         </div>
       </div>
       <div className={styles.content}>
-        <div ref={ref} className={styles.terminalWrapper}></div>
+        {/* Keep the terminal mounted so it doesn't lose its contents */}
+        <div
+          ref={ref}
+          className={styles.terminalWrapper}
+          hidden={activeTab !== TERMINAL}
+        ></div>
+        {activeTab !== TERMINAL && (
+          <p className={styles.message}>{MESSAGES[TABS[activeTab]]}</p>
+        )}
       </div>
     </div>
   );

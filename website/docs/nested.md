@@ -5,11 +5,28 @@ title: Nested
 
 # Nested
 
-- [Open in CodeSandbox](https://codesandbox.io/s/nested-68elg8)
+Put an `Allotment` inside a pane to build more complex layouts, such as an editor with a sidebar and a panel underneath.
 
-<iframe src="https://codesandbox.io/embed/nested-68elg8?fontsize=14&hidenavigation=1&theme=dark"
-     style={{width:"100%", height:"500px", border:0, borderRadius: "4px", overflow:"hidden"}}
-     title="Nested"
-     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   ></iframe>
+```tsx live
+<div style={{ height: 400 }}>
+  <Allotment>
+    <Allotment.Pane preferredSize={200} minSize={120} maxSize={400}>
+      <div className="demo-pane">Sidebar</div>
+    </Allotment.Pane>
+    <Allotment.Pane>
+      <Allotment vertical>
+        <Allotment.Pane>
+          <div className="demo-pane">Editor</div>
+        </Allotment.Pane>
+        <Allotment.Pane preferredSize={120} minSize={60} snap>
+          <div className="demo-pane">Panel</div>
+        </Allotment.Pane>
+      </Allotment>
+    </Allotment.Pane>
+  </Allotment>
+</div>
+```
+
+The panel has `snap` set, so dragging it below half its minimum size collapses it. Drag the edge back up to restore it.
+
+[Open in Storybook](https://allotment-storybook.netlify.app/?path=/story/basic--nested)

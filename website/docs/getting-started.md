@@ -1,6 +1,6 @@
 ---
 id: getting-started
-title: Getting Started
+title: Getting started
 ---
 
 Allotment is available as an [npm package](https://www.npmjs.com/package/allotment).
@@ -9,15 +9,11 @@ Allotment is available as an [npm package](https://www.npmjs.com/package/allotme
 
 To install and save in your package.json dependencies, run:
 
-```sh
-# with npm
+```bash npm2yarn
 npm install allotment
-
-# with yarn
-yarn add allotment
 ```
 
-Please note that react >= 17.0.0 and react-dom >= 17.0.0 are peer dependencies.
+Please note that `react` and `react-dom` are peer dependencies. Allotment supports React 17, 18 and 19.
 
 ## Usage
 
@@ -26,51 +22,42 @@ Please note that react >= 17.0.0 and react-dom >= 17.0.0 are peer dependencies.
 Here's a quick example to get you started:
 
 ```tsx
-import * as React from "react";
-import ReactDOM from "react-dom";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
-function App() {
+export function App() {
   return (
-    <Allotment>
-      <div>Pane 1</div>
-      <div>Pane 2</div>
-    </Allotment>
+    <div style={{ height: 400 }}>
+      <Allotment>
+        <div>Pane 1</div>
+        <div>Pane 2</div>
+      </Allotment>
+    </div>
   );
 }
+```
 
-ReactDOM.render(<App />, document.querySelector("#app"));
+Here it is running. Drag the line between the panes to resize them, or edit the code:
+
+```tsx live
+<div style={{ height: 200 }}>
+  <Allotment>
+    <div className="demo-pane">Pane 1</div>
+    <div className="demo-pane">Pane 2</div>
+  </Allotment>
+</div>
 ```
 
 :::caution
 
 Remember to import the required css: `import "allotment/dist/style.css"`
 
+Allotment takes its size from its parent element, so make sure the parent has a height. See the [FAQ](faq.md#its-not-workingi-dont-see-anything) if nothing is showing.
+
 :::
 
-## Control over individual panes
+## Next steps
 
-If you want more control over the behaviour of the individual panes you can use the `Allotment.Pane` component. This includes setting the minimum and maximum size of a pane, as well as whether to enable snapping behaviour.
-
-```tsx
-import * as React from "react";
-import ReactDOM from "react-dom";
-import { Allotment } from "allotment";
-import "allotment/dist/style.css";
-
-function App() {
-  return (
-    <Allotment>
-      <Allotment.Pane minSize={200}>
-        <div>Pane 1</div>
-      </Allotment.Pane>
-      <Allotment.Pane snap>
-        <div>Pane 2</div>
-      </Allotment.Pane>
-    </Allotment>
-  );
-}
-
-ReactDOM.render(<App />, document.querySelector("#app"));
-```
+- [Features](basic.md) shows what Allotment can do, with live examples: layout, sizing, snapping, nesting, adding and removing panes, visibility and resetting.
+- [How-to guides](styling.md) cover styling, persisting sizes and server-side rendering.
+- [API](overview.md) lists every prop and export.

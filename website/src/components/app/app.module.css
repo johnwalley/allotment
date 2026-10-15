@@ -3,10 +3,73 @@
   padding: 0;
 }
 
+/* Colours from VS Code's default "Dark 2026" theme, named after the CSS
+   variables VS Code itself exposes */
 .app {
-  color: rgb(255, 255, 255);
+  --vscode-foreground: #bfbfbf;
+  --vscode-descriptionForeground: #8c8c8c;
+  --vscode-icon-foreground: #8c8c8c;
+  --vscode-focusBorder: #3994bc;
+  --vscode-editor-background: #121314;
+  --vscode-editor-foreground: #bbbebf;
+  --vscode-editorLineNumber-foreground: #858889;
+  --vscode-editorLineNumber-activeForeground: #bbbebf;
+  --vscode-editor-lineHighlightBackground: #242526;
+  --vscode-sideBar-background: #191a1b;
+  --vscode-border: #2a2b2c;
+  --vscode-input-border: #333536;
+  --vscode-list-hoverBackground: rgba(255, 255, 255, 0.08);
+  --vscode-list-inactiveSelectionBackground: #2c2d2e;
+  --vscode-toolbar-hoverBackground: rgba(90, 93, 94, 0.31);
+  --vscode-activityBar-activeBackground: #313233;
+  --vscode-tab-activeBorderTop: #3994bc;
+  --vscode-statusBarItem-remoteBackground: #0078d4;
+  --vscode-button-background: #297aa0;
+  --vscode-font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu",
+    "Droid Sans", sans-serif;
+  --vscode-editor-font-family:
+    Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  /* Allotment's own variables */
+  --focus-border: var(--vscode-focusBorder);
+  --separator-border: var(--vscode-border);
+
+  background-color: var(--vscode-sideBar-background);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 16px 40px rgba(0, 0, 0, 0.3);
+  color: var(--vscode-foreground);
+  /* The mock editor is always dark, so native scrollbars (e.g. the terminal's)
+     should be too, whatever the site theme */
+  color-scheme: dark;
+  font-family: var(--vscode-font-family);
+  font-size: 13px;
+  line-height: normal;
+  overflow: hidden;
+  user-select: none;
 }
 
 .app a {
   color: inherit;
+}
+
+/* A 22px icon button, as used in VS Code's toolbars */
+.app :global(.action-label) {
+  align-items: center;
+  border-radius: 5px;
+  color: var(--vscode-foreground);
+  cursor: pointer;
+  display: flex !important;
+  font-size: 16px;
+  height: 22px;
+  justify-content: center;
+  width: 22px;
+}
+
+.app :global(.action-label):hover {
+  background-color: var(--vscode-toolbar-hoverBackground);
+  color: var(--vscode-foreground);
+  text-decoration: none;
 }

@@ -1,0 +1,31 @@
+.codeView {
+  color: var(--vscode-editor-foreground);
+  font-family: var(--vscode-editor-font-family);
+  font-size: 12px;
+  line-height: 18px;
+  overflow: hidden;
+  padding-top: 2px;
+  user-select: text;
+}
+
+.line {
+  display: flex;
+  white-space: pre;
+}
+
+.lineNumber {
+  color: var(--vscode-editorLineNumber-foreground);
+  flex: 0 0 auto;
+  padding-right: 26px;
+  text-align: right;
+  user-select: none;
+  width: 44px;
+}
+
+.line:first-child .lineNumber {
+  color: var(--vscode-editorLineNumber-activeForeground);
+}
+
+.lineContent {
+  background: none !important;
+}

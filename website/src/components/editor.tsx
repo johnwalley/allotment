@@ -3,89 +3,77 @@ import React from "react";
 import "@vscode/codicons/dist/codicon.css";
 
 import { Allotment } from "allotment";
-import { Document } from "./app";
+import { Document } from "./documents";
 import styles from "./editor.module.css";
 import { EditorGroupContainer } from "./editor-group-container";
 
+const WATERMARK = [
+  { label: "Show All Commands", keys: ["⇧", "⌘", "P"] },
+  { label: "Go to File", keys: ["⌘", "P"] },
+  { label: "Find in Files", keys: ["⇧", "⌘", "F"] },
+  { label: "Toggle Terminal", keys: ["⌃", "`"] },
+];
+
 export type EditorProps = {
+  activeIndex: number;
+  /** Minimum width of each editor group */
+  minSize: number;
   documents: Document[];
+  onActiveIndexChange: (index: number) => void;
   onDocumentsChange: (documents: Document[]) => void;
 };
 
-export const Editor = ({ documents, onDocumentsChange }: EditorProps) => {
+export const Editor = ({
+  activeIndex,
+  minSize,
+  documents,
+  onActiveIndexChange,
+  onDocumentsChange,
+}: EditorProps) => {
   return (
     <div className={styles.content}>
-      <Allotment className={styles.allotment} minSize={110}>
-        {documents.length > 0 ? (
-          documents.map((document, index) => (
-            <EditorGroupContainer
-              key={index}
-              document={document}
-              onClose={() => {
-                const newDocuments = [...documents];
-                newDocuments.splice(index, 1);
+      {documents.length > 0 ? (
+        <Allotment>
+          {documents.map((document, index) => (
+            <Allotment.Pane key={index} minSize={minSize}>
+              <EditorGroupContainer
+                active={index === activeIndex}
+                document={document}
+                onActivate={() => onActiveIndexChange(index)}
+                onClose={() => {
+                  const newDocuments = [...documents];
+                  newDocuments.splice(index, 1);
 
-                onDocumentsChange(newDocuments);
-              }}
-              onSplitEditor={() => {
-                const newDocuments = [...documents];
-                newDocuments.splice(index, 0, document);
+                  onDocumentsChange(newDocuments);
+                }}
+                onSplitEditor={() => {
+                  const newDocuments = [...documents];
+                  newDocuments.splice(index, 0, document);
 
-                onDocumentsChange(newDocuments);
-              }}
-            />
-          ))
-        ) : (
-          <div className={styles.watermark}>
-            <div className={styles.watermarkBox}>
-              <dl>
-                <dt>Show All Commands</dt>
+                  onDocumentsChange(newDocuments);
+                }}
+              />
+            </Allotment.Pane>
+          ))}
+        </Allotment>
+      ) : (
+        <div className={styles.watermark}>
+          <dl className={styles.watermarkBox}>
+            {WATERMARK.map(({ label, keys }) => (
+              <div key={label} className={styles.entry}>
+                <dt>{label}</dt>
                 <dd>
-                  <div
-                    className="monaco-keybinding"
-                    title="Shift+Command+P"
-                    style={{ color: "rgb(204, 204, 204)" }}
-                  >
-                    <span
-                      className="monaco-keybinding-key"
-                      style={{
-                        backgroundColor: "rgba(128, 128, 128, 0.17)",
-                        borderColor:
-                          "rgba(51, 51, 51, 0.6), rgba(51, 51, 51, 0.6) rgba(68, 68, 68, 0.6)",
-                        boxShadow: "rgba(0, 0, 0, 0.36) 0px -1px 0px inset",
-                      }}
-                    >
-                      ⇧
-                    </span>
-                    <span
-                      className="monaco-keybinding-key"
-                      style={{
-                        backgroundColor: "rgba(128, 128, 128, 0.17)",
-                        borderColor:
-                          "rgba(51, 51, 51, 0.6), rgba(51, 51, 51, 0.6) rgba(68, 68, 68, 0.6)",
-                        boxShadow: "rgba(0, 0, 0, 0.36) 0px -1px 0px inset",
-                      }}
-                    >
-                      ⌘
-                    </span>
-                    <span
-                      className="monaco-keybinding-key"
-                      style={{
-                        backgroundColor: "rgba(128, 128, 128, 0.17)",
-                        borderColor:
-                          "rgba(51, 51, 51, 0.6), rgba(51, 51, 51, 0.6) rgba(68, 68, 68, 0.6)",
-                        boxShadow: "rgba(0, 0, 0, 0.36) 0px -1px 0px inset",
-                      }}
-                    >
-                      P
-                    </span>
-                  </div>
+                  {keys.map((key) => (
+                    <kbd key={key} className={styles.key}>
+                      {key}
+                    </kbd>
+                  ))}
                 </dd>
-              </dl>
-            </div>
-          </div>
-        )}
-      </Allotment>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
     </div>
   );
 };

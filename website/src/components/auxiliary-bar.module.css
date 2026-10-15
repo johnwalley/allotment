@@ -1,17 +1,91 @@
 .auxiliaryBar {
-  background-color: rgb(37, 37, 38);
+  background-color: var(--vscode-sideBar-background);
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.messageArea {
-  height: 100%;
-  width: 100%;
-  display: flex;
+.title {
   align-items: center;
-  align-content: center;
+  display: flex;
+  flex: 0 0 35px;
+  gap: 2px;
+  padding: 0 8px 0 20px;
+}
+
+h2.titleLabel {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.welcome {
+  align-items: center;
+  color: var(--vscode-descriptionForeground);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 16px;
   text-align: center;
-  font-size: 13px;
   white-space: normal;
+}
+
+.welcome :global(.codicon) {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  margin: 0;
+}
+
+p.heading {
+  color: var(--vscode-foreground);
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.input {
+  border: 1px solid var(--vscode-input-border);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 8px 8px;
+  overflow: hidden;
+  padding: 6px 8px;
+}
+
+.placeholder {
+  color: #555555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toolbar {
+  align-items: center;
+  white-space: nowrap;
+  color: var(--vscode-descriptionForeground);
+  display: flex;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.picker {
+  align-items: center;
+  display: flex;
+}
+
+.picker :global(.codicon) {
+  font-size: 12px;
+}
+
+.send {
+  margin-left: auto;
 }

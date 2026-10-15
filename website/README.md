@@ -1,25 +1,20 @@
 # Website
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The documentation site for Allotment, published at <https://allotment.mulberryhousesoftware.com>. It's built with [Docusaurus](https://docusaurus.io/).
 
-### Installation
+- `docs/` holds the guides, API reference and examples.
+- `src/pages/index.tsx` is the homepage. The VS Code-style demo on it lives in `src/components/`.
+- `src/theme/ReactLiveScope` lists what live code blocks can use without importing it.
 
-```bash
-npm i
+Live code blocks and the homepage demo use the published `allotment` package from npm, not the code in `../src`.
+
+## Commands
+
+```sh
+npm install
+npm start          # dev server with live reload
+npm run build      # static build into build/
+npm run typecheck
 ```
 
-### Local Development
-
-```bash
-npm run start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```bash
-npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+Changes here use `docs:` or `chore(website):` commit types, so they don't trigger a release. See [AGENTS.md](../AGENTS.md).

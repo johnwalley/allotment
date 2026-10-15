@@ -1,7 +1,5 @@
 .panel {
-  background-color: rgb(30, 30, 30);
-  border-left-color: rgba(128, 128, 128, 0.35);
-  border-right-color: rgba(128, 128, 128, 0.35);
+  background-color: var(--vscode-sideBar-background);
   height: 100%;
   width: 100%;
   display: flex;
@@ -9,80 +7,94 @@
 }
 
 .title {
+  align-items: center;
+  display: flex;
   flex: 0 0 35px;
-  display: flex;
-  height: 35px;
-  overflow: hidden;
-  padding-left: 8px;
-  padding-right: 8px;
   justify-content: space-between;
-}
-
-.actionBar {
-  line-height: 27px;
-}
-
-.actionsContainer {
-  list-style-type: none;
-  display: flex;
-  margin: 0 auto;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-}
-
-.actionItem {
-  text-transform: uppercase;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  font-size: 11px;
-  padding: 2px 10px;
-  display: flex;
-}
-
-.actionLabel {
-  font-size: 11px;
-  padding: 3px;
-  border-radius: 5px;
-}
-
-.actionLabel:hover {
-  background-color: rgba(90, 93, 94, 0.31);
-}
-
-.activeItemIndicator {
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
   overflow: hidden;
-  pointer-events: none;
-  height: 100%;
-  top: -6px;
-  left: 10px;
-  width: calc(100% - 20px);
+  padding: 0 8px;
 }
 
-.activeItemIndicator::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
+.tabs {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tab {
+  color: var(--vscode-descriptionForeground);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-size: 11px;
+  line-height: 27px;
+  padding: 0 8px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.tab:hover,
+.tab.checked {
+  color: var(--vscode-foreground);
+}
+
+.tab.checked::after {
+  border-top: 1px solid var(--vscode-focusBorder);
   bottom: 0;
-  width: 100%;
-  height: 0;
-  border-top-width: 1px;
-  border-top-style: solid;
+  content: "";
+  left: 8px;
+  position: absolute;
+  right: 8px;
 }
 
+.actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+}
+
+.separator {
+  background-color: var(--vscode-border);
+  height: 16px;
+  margin: 0 4px;
+  width: 1px;
+}
+
+/* Fill the pane exactly so the fit addon sizes the terminal to the visible area */
 .terminalWrapper {
-  height: 100%;
+  position: absolute;
+  inset: 0;
   padding-left: 20px;
   padding-right: 20px;
+  text-align: left;
+}
+
+.terminalWrapper :global(.xterm-viewport) {
+  scrollbar-color: rgba(168, 169, 170, 0.52) transparent;
+  scrollbar-width: thin;
+}
+
+.terminalWrapper[hidden] {
+  display: none;
 }
 
 .content {
   flex: 1 1 0;
   position: relative;
+  overflow: hidden;
+}
+
+.message {
+  margin: 0;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .actions :global(.codicon-split-horizontal),
+  .actions :global(.codicon-trash) {
+    display: none !important;
+  }
 }

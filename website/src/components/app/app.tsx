@@ -1,7 +1,7 @@
 import "allotment/dist/style.css";
 
 import { Allotment, LayoutPriority } from "allotment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ActivityBar } from "../activity-bar";
 import { AuxiliaryBar } from "../auxiliary-bar";
@@ -10,42 +10,96 @@ import { Panel } from "../panel";
 import { Sidebar } from "../sidebar";
 import { Statusbar } from "../statusbar";
 import { Titlebar } from "../titlebar";
+import { DOCUMENTS, Document } from "../documents";
 import styles from "./app.module.css";
 
-export interface Document {
-  title: string;
-  icon: string;
-}
-
 export const ACTIVITIES = [
-  "Explorer",
-  "Search",
-  "Source Control",
-  "Run and Debug",
-  "Extensions",
+  { icon: "files", title: "Explorer" },
+  { icon: "search", title: "Search" },
+  { icon: "source-control", title: "Source Control" },
+  { icon: "debug-alt", title: "Run and Debug" },
+  { icon: "extensions", title: "Extensions" },
 ];
 
-export const DOCUMENTS = [
-  { title: "allotment.tsx", icon: "ts" },
-  { title: "allotment.module.css", icon: "css" },
-];
+// Below this width the demo starts without the sidebar and shrinks its
+// minimum sizes so that it fits on a phone
+const NARROW_QUERY = "(max-width: 600px)";
+
+const useNarrow = () => {
+  const [narrow, setNarrow] = useState(
+    () => window.matchMedia(NARROW_QUERY).matches,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(NARROW_QUERY);
+    const onChange = () => setNarrow(mediaQuery.matches);
+
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
+
+  return narrow;
+};
 
 export const App = () => {
+  const narrow = useNarrow();
   const [editorVisible, setEditorVisible] = useState(true);
   const [panelVisible, setPanelVisible] = useState(true);
   const [activity, setActivity] = useState(0);
   const [activityBar, setActivityBar] = useState(true);
-  const [openEditors, setOpenEditors] = useState(DOCUMENTS);
-  const [primarySideBar, setPrimarySideBar] = useState(true);
+  const [openEditors, setOpenEditors] = useState(DOCUMENTS.slice(0, 2));
+  const [activeEditor, setActiveEditor] = useState(0);
+  const [primarySideBar, setPrimarySideBar] = useState(!narrow);
   const [primarySideBarPosition, setPrimarySideBarPosition] = useState<
     "left" | "right"
   >("left");
   const [secondarySideBar, setSecondarySideBar] = useState(false);
 
+  const sideBarMinSize = narrow ? 120 : 170;
+
+  // There's only room for one side bar on a narrow screen
+  const showPrimarySideBar = (visible: boolean) => {
+    setPrimarySideBar(visible);
+
+    if (visible && narrow) {
+      setSecondarySideBar(false);
+    }
+  };
+
+  const showSecondarySideBar = (visible: boolean) => {
+    setSecondarySideBar(visible);
+
+    if (visible && narrow) {
+      setPrimarySideBar(false);
+    }
+  };
+
+  const activeIndex = Math.min(activeEditor, openEditors.length - 1);
+  const activeDocument = openEditors[activeIndex];
+
+  // Without tabs each editor group shows a single file, so opening a file
+  // focuses the group already showing it or replaces the focused group's file
+  const openDocument = (document: Document) => {
+    const index = openEditors.indexOf(document);
+
+    if (index !== -1) {
+      setActiveEditor(index);
+    } else if (openEditors.length === 0) {
+      setOpenEditors([document]);
+      setActiveEditor(0);
+    } else {
+      const newDocuments = [...openEditors];
+      newDocuments[activeIndex] = document;
+
+      setOpenEditors(newDocuments);
+    }
+  };
+
   const auxiliarySidebar = (
     <Allotment.Pane
       key="auxiliarySidebar"
-      minSize={170}
+      minSize={sideBarMinSize}
       priority={LayoutPriority.Low}
       preferredSize={300}
       visible={secondarySideBar}
@@ -58,33 +112,33 @@ export const App = () => {
   const sidebar = (
     <Allotment.Pane
       key="sidebar"
-      minSize={170}
+      minSize={sideBarMinSize}
       priority={LayoutPriority.Low}
       preferredSize={300}
       visible={primarySideBar}
       snap
     >
       <Sidebar
-        title={ACTIVITIES[activity]}
+        activity={activity}
+        title={ACTIVITIES[activity].title}
         documents={DOCUMENTS}
-        openEditors={openEditors}
-        onOpenEditorsChange={(openEditor) => {
-          setOpenEditors(openEditor);
-        }}
+        activeDocument={activeDocument}
+        onOpen={openDocument}
       />
     </Allotment.Pane>
   );
 
   return (
     <Allotment vertical className={styles.app}>
-      <Allotment.Pane minSize={28} maxSize={28}>
+      <Allotment.Pane minSize={35} maxSize={35}>
         <Titlebar
+          title="my-app"
           showPanel={panelVisible}
           showPrimarySideBar={primarySideBar}
           showSecondarySideBar={secondarySideBar}
           onShowPanelChanged={setPanelVisible}
-          onShowPrimarySideBarChanged={setPrimarySideBar}
-          onShowSecondarySidebarChanged={setSecondarySideBar}
+          onShowPrimarySideBarChanged={showPrimarySideBar}
+          onShowSecondarySidebarChanged={showSecondarySideBar}
         />
       </Allotment.Pane>
       <Allotment.Pane>
@@ -97,13 +151,7 @@ export const App = () => {
           >
             <ActivityBar
               checked={activity}
-              items={[
-                "files",
-                "search",
-                "source-control",
-                "debug-alt",
-                "extensions",
-              ]}
+              items={ACTIVITIES}
               onClick={(index) => {
                 setActivity(index);
               }}
@@ -112,7 +160,7 @@ export const App = () => {
           {primarySideBarPosition === "left" ? sidebar : auxiliarySidebar}
           <Allotment.Pane
             key="content"
-            minSize={300}
+            minSize={narrow ? 120 : 300}
             priority={LayoutPriority.High}
           >
             <Allotment
@@ -128,7 +176,10 @@ export const App = () => {
             >
               <Allotment.Pane key="editor" minSize={70} visible={editorVisible}>
                 <Editor
+                  minSize={narrow ? 60 : 110}
+                  activeIndex={activeIndex}
                   documents={openEditors}
+                  onActiveIndexChange={setActiveEditor}
                   onDocumentsChange={(documents) => {
                     setOpenEditors(documents);
                   }}
@@ -137,7 +188,7 @@ export const App = () => {
               <Allotment.Pane
                 key="terminal"
                 minSize={78}
-                preferredSize="40%"
+                preferredSize="35%"
                 visible={panelVisible}
               >
                 <Panel
@@ -162,7 +213,7 @@ export const App = () => {
         </Allotment>
       </Allotment.Pane>
       <Allotment.Pane minSize={22} maxSize={22}>
-        <Statusbar />
+        <Statusbar languageName={activeDocument?.languageName} />
       </Allotment.Pane>
     </Allotment>
   );

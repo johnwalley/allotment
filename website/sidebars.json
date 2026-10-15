@@ -1,11 +1,14 @@
 {
   "docs": [
     {
-      "Getting Started": ["getting-started"],
-      "How To Guides": ["styling"],
-      "API reference": ["overview", "allotment", "pane"],
-      "Examples": ["basic", "nested", "closable", "reset", "visible"]
+      "Getting started": ["getting-started"],
+      "Features": ["basic", "sizing", "snapping", "nested", "closable", "visible", "reset"],
+      "How-to guides": ["styling", "persist-sizes", "server-rendering"]
     },
-    { "type": "doc", "id": "faq" }
-  ]
+    {
+      "type": "doc",
+      "id": "faq"
+    }
+  ],
+  "api": ["overview", "allotment", "pane"]
 }

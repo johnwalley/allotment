@@ -4,19 +4,22 @@
  */
 
 .heroDemo {
-  height: 360px;
+  height: 400px;
   max-width: 800px;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  text-align: left;
 }
 
 @media screen and (max-width: 966px) {
   .heroDemo {
-    height: 320px;
+    height: 340px;
   }
 }
 
 .heroBanner {
+  /* Dark text reads better than white on the light primary colour, in both themes */
+  --ifm-hero-text-color: #1c1e21;
   padding: 4rem 0;
   text-align: center;
   position: relative;
@@ -25,17 +28,151 @@
 
 @media screen and (max-width: 966px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 2rem 0;
   }
 }
 
-.heroImage {
-  height: 240px;
-  padding-bottom: 20px;
+.demoPlaceholder {
+  background-color: #121314;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
 }
 
-.buttons {
+.demoPlaceholderTitlebar {
+  background-color: #191a1b;
+  border-bottom: 1px solid #2a2b2c;
+  border-radius: 10px 10px 0 0;
+  height: 35px;
+}
+
+.demoPlaceholderStatusbar {
+  background-color: #191a1b;
+  border-top: 1px solid #2a2b2c;
+  border-radius: 0 0 10px 10px;
+  height: 22px;
+}
+
+.demoCaption {
+  font-size: 0.875rem;
+  margin: 0 auto 1.5rem;
+  max-width: 800px;
+}
+
+.actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.examplesButton {
+  --ifm-button-border-color: var(--ifm-hero-text-color);
+  color: var(--ifm-hero-text-color);
+}
+
+.examplesButton:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: var(--ifm-hero-text-color);
+}
+
+.install {
+  align-items: center;
+  background-color: rgb(30, 30, 30);
+  border-radius: var(--ifm-global-radius);
+  display: inline-flex;
+  gap: 0.5rem;
+  max-width: 100%;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+}
+
+.installCommand {
+  background: none;
+  border: none;
+  color: var(--ifm-color-white);
+  font-size: 1rem;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.installPrompt {
+  opacity: 0.6;
+  user-select: none;
+}
+
+.installCopy {
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: var(--ifm-global-radius);
+  color: var(--ifm-color-white);
+  cursor: pointer;
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.installCopy:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.quickStart {
+  padding: 4rem 0 2rem;
+}
+
+.quickStart h2 {
+  margin-bottom: 1rem;
+}
+
+.steps {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+}
+
+.steps li {
+  margin-bottom: 0.5rem;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.badges img {
+  display: block;
+}
+
+.usedBy {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.usedBy p {
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 0.75rem;
+}
+
+.usedByList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.usedByList a {
+  color: var(--ifm-font-color-base);
+  font-size: 1.25rem;
+  font-weight: var(--ifm-font-weight-semibold);
 }

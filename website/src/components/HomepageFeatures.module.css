@@ -1,11 +1,18 @@
 .features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
+  padding: 2rem 0 4rem;
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.feature {
+  margin-bottom: 2rem;
+}
+
+.icon {
+  color: var(--ifm-color-primary);
+  font-size: 32px !important;
+  margin-bottom: 0.75rem;
+}
+
+.feature p {
+  margin-bottom: 0.5rem;
 }

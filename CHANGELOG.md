@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.6](https://github.com/johnwalley/allotment/compare/v1.20.5...v1.20.6) (2026-10-12)
+
+
+### Bug Fixes
+
+* call the latest onReset when double-clicking a sash ([#904](https://github.com/johnwalley/allotment/issues/904)) ([b4d9fca](https://github.com/johnwalley/allotment/commit/b4d9fcabb1f8eba27265be55adaf32f7888af001)), closes [#901](https://github.com/johnwalley/allotment/issues/901)
+* **sash:** end in-progress drags cleanly on dispose and view changes ([#898](https://github.com/johnwalley/allotment/issues/898)) ([b307433](https://github.com/johnwalley/allotment/commit/b307433a984d1b690e304f7b130efd35d5be28d6))
+* **split-view:** resize() no longer crashes when given extra sizes ([#914](https://github.com/johnwalley/allotment/issues/914)) ([2b547d3](https://github.com/johnwalley/allotment/commit/2b547d35802be6247bde28cfff4a86ddb8c80023))
+
 ## [1.20.5](https://github.com/johnwalley/allotment/compare/v1.20.4...v1.20.5) (2025-12-19)
 
 
