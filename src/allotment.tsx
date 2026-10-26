@@ -29,6 +29,14 @@ function isPane(item: React.ReactNode | typeof Pane): item is typeof Pane {
   return (item as any).type.displayName === "Allotment.Pane";
 }
 
+// `0` is a valid preferred size, so a truthiness check would drop it. An empty
+// string still means "no preferred size".
+function hasPreferredSize(
+  props: PaneProps | undefined,
+): props is PaneProps & { preferredSize: number | string } {
+  return props?.preferredSize !== undefined && props.preferredSize !== "";
+}
+
 function isPaneProps(props: AllotmentProps | PaneProps): props is PaneProps {
   return (
     (props as PaneProps).minSize !== undefined ||
@@ -235,8 +243,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
                   minimumSize: props?.minSize ?? minSize,
                   maximumSize: props?.maxSize ?? maxSize,
                   priority: props?.priority ?? LayoutPriority.Normal,
-                  ...(props?.preferredSize && {
-                    preferredSize: props?.preferredSize,
+                  ...(hasPreferredSize(props) && {
+                    preferredSize: props.preferredSize,
                   }),
                   snap: props?.snap ?? snap,
                 });
@@ -339,8 +347,8 @@ const Allotment = forwardRef<AllotmentHandle, AllotmentProps>(
             minimumSize: props?.minSize ?? minSize,
             maximumSize: props?.maxSize ?? maxSize,
             priority: props?.priority ?? LayoutPriority.Normal,
-            ...(props?.preferredSize && {
-              preferredSize: props?.preferredSize,
+            ...(hasPreferredSize(props) && {
+              preferredSize: props.preferredSize,
             }),
             snap: props?.snap ?? snap,
           });
